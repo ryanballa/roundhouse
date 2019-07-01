@@ -1,0 +1,31 @@
+import React from 'react';
+import { styledComponent } from '../../utils/styledComponent';
+import { fontConfig, spacing, zIndex } from '../../config/styles';
+import MainNavigation from './MainNavigation';
+import { Link } from 'react-router-dom'
+
+const StyledHeader = styledComponent('header', {
+  '& h1': {
+    display: 'inline',
+    margin: 0,
+    ...fontConfig.h1,
+  },
+  backgroundColor: '#8b96a0',
+  boxShadow: '1px 1px 1px rgba(0, 0, 0, 0.3)',
+  color: '#FFFFFF',
+  fontFamily: fontConfig.familyStylized,
+  padding: spacing.boxPadding,
+  position: 'relative',
+  zIndex: zIndex.header,
+});
+
+const Header = () => (
+  <StyledHeader>
+    <h1>
+      <Link to="/">Roundhouse</Link>
+    </h1>
+    <MainNavigation />
+  </StyledHeader>
+);
+
+export default Header;
