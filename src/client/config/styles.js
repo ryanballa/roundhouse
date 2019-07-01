@@ -3,8 +3,8 @@ export const colors = {
 };
 
 export const fontConfig = {
-  familyStylized: "'Dosis', 'sans-serif'",
   familyBody: 'sans-serif',
+  familyStylized: "'Dosis', 'sans-serif'",
   h1: {
     fontSize: '1.2em',
     letterSpacing: '0.1em',

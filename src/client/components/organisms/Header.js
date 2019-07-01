@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { styledComponent } from '../../utils/styledComponent';
 import { fontConfig, spacing, zIndex } from '../../config/styles';
 import MainNavigation from './MainNavigation';
-import { Link } from 'react-router-dom'
 
 const StyledHeader = styledComponent('header', {
   '& h1': {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
-import { asyncUpdates } from 'src/client/utils/testHelpers';
 import { wait } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { asyncUpdates } from '../utils/testHelpers';
 import Add from './Add';
 
 const PATHNAME = '/locomotives';

@@ -15,9 +15,7 @@ const SingleColumn = ({ children }) => (
   <div>
     <Header />
     {/* <SubNavigation /> */}
-    <StyledSection>
-      {children}
-    </StyledSection>
+    <StyledSection>{children}</StyledSection>
   </div>
 );
 

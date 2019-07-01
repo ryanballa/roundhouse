@@ -1,21 +1,19 @@
-import React, { Fragment, useState, useEffect } from 'react'
-import SingleColumn from '../components/layout/SingleColumn';
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import SingleColumn from '../components/layout/SingleColumn';
 
 function List() {
-  const [data, setData] = useState([{ id: '1', road: 'Test'}]);
+  const [data, setData] = useState([{ id: '1', road: 'Test' }]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const result = await axios(
-        '/api/v1/locomotives',
-      );
+      const result = await axios('/api/v1/locomotives');
       setData(result.data);
       setIsLoading(false);
-    }
+    };
     fetchData();
   }, []);
 
@@ -28,7 +26,9 @@ function List() {
         <ul>
           {data.map(locomotive => (
             <li key={locomotive.id}>
-              <Link key={locomotive.id} to={`locomotives/${locomotive.id}`}>{locomotive.road}</Link>
+              <Link key={locomotive.id} to={`locomotives/${locomotive.id}`}>
+                {locomotive.road}
+              </Link>
             </li>
           ))}
         </ul>
