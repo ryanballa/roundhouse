@@ -85380,9 +85380,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var StyledSection = (0, _styledComponent.styledComponent)('section', {
   fontFamily: _styles.fontConfig.familyBody,
-  margin: 20,
-  position: 'relative',
-  zIndex: _styles.zIndex.layout
+  margin: 20
 });
 
 var SingleColumn = function SingleColumn(_ref) {
@@ -86514,7 +86512,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Edit = function Edit(_ref) {
-  var match = _ref.match;
+  var history = _ref.history,
+      match = _ref.match;
 
   var _useState = (0, _react.useState)([{
     engine_number: '123',
@@ -86529,6 +86528,11 @@ var Edit = function Edit(_ref) {
       isLoading = _useState4[0],
       setIsLoading = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      isDeleting = _useState6[0],
+      setIsDeleting = _useState6[1];
+
   (0, _react.useEffect)(function () {
     var fetchData =
     /*#__PURE__*/
@@ -86536,21 +86540,22 @@ var Edit = function Edit(_ref) {
       var _ref2 = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee() {
-        var result;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 setIsLoading(true);
                 _context.next = 3;
-                return (0, _axios.default)("/api/v1/locomotives/".concat(match.params.id));
+                return (0, _axios.default)("/api/v1/locomotives/".concat(match.params.id)).then(function (locomotive) {
+                  if (!locomotive.data.length) {
+                    history.push('/404');
+                  }
+
+                  setData(locomotive.data);
+                  setIsLoading(false);
+                });
 
               case 3:
-                result = _context.sent;
-                setData(result.data);
-                setIsLoading(false);
-
-              case 6:
               case "end":
                 return _context.stop();
             }
@@ -86569,7 +86574,23 @@ var Edit = function Edit(_ref) {
     engine_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 9999').required('Required'),
     road: Yup.string().required('Required')
   });
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
+    intent: "danger",
+    isShown: isDeleting,
+    title: "Delete Locomotive",
+    onCloseComplete: function onCloseComplete() {
+      return setIsDeleting(false);
+    },
+    onConfirm: function onConfirm() {
+      _axios.default.delete("/api/v1/locomotives/".concat(match.params.id)).then(function () {
+        setIsDeleting(false);
+        history.push('/locomotives');
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    confirmLabel: "Delete"
+  }, "Are you sure you want to delete ", data[0].road, " ?"), _react.default.createElement(_formik.Formik, {
     initialValues: {
       engine_number: data[0].engine_number || '',
       is_dcc: data[0].is_dcc,
@@ -86591,15 +86612,22 @@ var Edit = function Edit(_ref) {
     var errors = _ref4.errors,
         touched = _ref4.touched,
         handleSubmit = _ref4.handleSubmit;
-    return _react.default.createElement(_Form.default, {
+    return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Form.default, {
       errors: errors,
       touched: touched,
       handleSubmit: handleSubmit
-    });
+    }), _react.default.createElement(_evergreenUi.Button, {
+      onClick: function onClick() {
+        setIsDeleting(true);
+      }
+    }, "Delete"));
   }))));
 };
 
 Edit.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired,
   match: _propTypes.default.shape({
     params: _propTypes.default.shape({
       id: _propTypes.default.string.isRequired
@@ -86722,7 +86750,33 @@ function Home() {
 
 var _default = Home;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"Routes.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"pages/NotFound.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function NotFound() {
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement("h1", null, "Not Found"), _react.default.createElement("p", null, "We cannot find that. Maybe it was deleted or your link is incorrect."), _react.default.createElement("b", null, "Useful Actions"), _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+    to: "locomotives/add"
+  }, "Add A Locomotive")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+    to: "locomotives"
+  }, "Manage Locomotives"))));
+}
+
+var _default = NotFound;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"Routes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86742,6 +86796,8 @@ var _List = _interopRequireDefault(require("./locomotives/List"));
 
 var _Home = _interopRequireDefault(require("./pages/Home"));
 
+var _NotFound = _interopRequireDefault(require("./pages/NotFound"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Routes = function Routes(_ref) {
@@ -86752,6 +86808,10 @@ var Routes = function Routes(_ref) {
     exact: true,
     path: "/",
     component: _Home.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/404",
+    component: _NotFound.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/locomotives",
@@ -86770,7 +86830,7 @@ var Routes = function Routes(_ref) {
 var _default = (0, _reactRouterDom.withRouter)(Routes);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./pages/Home":"pages/Home.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -94814,7 +94874,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61664" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56049" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
