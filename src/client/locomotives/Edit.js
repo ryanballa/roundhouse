@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Dialog, Pane } from 'evergreen-ui';
+import { Button, Dialog, Pane, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -51,6 +51,7 @@ const Edit = ({ history, match }) => {
                   .delete(`/api/v1/locomotives/${match.params.id}`)
                   .then(() => {
                     setIsDeleting(false);
+                    toaster.success('Locomotive Deleted');
                     history.push('/locomotives');
                   })
                   .catch(error => {
@@ -75,6 +76,7 @@ const Edit = ({ history, match }) => {
                   .put(`/api/v1/locomotives/${match.params.id}`, values)
                   .then(() => {
                     setSubmitting(false);
+                    toaster.success('Locomotive Saved');
                   })
                   .catch(error => {
                     console.log(error);

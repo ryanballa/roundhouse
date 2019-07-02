@@ -1,12 +1,12 @@
-import React from 'react'
-import { Route, Switch, withRouter } from 'react-router-dom'
-import Add from './locomotives/Add'
-import Edit from './locomotives/Edit'
-import List from './locomotives/List'
-import Home from './pages/Home'
-import NotFound from './pages/NotFound'
+import React from 'react';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import Add from './locomotives/Add';
+import Edit from './locomotives/Edit';
+import List from './locomotives/List';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
 
-const Routes = ({ location }) => (
+const Routes = () => (
   <div className="routeWrapper">
     <Switch>
       <Route exact path="/" component={Home} />
@@ -16,6 +16,6 @@ const Routes = ({ location }) => (
       <Route exact path="/locomotives/:id" component={Edit} />
     </Switch>
   </div>
-)
+);
 
-export default withRouter(Routes)
+export default withRouter(Routes);

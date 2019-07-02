@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Button } from 'evergreen-ui';
 import axios from 'axios';
 import SingleColumn from '../components/layout/SingleColumn';
 
-function List() {
+function List({ history }) {
   const [data, setData] = useState([{ id: '1', road: 'Test' }]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,8 +35,22 @@ function List() {
           ))}
         </ul>
       )}
+      <Button
+        iconBefore="add"
+        onClick={() => {
+          history.push('/locomotives/add');
+        }}
+      >
+        Add Locomotive
+      </Button>
     </SingleColumn>
   );
 }
+
+List.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default List;

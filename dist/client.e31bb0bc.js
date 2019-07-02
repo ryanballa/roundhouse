@@ -85691,6 +85691,8 @@ function Add() {
       /* istanbul ignore next */
       function () {
         /* istanbul ignore next */
+        _evergreenUi.toaster.success('Locomotive Added');
+
         setSubmitting(false);
       }).catch(function () {});
     }
@@ -86584,6 +86586,9 @@ var Edit = function Edit(_ref) {
     onConfirm: function onConfirm() {
       _axios.default.delete("/api/v1/locomotives/".concat(match.params.id)).then(function () {
         setIsDeleting(false);
+
+        _evergreenUi.toaster.success('Locomotive Deleted');
+
         history.push('/locomotives');
       }).catch(function (error) {
         console.log(error);
@@ -86604,6 +86609,8 @@ var Edit = function Edit(_ref) {
 
       _axios.default.put("/api/v1/locomotives/".concat(match.params.id), values).then(function () {
         setSubmitting(false);
+
+        _evergreenUi.toaster.success('Locomotive Saved');
       }).catch(function (error) {
         console.log(error);
       });
@@ -86652,7 +86659,11 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _reactRouterDom = require("react-router-dom");
+
+var _evergreenUi = require("evergreen-ui");
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -86662,7 +86673,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function List() {
+function List(_ref) {
+  var history = _ref.history;
+
   var _useState = (0, _react.useState)([{
     id: '1',
     road: 'Test'
@@ -86680,7 +86693,7 @@ function List() {
     var fetchData =
     /*#__PURE__*/
     function () {
-      var _ref = (0, _asyncToGenerator2.default)(
+      var _ref2 = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee() {
         var result;
@@ -86706,7 +86719,7 @@ function List() {
       }));
 
       return function fetchData() {
-        return _ref.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       };
     }();
 
@@ -86719,12 +86732,22 @@ function List() {
       key: locomotive.id,
       to: "locomotives/".concat(locomotive.id)
     }, locomotive.road));
-  })));
+  })), _react.default.createElement(_evergreenUi.Button, {
+    iconBefore: "add",
+    onClick: function onClick() {
+      history.push('/locomotives/add');
+    }
+  }, "Add Locomotive"));
 }
 
+List.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired
+};
 var _default = List;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/Home.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/Home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86734,9 +86757,9 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
-
 var _reactRouterDom = require("react-router-dom");
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86750,7 +86773,7 @@ function Home() {
 
 var _default = Home;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"pages/NotFound.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/NotFound.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86800,8 +86823,7 @@ var _NotFound = _interopRequireDefault(require("./pages/NotFound"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Routes = function Routes(_ref) {
-  var location = _ref.location;
+var Routes = function Routes() {
   return _react.default.createElement("div", {
     className: "routeWrapper"
   }, _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {

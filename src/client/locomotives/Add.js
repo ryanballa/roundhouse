@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Pane } from 'evergreen-ui';
+import { Pane, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
@@ -39,6 +39,7 @@ function Add() {
                 .then(
                   /* istanbul ignore next */ () => {
                     /* istanbul ignore next */
+                    toaster.success('Locomotive Added');
                     setSubmitting(false);
                   },
                 )
