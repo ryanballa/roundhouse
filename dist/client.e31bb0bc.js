@@ -29621,67 +29621,7 @@ if ("development" !== "production") {
     style: _propTypes.default.object
   });
 }
-},{"@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","react-router":"../../node_modules/react-router/esm/react-router.js","history":"../../node_modules/history/esm/history.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../../node_modules/@babel/runtime/helpers/extends.js":[function(require,module,exports) {
-function _extends() {
-  module.exports = _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-module.exports = _extends;
-},{}],"../../node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":[function(require,module,exports) {
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutPropertiesLoose;
-},{}],"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js":[function(require,module,exports) {
-var objectWithoutPropertiesLoose = require("./objectWithoutPropertiesLoose");
-
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
-  }
-
-  return target;
-}
-
-module.exports = _objectWithoutProperties;
-},{"./objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"}],"../../node_modules/@babel/runtime/helpers/arrayWithHoles.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","react-router":"../../node_modules/react-router/esm/react-router.js","history":"../../node_modules/history/esm/history.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../../node_modules/@babel/runtime/helpers/arrayWithHoles.js":[function(require,module,exports) {
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
@@ -30742,7 +30682,7 @@ function cleanArray(rules) {
 function clean(input) {
   return Array.isArray(input) ? cleanArray(input) : cleanObject(input);
 }
-},{}],"../../node_modules/inline-style-prefixer/static/staticData.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/staticData.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30761,7 +30701,7 @@ exports.default = {
   prefixMap: { "appearance": wm, "userSelect": wmms, "textEmphasisPosition": w, "textEmphasis": w, "textEmphasisStyle": w, "textEmphasisColor": w, "boxDecorationBreak": w, "clipPath": w, "maskImage": w, "maskMode": w, "maskRepeat": w, "maskPosition": w, "maskClip": w, "maskOrigin": w, "maskSize": w, "maskComposite": w, "mask": w, "maskBorderSource": w, "maskBorderMode": w, "maskBorderSlice": w, "maskBorderWidth": w, "maskBorderOutset": w, "maskBorderRepeat": w, "maskBorder": w, "maskType": w, "textDecorationStyle": w, "textDecorationSkip": w, "textDecorationLine": w, "textDecorationColor": w, "filter": w, "fontFeatureSettings": w, "breakAfter": wmms, "breakBefore": wmms, "breakInside": wmms, "columnCount": wm, "columnFill": wm, "columnGap": wm, "columnRule": wm, "columnRuleColor": wm, "columnRuleStyle": wm, "columnRuleWidth": wm, "columns": wm, "columnSpan": wm, "columnWidth": wm, "writingMode": wms, "flex": w, "flexBasis": w, "flexDirection": w, "flexGrow": w, "flexFlow": w, "flexShrink": w, "flexWrap": w, "alignContent": w, "alignItems": w, "alignSelf": w, "justifyContent": w, "order": w, "transform": w, "transformOrigin": w, "transformOriginX": w, "transformOriginY": w, "backfaceVisibility": w, "perspective": w, "perspectiveOrigin": w, "transformStyle": w, "transformOriginZ": w, "animation": w, "animationDelay": w, "animationDirection": w, "animationFillMode": w, "animationDuration": w, "animationIterationCount": w, "animationName": w, "animationPlayState": w, "animationTimingFunction": w, "backdropFilter": w, "fontKerning": w, "scrollSnapType": wms, "scrollSnapPointsX": wms, "scrollSnapPointsY": wms, "scrollSnapDestination": wms, "scrollSnapCoordinate": wms, "shapeImageThreshold": w, "shapeImageMargin": w, "shapeImageOutside": w, "hyphens": wmms, "flowInto": wms, "flowFrom": wms, "regionFragment": wms, "textAlignLast": m, "tabSize": m, "wrapFlow": ms, "wrapThrough": ms, "wrapMargin": ms, "gridTemplateColumns": ms, "gridTemplateRows": ms, "gridTemplateAreas": ms, "gridTemplate": ms, "gridAutoColumns": ms, "gridAutoRows": ms, "gridAutoFlow": ms, "grid": ms, "gridRowStart": ms, "gridColumnStart": ms, "gridRowEnd": ms, "gridRow": ms, "gridColumn": ms, "gridColumnEnd": ms, "gridColumnGap": ms, "gridRowGap": ms, "gridArea": ms, "gridGap": ms, "textSizeAdjust": wms, "borderImage": w, "borderImageOutset": w, "borderImageRepeat": w, "borderImageSlice": w, "borderImageSource": w, "borderImageWidth": w, "transitionDelay": w, "transitionDuration": w, "transitionProperty": w, "transitionTimingFunction": w }
 };
 module.exports = exports["default"];
-},{}],"../../node_modules/inline-style-prefixer/utils/capitalizeString.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/utils/capitalizeString.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30772,7 +30712,7 @@ function capitalizeString(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 module.exports = exports["default"];
-},{}],"../../node_modules/inline-style-prefixer/utils/prefixProperty.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/utils/prefixProperty.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30795,7 +30735,7 @@ function prefixProperty(prefixProperties, property, style) {
   }
 }
 module.exports = exports['default'];
-},{"./capitalizeString":"../../node_modules/inline-style-prefixer/utils/capitalizeString.js"}],"../../node_modules/inline-style-prefixer/utils/prefixValue.js":[function(require,module,exports) {
+},{"./capitalizeString":"../../node_modules/glamor/node_modules/inline-style-prefixer/utils/capitalizeString.js"}],"../../node_modules/glamor/node_modules/inline-style-prefixer/utils/prefixValue.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30814,7 +30754,7 @@ function prefixValue(plugins, property, value, style, metaData) {
   }
 }
 module.exports = exports["default"];
-},{}],"../../node_modules/inline-style-prefixer/static/plugins/cursor.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/cursor.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30851,7 +30791,7 @@ function isPrefixedValue(value) {
   return typeof value === 'string' && regex.test(value);
 }
 module.exports = exports['default'];
-},{}],"../../node_modules/inline-style-prefixer/static/plugins/crossFade.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/crossFade.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30875,7 +30815,7 @@ function crossFade(property, value) {
   }
 }
 module.exports = exports['default'];
-},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/inline-style-prefixer/static/plugins/filter.js":[function(require,module,exports) {
+},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/filter.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30899,7 +30839,7 @@ function filter(property, value) {
   }
 }
 module.exports = exports['default'];
-},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/inline-style-prefixer/static/plugins/flex.js":[function(require,module,exports) {
+},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/flex.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30917,7 +30857,7 @@ function flex(property, value) {
   }
 }
 module.exports = exports['default'];
-},{}],"../../node_modules/inline-style-prefixer/static/plugins/flexboxOld.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/flexboxOld.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30957,7 +30897,7 @@ function flexboxOld(property, value, style) {
   }
 }
 module.exports = exports['default'];
-},{}],"../../node_modules/inline-style-prefixer/static/plugins/gradient.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/gradient.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30983,7 +30923,7 @@ function gradient(property, value) {
   }
 }
 module.exports = exports['default'];
-},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/inline-style-prefixer/static/plugins/imageSet.js":[function(require,module,exports) {
+},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/imageSet.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31007,7 +30947,7 @@ function imageSet(property, value) {
   }
 }
 module.exports = exports['default'];
-},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/inline-style-prefixer/static/plugins/position.js":[function(require,module,exports) {
+},{"css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js"}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/position.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31020,7 +30960,7 @@ function position(property, value) {
   }
 }
 module.exports = exports['default'];
-},{}],"../../node_modules/inline-style-prefixer/static/plugins/sizing.js":[function(require,module,exports) {
+},{}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/sizing.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31100,7 +31040,7 @@ function hyphenateProperty(property) {
   return (0, _hyphenateStyleName2.default)(property);
 }
 module.exports = exports['default'];
-},{"hyphenate-style-name":"../../node_modules/hyphenate-style-name/index.js"}],"../../node_modules/inline-style-prefixer/static/plugins/transition.js":[function(require,module,exports) {
+},{"hyphenate-style-name":"../../node_modules/hyphenate-style-name/index.js"}],"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/transition.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31194,7 +31134,7 @@ function transition(property, value, style, propertyPrefixMap) {
   }
 }
 module.exports = exports['default'];
-},{"css-in-js-utils/lib/hyphenateProperty":"../../node_modules/css-in-js-utils/lib/hyphenateProperty.js","css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js","../../utils/capitalizeString":"../../node_modules/inline-style-prefixer/utils/capitalizeString.js"}],"../../node_modules/glamor/lib/prefixer.js":[function(require,module,exports) {
+},{"css-in-js-utils/lib/hyphenateProperty":"../../node_modules/css-in-js-utils/lib/hyphenateProperty.js","css-in-js-utils/lib/isPrefixedValue":"../../node_modules/css-in-js-utils/lib/isPrefixedValue.js","../../utils/capitalizeString":"../../node_modules/glamor/node_modules/inline-style-prefixer/utils/capitalizeString.js"}],"../../node_modules/glamor/lib/prefixer.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31276,7 +31216,7 @@ function prefixer(style) {
   }
   return style;
 }
-},{"inline-style-prefixer/static/staticData":"../../node_modules/inline-style-prefixer/static/staticData.js","inline-style-prefixer/utils/prefixProperty":"../../node_modules/inline-style-prefixer/utils/prefixProperty.js","inline-style-prefixer/utils/prefixValue":"../../node_modules/inline-style-prefixer/utils/prefixValue.js","inline-style-prefixer/static/plugins/cursor":"../../node_modules/inline-style-prefixer/static/plugins/cursor.js","inline-style-prefixer/static/plugins/crossFade":"../../node_modules/inline-style-prefixer/static/plugins/crossFade.js","inline-style-prefixer/static/plugins/filter":"../../node_modules/inline-style-prefixer/static/plugins/filter.js","inline-style-prefixer/static/plugins/flex":"../../node_modules/inline-style-prefixer/static/plugins/flex.js","inline-style-prefixer/static/plugins/flexboxOld":"../../node_modules/inline-style-prefixer/static/plugins/flexboxOld.js","inline-style-prefixer/static/plugins/gradient":"../../node_modules/inline-style-prefixer/static/plugins/gradient.js","inline-style-prefixer/static/plugins/imageSet":"../../node_modules/inline-style-prefixer/static/plugins/imageSet.js","inline-style-prefixer/static/plugins/position":"../../node_modules/inline-style-prefixer/static/plugins/position.js","inline-style-prefixer/static/plugins/sizing":"../../node_modules/inline-style-prefixer/static/plugins/sizing.js","inline-style-prefixer/static/plugins/transition":"../../node_modules/inline-style-prefixer/static/plugins/transition.js"}],"../../node_modules/glamor/lib/plugins.js":[function(require,module,exports) {
+},{"inline-style-prefixer/static/staticData":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/staticData.js","inline-style-prefixer/utils/prefixProperty":"../../node_modules/glamor/node_modules/inline-style-prefixer/utils/prefixProperty.js","inline-style-prefixer/utils/prefixValue":"../../node_modules/glamor/node_modules/inline-style-prefixer/utils/prefixValue.js","inline-style-prefixer/static/plugins/cursor":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/cursor.js","inline-style-prefixer/static/plugins/crossFade":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/crossFade.js","inline-style-prefixer/static/plugins/filter":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/filter.js","inline-style-prefixer/static/plugins/flex":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/flex.js","inline-style-prefixer/static/plugins/flexboxOld":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/flexboxOld.js","inline-style-prefixer/static/plugins/gradient":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/gradient.js","inline-style-prefixer/static/plugins/imageSet":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/imageSet.js","inline-style-prefixer/static/plugins/position":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/position.js","inline-style-prefixer/static/plugins/sizing":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/sizing.js","inline-style-prefixer/static/plugins/transition":"../../node_modules/glamor/node_modules/inline-style-prefixer/static/plugins/transition.js"}],"../../node_modules/glamor/lib/plugins.js":[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74540,6 +74480,26 @@ function _interopRequireDefault(obj) {
 }
 
 module.exports = _interopRequireDefault;
+},{}],"../../node_modules/@babel/runtime/helpers/extends.js":[function(require,module,exports) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
 },{}],"../../node_modules/lodash/_baseHas.js":[function(require,module,exports) {
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -78362,7 +78322,24 @@ function () {
 var _default = Condition;
 exports.default = _default;
 module.exports = exports["default"];
-},{"@babel/runtime/helpers/interopRequireDefault":"../../node_modules/@babel/runtime/helpers/interopRequireDefault.js","lodash/has":"../../node_modules/lodash/has.js","./util/isSchema":"../../node_modules/yup/lib/util/isSchema.js"}],"../../node_modules/synchronous-promise/index.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"../../node_modules/@babel/runtime/helpers/interopRequireDefault.js","lodash/has":"../../node_modules/lodash/has.js","./util/isSchema":"../../node_modules/yup/lib/util/isSchema.js"}],"../../node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js":[function(require,module,exports) {
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutPropertiesLoose;
+},{}],"../../node_modules/synchronous-promise/index.js":[function(require,module,exports) {
 /* jshint node: true */
 "use strict";
 function makeArrayFrom(obj) {
@@ -83117,8 +83094,8 @@ var colors = {
 };
 exports.colors = colors;
 var fontConfig = {
-  familyStylized: "'Dosis', 'sans-serif'",
   familyBody: 'sans-serif',
+  familyStylized: "'Dosis', 'sans-serif'",
   h1: {
     fontSize: '1.2em',
     letterSpacing: '0.1em'
@@ -85349,13 +85326,13 @@ var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/obje
 
 var _react = _interopRequireDefault(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _styledComponent = require("../../utils/styledComponent");
 
 var _styles = require("../../config/styles");
 
 var _MainNavigation = _interopRequireDefault(require("./MainNavigation"));
-
-var _reactRouterDom = require("react-router-dom");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85381,7 +85358,7 @@ var Header = function Header() {
 
 var _default = Header;
 exports.default = _default;
-},{"@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","react":"../../node_modules/react/index.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","./MainNavigation":"components/organisms/MainNavigation.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/layout/SingleColumn.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","./MainNavigation":"components/organisms/MainNavigation.js"}],"components/layout/SingleColumn.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85418,7 +85395,30 @@ SingleColumn.propTypes = {
 };
 var _default = SingleColumn;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../config/styles":"config/styles.js","../../utils/styledComponent":"utils/styledComponent.js","../organisms/Header":"components/organisms/Header.js"}],"components/atoms/forms/Error.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../config/styles":"config/styles.js","../../utils/styledComponent":"utils/styledComponent.js","../organisms/Header":"components/organisms/Header.js"}],"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js":[function(require,module,exports) {
+var objectWithoutPropertiesLoose = require("./objectWithoutPropertiesLoose");
+
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = objectWithoutPropertiesLoose(source, excluded);
+  var key, i;
+
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+
+  return target;
+}
+
+module.exports = _objectWithoutProperties;
+},{"./objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"}],"components/atoms/forms/Error.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85427,6 +85427,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _styledComponent = require("../../../utils/styledComponent");
 
@@ -85444,9 +85446,15 @@ var Error = function Error(_ref) {
   return _react.default.createElement(StyledDiv, null, children);
 };
 
+Error.propTypes = {
+  children: _propTypes.default.node
+};
+Error.defaultProps = {
+  children: null
+};
 var _default = Error;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","../../../utils/styledComponent":"utils/styledComponent.js","../../../config/styles":"config/styles.js"}],"locomotives/Add.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../../utils/styledComponent":"utils/styledComponent.js","../../../config/styles":"config/styles.js"}],"locomotives/components/Form.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85458,58 +85466,43 @@ var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends")
 
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
-
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
 var _evergreenUi = require("evergreen-ui");
 
 var _formik = require("formik");
 
-var _axios = _interopRequireDefault(require("axios"));
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var Yup = _interopRequireWildcard(require("yup"));
+var _Error = _interopRequireDefault(require("../../components/atoms/forms/Error"));
 
-var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+var _styledComponent = require("../../utils/styledComponent");
 
-var _styledComponent = require("../utils/styledComponent");
-
-var _Error = _interopRequireDefault(require("../components/atoms/forms/Error"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+var _styles = require("../../config/styles");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint-disable react/no-multi-comp */
 var StyledDiv = (0, _styledComponent.styledComponent)('div', {
-  '& li': {
-    listStyle: 'none',
-    marginBottom: '15px'
-  },
   '& input': {
     border: '1px solid #fffcfc',
     borderRadius: '2px',
     boxShadow: '0 0 0 1px rgba(67, 90, 111, 0.14)',
     padding: '8px'
-  }
+  },
+  '& li': {
+    listStyle: 'none',
+    marginBottom: '15px'
+  },
+  color: _styles.colors.error,
+  paddingTop: '5px'
 });
 
-function Add(_ref) {
-  var match = _ref.match;
-
-  var _useState = (0, _react.useState)([{
-    engine_number: '',
-    location: 'home',
-    road: '',
-    'is_operational': true
-  }]),
-      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      data = _useState2[0],
-      setData = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(false),
-      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
-      isLoading = _useState4[0],
-      setIsLoading = _useState4[1];
+var Form = function Form(_ref) {
+  var errors = _ref.errors,
+      isSubmitting = _ref.isSubmitting,
+      handleSubmit = _ref.handleSubmit,
+      touched = _ref.touched;
 
   var SwitchField = function SwitchField(_ref2) {
     var id = _ref2.id,
@@ -85518,10 +85511,7 @@ function Add(_ref) {
         value = _ref2$field.value,
         onChange = _ref2$field.onChange,
         onBlur = _ref2$field.onBlur,
-        _ref2$form = _ref2.form,
-        touched = _ref2$form.touched,
-        errors = _ref2$form.errors,
-        props = (0, _objectWithoutProperties2.default)(_ref2, ["id", "field", "form"]);
+        props = (0, _objectWithoutProperties2.default)(_ref2, ["id", "field"]);
     return _react.default.createElement("div", null, _react.default.createElement(_evergreenUi.Switch, (0, _extends2.default)({
       id: id,
       name: name,
@@ -85532,6 +85522,16 @@ function Add(_ref) {
     }, props)));
   };
 
+  SwitchField.propTypes = {
+    field: _propTypes.default.shape({
+      name: _propTypes.default.string,
+      onBlur: _propTypes.default.func,
+      onChange: _propTypes.default.func,
+      value: _propTypes.default.bool
+    }).isRequired,
+    id: _propTypes.default.string.isRequired
+  };
+
   var SelectField = function SelectField(_ref3) {
     var id = _ref3.id,
         _ref3$field = _ref3.field,
@@ -85539,10 +85539,7 @@ function Add(_ref) {
         value = _ref3$field.value,
         onChange = _ref3$field.onChange,
         onBlur = _ref3$field.onBlur,
-        _ref3$form = _ref3.form,
-        touched = _ref3$form.touched,
-        errors = _ref3$form.errors,
-        props = (0, _objectWithoutProperties2.default)(_ref3, ["id", "field", "form"]);
+        props = (0, _objectWithoutProperties2.default)(_ref3, ["id", "field"]);
     return _react.default.createElement("div", null, _react.default.createElement(_evergreenUi.Select, (0, _extends2.default)({
       id: id,
       name: name,
@@ -85558,92 +85555,162 @@ function Add(_ref) {
     }, "Studio")));
   };
 
+  SelectField.propTypes = {
+    field: _propTypes.default.shape({
+      name: _propTypes.default.string,
+      onBlur: _propTypes.default.func,
+      onChange: _propTypes.default.func,
+      value: _propTypes.default.string
+    }).isRequired,
+    id: _propTypes.default.string.isRequired
+  };
+  return _react.default.createElement(StyledDiv, null, _react.default.createElement("form", {
+    "data-testid": "locomotiveAdd-form",
+    onSubmit: handleSubmit
+  }, _react.default.createElement("ul", null, _react.default.createElement("li", {
+    "data-testid": "road"
+  }, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Road"
+  }, _react.default.createElement(_formik.Field, {
+    id: "road",
+    type: "text",
+    name: "road",
+    placeholder: ""
+  })), _react.default.createElement(_Error.default, null, errors.road && touched.road ? _react.default.createElement("div", {
+    className: "error"
+  }, errors.road) : null)), _react.default.createElement("li", {
+    "data-testid": "engine_number"
+  }, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Engine Number"
+  }, _react.default.createElement(_formik.Field, {
+    id: "engine_number",
+    type: "text",
+    name: "engine_number",
+    placeholder: ""
+  })), _react.default.createElement(_Error.default, null, errors.engine_number && touched.engine_number ? _react.default.createElement("div", {
+    className: "error"
+  }, errors.engine_number) : null)), _react.default.createElement("li", {
+    "data-testid": "is_operational"
+  }, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Is Operational"
+  }, _react.default.createElement(_formik.Field, {
+    id: "is_operational",
+    name: "is_operational",
+    component: SwitchField
+  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Is DCC"
+  }, _react.default.createElement(_formik.Field, {
+    id: "is_dcc",
+    name: "is_dcc",
+    component: SwitchField
+  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Location"
+  }, _react.default.createElement(_formik.Field, {
+    id: "location",
+    name: "location",
+    component: SelectField
+  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
+    type: "submit",
+    "data-testid": "locomotiveAdd-submit",
+    disabled: isSubmitting
+  }, "Submit")))));
+};
+
+Form.propTypes = {
+  errors: _propTypes.default.shape({
+    engine_number: _propTypes.default.node,
+    road: _propTypes.default.node
+  }),
+  handleSubmit: _propTypes.default.func.isRequired,
+  isSubmitting: _propTypes.default.bool,
+  touched: _propTypes.default.shape({
+    engine_number: _propTypes.default.bool,
+    road: _propTypes.default.bool
+  }).isRequired
+};
+Form.defaultProps = {
+  errors: {},
+  isSubmitting: false
+};
+var _default = Form;
+exports.default = _default;
+},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/objectWithoutProperties":"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","prop-types":"../../node_modules/prop-types/index.js","../../components/atoms/forms/Error":"components/atoms/forms/Error.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js"}],"locomotives/Add.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _formik = require("formik");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var Yup = _interopRequireWildcard(require("yup"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _Form = _interopRequireDefault(require("./components/Form"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Add() {
+  var _useState = (0, _react.useState)([{
+    engine_number: '',
+    is_operational: true,
+    location: 'home',
+    road: ''
+  }]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 1),
+      data = _useState2[0];
+
   var EditSchema = Yup.object().shape({
-    engine_number: Yup.string().min(3, 'Numbers need to be at least 3 numbers').max(4, 'Numbers cannot be more than 4').required('Required'),
+    engine_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 4').required('Required'),
     road: Yup.string().required('Required')
   });
   return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
     initialValues: {
-      road: data[0].road,
       engine_number: data[0].engine_number || '',
-      is_operational: data[0].is_operational,
       is_dcc: data[0].is_dcc,
+      is_operational: data[0].is_operational,
       location: data[0].location,
+      road: data[0].road,
       user_id: 1
     },
     validationSchema: EditSchema,
-    onSubmit: function onSubmit(values, _ref4) {
-      var setSubmitting = _ref4.setSubmitting;
+    onSubmit: function onSubmit(values, _ref) {
+      var setSubmitting = _ref.setSubmitting;
 
       _axios.default.post('/api/v1/locomotives/', values).then(
       /* istanbul ignore next */
-      function (response) {
+      function () {
         /* istanbul ignore next */
         setSubmitting(false);
-      }).catch(function (error) {});
+      }).catch(function () {});
     }
-  }, function (_ref5) {
-    var values = _ref5.values,
-        errors = _ref5.errors,
-        touched = _ref5.touched,
-        handleChange = _ref5.handleChange,
-        handleBlur = _ref5.handleBlur,
-        handleSubmit = _ref5.handleSubmit,
-        isSubmitting = _ref5.isSubmitting;
-    return _react.default.createElement(StyledDiv, null, _react.default.createElement("form", {
-      "data-testid": "locomotiveAdd-form",
-      onSubmit: handleSubmit
-    }, _react.default.createElement("ul", null, _react.default.createElement("li", {
-      "data-testid": "road"
-    }, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Road"
-    }, _react.default.createElement(_formik.Field, {
-      id: "road",
-      type: "text",
-      name: "road",
-      placeholder: ""
-    })), _react.default.createElement(_Error.default, null, errors.road && touched.road ? _react.default.createElement("div", {
-      className: "error"
-    }, errors.road) : null)), _react.default.createElement("li", {
-      "data-testid": "engine_number"
-    }, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Engine Number"
-    }, _react.default.createElement(_formik.Field, {
-      id: "engine_number",
-      type: "text",
-      name: "engine_number",
-      placeholder: ""
-    })), _react.default.createElement(_Error.default, null, errors.engine_number && touched.engine_number ? _react.default.createElement("div", {
-      className: "error"
-    }, errors.engine_number) : null)), _react.default.createElement("li", {
-      "data-testid": "is_operational"
-    }, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Is Operational"
-    }, _react.default.createElement(_formik.Field, {
-      name: "is_operational",
-      component: SwitchField
-    }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Is DCC"
-    }, _react.default.createElement(_formik.Field, {
-      name: "is_dcc",
-      component: SwitchField
-    }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Location"
-    }, _react.default.createElement(_formik.Field, {
-      name: "location",
-      component: SelectField
-    }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
-      type: "submit",
-      "data-testid": "locomotiveAdd-submit",
-      disabled: isSubmitting
-    }, "Submit")))));
+  }, function (_ref2) {
+    var errors = _ref2.errors,
+        touched = _ref2.touched,
+        handleSubmit = _ref2.handleSubmit;
+    return _react.default.createElement(_Form.default, {
+      errors: errors,
+      touched: touched,
+      handleSubmit: handleSubmit
+    });
   }))));
 }
 
-;
 var _default = Add;
 exports.default = _default;
-},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/objectWithoutProperties":"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../utils/styledComponent":"utils/styledComponent.js","../components/atoms/forms/Error":"components/atoms/forms/Error.js"}],"../../node_modules/@babel/runtime/node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","./components/Form":"locomotives/components/Form.js"}],"../../node_modules/@babel/runtime/node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -86420,10 +86487,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
-var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
-
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
@@ -86431,6 +86494,8 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _evergreenUi = require("evergreen-ui");
 
@@ -86442,28 +86507,13 @@ var Yup = _interopRequireWildcard(require("yup"));
 
 var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
 
-var _styledComponent = require("../utils/styledComponent");
-
-var _Error = _interopRequireDefault(require("../components/atoms/forms/Error"));
+var _Form = _interopRequireDefault(require("./components/Form"));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var StyledDiv = (0, _styledComponent.styledComponent)('div', {
-  '& li': {
-    listStyle: 'none',
-    marginBottom: '15px'
-  },
-  '& input': {
-    border: '1px solid #fffcfc',
-    borderRadius: '2px',
-    boxShadow: '0 0 0 1px rgba(67, 90, 111, 0.14)',
-    padding: '8px'
-  }
-});
-
-function Edit(_ref) {
+var Edit = function Edit(_ref) {
   var match = _ref.match;
 
   var _useState = (0, _react.useState)([{
@@ -86505,7 +86555,7 @@ function Edit(_ref) {
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee);
       }));
 
       return function fetchData() {
@@ -86515,125 +86565,50 @@ function Edit(_ref) {
 
     fetchData();
   }, []);
-
-  var SwitchField = function SwitchField(_ref3) {
-    var id = _ref3.id,
-        _ref3$field = _ref3.field,
-        name = _ref3$field.name,
-        value = _ref3$field.value,
-        onChange = _ref3$field.onChange,
-        onBlur = _ref3$field.onBlur,
-        _ref3$form = _ref3.form,
-        touched = _ref3$form.touched,
-        errors = _ref3$form.errors,
-        props = (0, _objectWithoutProperties2.default)(_ref3, ["id", "field", "form"]);
-    return _react.default.createElement("div", null, _react.default.createElement(_evergreenUi.Switch, (0, _extends2.default)({
-      id: id,
-      name: name,
-      value: value ? value.toString() : 'false',
-      onBlur: onBlur,
-      checked: value,
-      onChange: onChange
-    }, props)));
-  };
-
-  var SelectField = function SelectField(_ref4) {
-    var id = _ref4.id,
-        _ref4$field = _ref4.field,
-        name = _ref4$field.name,
-        value = _ref4$field.value,
-        onChange = _ref4$field.onChange,
-        onBlur = _ref4$field.onBlur,
-        _ref4$form = _ref4.form,
-        touched = _ref4$form.touched,
-        errors = _ref4$form.errors,
-        props = (0, _objectWithoutProperties2.default)(_ref4, ["id", "field", "form"]);
-    return _react.default.createElement("div", null, _react.default.createElement(_evergreenUi.Select, (0, _extends2.default)({
-      id: id,
-      name: name,
-      onChange: onChange,
-      value: value,
-      onBlur: onBlur
-    }, props), _react.default.createElement("option", {
-      value: "club"
-    }, "Club"), _react.default.createElement("option", {
-      value: "home"
-    }, "Home"), _react.default.createElement("option", {
-      value: "studio"
-    }, "Studio")));
-  };
-
   var EditSchema = Yup.object().shape({
-    engine_number: Yup.string().min(3, 'Numbers need to be at least 3 numbers').max(4, 'Numbers cannot be more than 4').required('Required'),
+    engine_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 9999').required('Required'),
     road: Yup.string().required('Required')
   });
   return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
     initialValues: {
-      road: data[0].road,
       engine_number: data[0].engine_number || '',
-      is_operational: data[0].is_operational,
       is_dcc: data[0].is_dcc,
-      location: data[0].location
+      is_operational: data[0].is_operational,
+      location: data[0].location,
+      road: data[0].road
     },
     validationSchema: EditSchema,
-    onSubmit: function onSubmit(values, _ref5) {
-      var setSubmitting = _ref5.setSubmitting;
-      console.log(values);
+    onSubmit: function onSubmit(values, _ref3) {
+      var setSubmitting = _ref3.setSubmitting;
 
-      _axios.default.put("/api/v1/locomotives/".concat(match.params.id), values).then(function (response) {
-        console.log(response);
+      _axios.default.put("/api/v1/locomotives/".concat(match.params.id), values).then(function () {
         setSubmitting(false);
       }).catch(function (error) {
         console.log(error);
       });
     }
-  }, function (_ref6) {
-    var values = _ref6.values,
-        errors = _ref6.errors,
-        touched = _ref6.touched,
-        handleChange = _ref6.handleChange,
-        handleBlur = _ref6.handleBlur,
-        handleSubmit = _ref6.handleSubmit,
-        isSubmitting = _ref6.isSubmitting;
-    return _react.default.createElement(StyledDiv, null, _react.default.createElement("form", {
-      onSubmit: handleSubmit
-    }, _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Road"
-    }, _react.default.createElement(_formik.Field, {
-      type: "text",
-      name: "road",
-      placeholder: ""
-    })), _react.default.createElement(_Error.default, null, errors.road && touched.road ? _react.default.createElement("div", null, errors.road) : null)), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Engine Number"
-    }, _react.default.createElement(_formik.Field, {
-      type: "text",
-      name: "engine_number",
-      placeholder: ""
-    })), _react.default.createElement(_Error.default, null, errors.engine_number && touched.engine_number ? _react.default.createElement("div", null, errors.engine_number) : null)), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Is Operational"
-    }, _react.default.createElement(_formik.Field, {
-      name: "is_operational",
-      component: SwitchField
-    }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Is DCC"
-    }, _react.default.createElement(_formik.Field, {
-      name: "is_dcc",
-      component: SwitchField
-    }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-      label: "Location"
-    }, _react.default.createElement(_formik.Field, {
-      name: "location",
-      component: SelectField
-    }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
-      disabled: isSubmitting
-    }, "Submit")))));
+  }, function (_ref4) {
+    var errors = _ref4.errors,
+        touched = _ref4.touched,
+        handleSubmit = _ref4.handleSubmit;
+    return _react.default.createElement(_Form.default, {
+      errors: errors,
+      touched: touched,
+      handleSubmit: handleSubmit
+    });
   }))));
-}
+};
 
-;
+Edit.propTypes = {
+  match: _propTypes.default.shape({
+    params: _propTypes.default.shape({
+      id: _propTypes.default.string.isRequired
+    }).isRequired
+  }).isRequired
+};
 var _default = Edit;
 exports.default = _default;
-},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/objectWithoutProperties":"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js","@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../utils/styledComponent":"utils/styledComponent.js","../components/atoms/forms/Error":"components/atoms/forms/Error.js"}],"locomotives/List.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","./components/Form":"locomotives/components/Form.js"}],"locomotives/List.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86649,11 +86624,11 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
-
 var _reactRouterDom = require("react-router-dom");
 
 var _axios = _interopRequireDefault(require("axios"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -86699,7 +86674,7 @@ function List() {
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee);
       }));
 
       return function fetchData() {
@@ -86721,7 +86696,7 @@ function List() {
 
 var _default = List;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../../node_modules/axios/index.js"}],"pages/Home.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/Home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -94839,7 +94814,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65235" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61664" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
