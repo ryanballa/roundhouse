@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Button, Dialog, Pane, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
@@ -68,6 +69,7 @@ const Edit = ({ history, match }) => {
                 is_dcc: data[0].is_dcc,
                 is_operational: data[0].is_operational,
                 location: data[0].location,
+                purchased_on: moment(data[0].purchased_on).format('YYYY-MM-DD'),
                 road: data[0].road,
               }}
               validationSchema={EditSchema}

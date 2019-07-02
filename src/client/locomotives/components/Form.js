@@ -111,6 +111,16 @@ const Form = ({ errors, isSubmitting, handleSubmit, touched }) => {
               ) : null}
             </Error>
           </li>
+          <li data-testid="purchased_on">
+            <FormField label="purchased_on">
+              <Field
+                id="purchased_on"
+                type="date"
+                name="purchased_on"
+                placeholder=""
+              />
+            </FormField>
+          </li>
           <li data-testid="is_operational">
             <FormField label="Is Operational">
               <Field
