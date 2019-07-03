@@ -46,4 +46,28 @@ photos.post('/', (request, response) => {
     );
 });
 
+photos.put('/', (request, response) => {
+  const photo = request.body;
+
+  for (const requiredParameter of ['locomotive_id', 'photo_id']) {
+    if (!photo[requiredParameter]) {
+      return response.status(422).send({
+        error: `Expected format: { path: <String> }. You're missing a "${requiredParameter}" property.`,
+      });
+    }
+  }
+
+  database('locomotives_photos')
+    .insert(photo, 'id')
+    .then(photoResult => {
+      response.status(201).json({ id: photoResult[0] });
+    })
+    .catch(
+      /* istanbul ignore next */ error => {
+        /* istanbul ignore next */
+        response.status(500).json({ error });
+      },
+    );
+});
+
 module.exports = photos;

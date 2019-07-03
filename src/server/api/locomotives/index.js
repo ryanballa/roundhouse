@@ -11,6 +11,8 @@ locomotives.use(bodyParser.json());
 locomotives.get('/', (request, response) => {
   database('locomotives')
   .join('users', 'users.id', 'locomotives.user_id')
+  .join('photos', 'photos.id', 'locomotives.id')
+  .select('photos.path as photo', 'locomotives.* as locomotive')
   .select('users.full_name as user', 'locomotives.* as locomotive')
   .then((locomotives) => {
       response.status(200).json(locomotives);
