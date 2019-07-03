@@ -22,7 +22,13 @@ const StyledDiv = styledComponent('div', {
   paddingTop: '5px',
 });
 
-const Form = ({ errors, isSubmitting, handleSubmit, touched }) => {
+const Form = ({
+  errors,
+  isSubmitting,
+  handleSubmit,
+  touched,
+  setFieldValue,
+}) => {
   const SwitchField = ({
     id,
     field: { name, value, onChange, onBlur },
@@ -141,6 +147,16 @@ const Form = ({ errors, isSubmitting, handleSubmit, touched }) => {
             </FormField>
           </li>
           <li>
+            <input
+              id="file"
+              name="file"
+              type="file"
+              onChange={event => {
+                setFieldValue('file', event.currentTarget.files[0]);
+              }}
+            />
+          </li>
+          <li>
             <Button
               type="submit"
               data-testid="locomotiveAdd-submit"
@@ -162,6 +178,7 @@ Form.propTypes = {
   }),
   handleSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool,
+  setFieldValue: PropTypes.func.isRequired,
   touched: PropTypes.shape({
     engine_number: PropTypes.bool,
     road: PropTypes.bool,

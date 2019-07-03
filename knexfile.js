@@ -4,7 +4,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/publications',
+    connection: 'postgres://localhost/dev_roundhouse',
     migrations: {
       directory: './db/migrations'
     },

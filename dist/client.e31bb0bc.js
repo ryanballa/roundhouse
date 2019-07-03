@@ -28466,7 +28466,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
   return target;
 }
-},{}],"../../node_modules/react-router/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":[function(require,module,exports) {
+},{}],"../../node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":[function(require,module,exports) {
 'use strict';
 
 /**
@@ -29331,7 +29331,7 @@ if ("development" !== "production") {
     global[key] = "esm";
   }
 }
-},{"mini-create-react-context":"../../node_modules/mini-create-react-context/dist/esm/index.js","@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","history":"../../node_modules/history/esm/history.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js","path-to-regexp":"../../node_modules/react-router/node_modules/path-to-regexp/index.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","react-is":"../../node_modules/react-is/index.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","hoist-non-react-statics":"../../node_modules/react-router/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"}],"../../node_modules/react-router-dom/esm/react-router-dom.js":[function(require,module,exports) {
+},{"mini-create-react-context":"../../node_modules/mini-create-react-context/dist/esm/index.js","@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","history":"../../node_modules/history/esm/history.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js","path-to-regexp":"../../node_modules/react-router/node_modules/path-to-regexp/index.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","react-is":"../../node_modules/react-is/index.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","hoist-non-react-statics":"../../node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"}],"../../node_modules/react-router-dom/esm/react-router-dom.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -66900,7 +66900,7 @@ module.exports = function exportedEqual(a, b) {
   }
 };
 
-},{}],"../../node_modules/formik/node_modules/deepmerge/dist/es.js":[function(require,module,exports) {
+},{}],"../../node_modules/deepmerge/dist/es.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -66992,112 +66992,7 @@ deepmerge.all = function deepmergeAll(array, options) {
 var deepmerge_1 = deepmerge;
 var _default = deepmerge_1;
 exports.default = _default;
-},{}],"../../node_modules/formik/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":[function(require,module,exports) {
-'use strict';
-
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-var ReactIs = require('react-is');
-var REACT_STATICS = {
-    childContextTypes: true,
-    contextType: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    getDerivedStateFromError: true,
-    getDerivedStateFromProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-};
-
-var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    callee: true,
-    arguments: true,
-    arity: true
-};
-
-var FORWARD_REF_STATICS = {
-    '$$typeof': true,
-    render: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true
-};
-
-var MEMO_STATICS = {
-    '$$typeof': true,
-    compare: true,
-    defaultProps: true,
-    displayName: true,
-    propTypes: true,
-    type: true
-};
-
-var TYPE_STATICS = {};
-TYPE_STATICS[ReactIs.ForwardRef] = FORWARD_REF_STATICS;
-
-function getStatics(component) {
-    if (ReactIs.isMemo(component)) {
-        return MEMO_STATICS;
-    }
-    return TYPE_STATICS[component['$$typeof']] || REACT_STATICS;
-}
-
-var defineProperty = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = Object.prototype;
-
-function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-    if (typeof sourceComponent !== 'string') {
-        // don't hoist over string (html) components
-
-        if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-            }
-        }
-
-        var keys = getOwnPropertyNames(sourceComponent);
-
-        if (getOwnPropertySymbols) {
-            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-        }
-
-        var targetStatics = getStatics(targetComponent);
-        var sourceStatics = getStatics(sourceComponent);
-
-        for (var i = 0; i < keys.length; ++i) {
-            var key = keys[i];
-            if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
-                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                try {
-                    // Avoid failures from read-only properties
-                    defineProperty(targetComponent, key, descriptor);
-                } catch (e) {}
-            }
-        }
-
-        return targetComponent;
-    }
-
-    return targetComponent;
-}
-
-module.exports = hoistNonReactStatics;
-
-},{"react-is":"../../node_modules/react-is/index.js"}],"../../node_modules/create-react-context/lib/implementation.js":[function(require,module,exports) {
+},{}],"../../node_modules/create-react-context/lib/implementation.js":[function(require,module,exports) {
 'use strict';
 
 exports.__esModule = true;
@@ -73073,7 +72968,7 @@ var ErrorMessage =
 /*#__PURE__*/
 connect(ErrorMessageImpl);
 exports.ErrorMessage = ErrorMessage;
-},{"tslib":"../../node_modules/tslib/tslib.es6.js","react":"../../node_modules/react/index.js","react-fast-compare":"../../node_modules/react-fast-compare/index.js","deepmerge":"../../node_modules/formik/node_modules/deepmerge/dist/es.js","hoist-non-react-statics":"../../node_modules/formik/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js","create-react-context":"../../node_modules/create-react-context/lib/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","lodash-es/clone":"../../node_modules/lodash-es/clone.js","lodash-es/toPath":"../../node_modules/lodash-es/toPath.js","lodash-es/cloneDeep":"../../node_modules/lodash-es/cloneDeep.js"}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
+},{"tslib":"../../node_modules/tslib/tslib.es6.js","react":"../../node_modules/react/index.js","react-fast-compare":"../../node_modules/react-fast-compare/index.js","deepmerge":"../../node_modules/deepmerge/dist/es.js","hoist-non-react-statics":"../../node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js","create-react-context":"../../node_modules/create-react-context/lib/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","lodash-es/clone":"../../node_modules/lodash-es/clone.js","lodash-es/toPath":"../../node_modules/lodash-es/toPath.js","lodash-es/cloneDeep":"../../node_modules/lodash-es/cloneDeep.js"}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -85605,7 +85500,8 @@ var Form = function Form(_ref) {
   var errors = _ref.errors,
       isSubmitting = _ref.isSubmitting,
       handleSubmit = _ref.handleSubmit,
-      touched = _ref.touched;
+      touched = _ref.touched,
+      setFieldValue = _ref.setFieldValue;
 
   var SwitchField = function SwitchField(_ref2) {
     var id = _ref2.id,
@@ -85721,7 +85617,14 @@ var Form = function Form(_ref) {
     id: "location",
     name: "location",
     component: SelectField
-  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
+  }))), _react.default.createElement("li", null, _react.default.createElement("input", {
+    id: "file",
+    name: "file",
+    type: "file",
+    onChange: function onChange(event) {
+      setFieldValue('file', event.currentTarget.files[0]);
+    }
+  })), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
     type: "submit",
     "data-testid": "locomotiveAdd-submit",
     disabled: isSubmitting
@@ -85735,6 +85638,7 @@ Form.propTypes = {
   }),
   handleSubmit: _propTypes.default.func.isRequired,
   isSubmitting: _propTypes.default.bool,
+  setFieldValue: _propTypes.default.func.isRequired,
   touched: _propTypes.default.shape({
     engine_number: _propTypes.default.bool,
     road: _propTypes.default.bool
@@ -99619,7 +99523,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53469" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61161" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
