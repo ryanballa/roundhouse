@@ -91527,15 +91527,13 @@ function _inherits(subClass, superClass) {
 }
 
 module.exports = _inherits;
-},{"./setPrototypeOf":"../../node_modules/@babel/runtime/helpers/setPrototypeOf.js"}],"locomotives/Upload.js":[function(require,module,exports) {
+},{"./setPrototypeOf":"../../node_modules/@babel/runtime/helpers/setPrototypeOf.js"}],"components/atoms/Thumb.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
@@ -91551,25 +91549,12 @@ var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
-var _formik = require("formik");
-
-var yup = _interopRequireWildcard(require("yup"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _evergreenUi = require("evergreen-ui");
-
-var _axios = _interopRequireDefault(require("axios"));
-
-var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+var _propTypes = _interopRequireDefault(require("prop-types"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable react/no-multi-comp */
 var Thumb =
 /*#__PURE__*/
 function (_React$Component) {
@@ -91646,14 +91631,41 @@ function (_React$Component) {
   return Thumb;
 }(_react.default.Component);
 
-function Upload() {
-  var _useState = (0, _react.useState)([{
-    file: {}
-  }]),
-      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      data = _useState2[0],
-      setData = _useState2[1];
+(0, _defineProperty2.default)(Thumb, "propTypes", {
+  file: _propTypes.default.objectOf(_propTypes.default.object)
+});
+(0, _defineProperty2.default)(Thumb, "defaultProps", {
+  file: undefined
+});
+var _default = Thumb;
+exports.default = _default;
+},{"@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js"}],"locomotives/Upload.js":[function(require,module,exports) {
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _formik = require("formik");
+
+var yup = _interopRequireWildcard(require("yup"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _Thumb = _interopRequireDefault(require("../components/atoms/Thumb"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Upload() {
   return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement("h1", null, "Upload Image"), _react.default.createElement("div", {
     className: "container"
   }, _react.default.createElement(_formik.Formik, {
@@ -91678,18 +91690,7 @@ function Upload() {
         setSubmitting(false);
       }).catch(function (err) {
         console.log(err);
-      }); // alert(
-      //   JSON.stringify(
-      //     {
-      //       fileName: values.file.name,
-      //       type: values.file.type,
-      //       size: `${values.file.size} bytes`,
-      //     },
-      //     null,
-      //     2,
-      //   ),
-      // );
-
+      });
     },
     validationSchema: yup.object().shape({
       file: yup.mixed().required()
@@ -91703,17 +91704,17 @@ function Upload() {
       }, _react.default.createElement("div", {
         className: "form-group"
       }, _react.default.createElement("label", {
+        id: "file",
         htmlFor: "file"
-      }, "File upload"), _react.default.createElement("input", {
+      }, "File upload", _react.default.createElement("input", {
         id: "file",
         name: "file",
         type: "file",
         onChange: function onChange(event) {
-          setData(event.currentTarget.files[0]);
           setFieldValue('file', event.currentTarget.files[0]);
         },
         className: "form-control"
-      }), _react.default.createElement(Thumb, {
+      })), _react.default.createElement(_Thumb.default, {
         file: values.file
       })), _react.default.createElement("button", {
         type: "submit",
@@ -91725,7 +91726,7 @@ function Upload() {
 
 var _default = Upload;
 exports.default = _default;
-},{"@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","yup":"../../node_modules/yup/lib/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/Home.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","yup":"../../node_modules/yup/lib/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/atoms/Thumb":"components/atoms/Thumb.js"}],"pages/Home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

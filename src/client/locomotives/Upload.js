@@ -1,61 +1,12 @@
-/* eslint-disable react/no-multi-comp */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { Link } from 'react-router-dom';
-import { Button, toaster } from 'evergreen-ui';
+import { toaster } from 'evergreen-ui';
 import axios from 'axios';
 import SingleColumn from '../components/layout/SingleColumn';
-
-class Thumb extends React.Component {
-  state = {
-    loading: false,
-    thumb: undefined,
-  };
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.file) {
-      return;
-    }
-
-    this.setState({ loading: true }, () => {
-      let reader = new FileReader();
-
-      reader.onloadend = () => {
-        this.setState({ loading: false, thumb: reader.result });
-      };
-
-      reader.readAsDataURL(nextProps.file);
-    });
-  }
-
-  render() {
-    const { file } = this.props;
-    const { loading, thumb } = this.state;
-
-    if (!file) {
-      return null;
-    }
-
-    if (loading) {
-      return <p>loading...</p>;
-    }
-
-    return (
-      <img
-        src={thumb}
-        alt={file.name}
-        className="img-thumbnail mt-2"
-        height={200}
-        width={200}
-      />
-    );
-  }
-}
+import Thumb from '../components/atoms/Thumb';
 
 function Upload() {
-  const [data, setData] = useState([{ file: {} }]);
-
   return (
     <SingleColumn>
       <h1>Upload Image</h1>
@@ -79,17 +30,6 @@ function Upload() {
               .catch(err => {
                 console.log(err);
               });
-            // alert(
-            //   JSON.stringify(
-            //     {
-            //       fileName: values.file.name,
-            //       type: values.file.type,
-            //       size: `${values.file.size} bytes`,
-            //     },
-            //     null,
-            //     2,
-            //   ),
-            // );
           }}
           validationSchema={yup.object().shape({
             file: yup.mixed().required(),
@@ -98,17 +38,18 @@ function Upload() {
             return (
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="file">File upload</label>
-                  <input
-                    id="file"
-                    name="file"
-                    type="file"
-                    onChange={event => {
-                      setData(event.currentTarget.files[0]);
-                      setFieldValue('file', event.currentTarget.files[0]);
-                    }}
-                    className="form-control"
-                  />
+                  <label id="file" htmlFor="file">
+                    File upload
+                    <input
+                      id="file"
+                      name="file"
+                      type="file"
+                      onChange={event => {
+                        setFieldValue('file', event.currentTarget.files[0]);
+                      }}
+                      className="form-control"
+                    />
+                  </label>
                   <Thumb file={values.file} />
                 </div>
                 <button type="submit" className="btn btn-primary">
