@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
+import FormActions from '../components/organisms/FormActions';
 import Form from './components/Form';
 
 const Edit = ({ history, match }) => {
@@ -17,10 +18,10 @@ const Edit = ({ history, match }) => {
     const fetchData = async () => {
       setIsLoading(true);
       await axios(`/api/v1/locomotives/${match.params.id}`).then(locomotive => {
-        if (!locomotive.data.length) {
+        if (!locomotive.data.locomotive.length) {
           history.push('/404');
         }
-        setData(locomotive.data);
+        setData(locomotive.data.locomotive);
         setIsLoading(false);
       });
     };
@@ -37,6 +38,18 @@ const Edit = ({ history, match }) => {
 
   return (
     <SingleColumn>
+      <FormActions>
+        <h1>Edit Locomotive</h1>
+        <Button
+          iconBefore="trash"
+          intent="danger"
+          onClick={() => {
+            setIsDeleting(true);
+          }}
+        >
+          Delete
+        </Button>
+      </FormActions>
       <Fragment>
         {isLoading ? (
           <div>Loading ...</div>
@@ -69,7 +82,9 @@ const Edit = ({ history, match }) => {
                 is_dcc: data[0].is_dcc,
                 is_operational: data[0].is_operational,
                 location: data[0].location,
-                purchased_on: moment(data[0].purchased_on).format('YYYY-MM-DD'),
+                purchased_on: moment(data[0].purchased_on).isValid()
+                  ? moment(data[0].purchased_on).format('YYYY-MM-DD')
+                  : undefined,
                 road: data[0].road,
               }}
               validationSchema={EditSchema}
@@ -97,13 +112,6 @@ const Edit = ({ history, match }) => {
                     touched={touched}
                     handleSubmit={handleSubmit}
                   />
-                  <Button
-                    onClick={() => {
-                      setIsDeleting(true);
-                    }}
-                  >
-                    Delete
-                  </Button>
                 </Fragment>
               )}
             </Formik>

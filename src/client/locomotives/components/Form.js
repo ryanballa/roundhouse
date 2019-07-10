@@ -18,17 +18,14 @@ const StyledDiv = styledComponent('div', {
     listStyle: 'none',
     marginBottom: '15px',
   },
+  '& ul': {
+    paddingLeft: 0,
+  },
   color: colors.error,
   paddingTop: '5px',
 });
 
-const Form = ({
-  errors,
-  isSubmitting,
-  handleSubmit,
-  touched,
-  setFieldValue,
-}) => {
+const Form = ({ errors, isSubmitting, handleSubmit, touched }) => {
   const SwitchField = ({
     id,
     field: { name, value, onChange, onBlur },
@@ -146,7 +143,7 @@ const Form = ({
               <Field id="location" name="location" component={SelectField} />
             </FormField>
           </li>
-          <li>
+          {/* <li>
             <input
               id="file"
               name="file"
@@ -155,7 +152,7 @@ const Form = ({
                 setFieldValue('file', event.currentTarget.files[0]);
               }}
             />
-          </li>
+          </li> */}
           <li>
             <Button
               type="submit"
@@ -178,7 +175,7 @@ Form.propTypes = {
   }),
   handleSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool,
-  setFieldValue: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func,
   touched: PropTypes.shape({
     engine_number: PropTypes.bool,
     road: PropTypes.bool,
@@ -188,6 +185,7 @@ Form.propTypes = {
 Form.defaultProps = {
   errors: {},
   isSubmitting: false,
+  setFieldValue: () => {},
 };
 
 export default Form;

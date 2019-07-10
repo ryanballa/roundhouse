@@ -85379,8 +85379,11 @@ var _Header = _interopRequireDefault(require("../organisms/Header"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var StyledSection = (0, _styledComponent.styledComponent)('section', {
+  '& h1': {
+    fontFamily: _styles.fontConfig.familyStylized
+  },
   fontFamily: _styles.fontConfig.familyBody,
-  margin: 20
+  margin: 30
 });
 
 var SingleColumn = function SingleColumn(_ref) {
@@ -85492,6 +85495,9 @@ var StyledDiv = (0, _styledComponent.styledComponent)('div', {
     listStyle: 'none',
     marginBottom: '15px'
   },
+  '& ul': {
+    paddingLeft: 0
+  },
   color: _styles.colors.error,
   paddingTop: '5px'
 });
@@ -85500,8 +85506,7 @@ var Form = function Form(_ref) {
   var errors = _ref.errors,
       isSubmitting = _ref.isSubmitting,
       handleSubmit = _ref.handleSubmit,
-      touched = _ref.touched,
-      setFieldValue = _ref.setFieldValue;
+      touched = _ref.touched;
 
   var SwitchField = function SwitchField(_ref2) {
     var id = _ref2.id,
@@ -85617,14 +85622,7 @@ var Form = function Form(_ref) {
     id: "location",
     name: "location",
     component: SelectField
-  }))), _react.default.createElement("li", null, _react.default.createElement("input", {
-    id: "file",
-    name: "file",
-    type: "file",
-    onChange: function onChange(event) {
-      setFieldValue('file', event.currentTarget.files[0]);
-    }
-  })), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
+  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
     type: "submit",
     "data-testid": "locomotiveAdd-submit",
     disabled: isSubmitting
@@ -85638,7 +85636,7 @@ Form.propTypes = {
   }),
   handleSubmit: _propTypes.default.func.isRequired,
   isSubmitting: _propTypes.default.bool,
-  setFieldValue: _propTypes.default.func.isRequired,
+  setFieldValue: _propTypes.default.func,
   touched: _propTypes.default.shape({
     engine_number: _propTypes.default.bool,
     road: _propTypes.default.bool
@@ -85646,7 +85644,8 @@ Form.propTypes = {
 };
 Form.defaultProps = {
   errors: {},
-  isSubmitting: false
+  isSubmitting: false,
+  setFieldValue: function setFieldValue() {}
 };
 var _default = Form;
 exports.default = _default;
@@ -91103,7 +91102,40 @@ var global = arguments[3];
 
 })));
 
-},{}],"locomotives/Edit.js":[function(require,module,exports) {
+},{}],"components/organisms/FormActions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _styledComponent = require("../../utils/styledComponent");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledDiv = (0, _styledComponent.styledComponent)('div', {
+  alignItems: 'center',
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '100%'
+});
+
+var FormActions = function FormActions(_ref) {
+  var children = _ref.children;
+  return _react.default.createElement(StyledDiv, null, children);
+};
+
+FormActions.propTypes = {
+  children: _propTypes.default.node.isRequired
+};
+var _default = FormActions;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../utils/styledComponent":"utils/styledComponent.js"}],"locomotives/Edit.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91132,6 +91164,8 @@ var _axios = _interopRequireDefault(require("axios"));
 var Yup = _interopRequireWildcard(require("yup"));
 
 var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _FormActions = _interopRequireDefault(require("../components/organisms/FormActions"));
 
 var _Form = _interopRequireDefault(require("./components/Form"));
 
@@ -91175,11 +91209,11 @@ var Edit = function Edit(_ref) {
                 setIsLoading(true);
                 _context.next = 3;
                 return (0, _axios.default)("/api/v1/locomotives/".concat(match.params.id)).then(function (locomotive) {
-                  if (!locomotive.data.length) {
+                  if (!locomotive.data.locomotive.length) {
                     history.push('/404');
                   }
 
-                  setData(locomotive.data);
+                  setData(locomotive.data.locomotive);
                   setIsLoading(false);
                 });
 
@@ -91202,7 +91236,13 @@ var Edit = function Edit(_ref) {
     engine_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 9999').required('Required'),
     road: Yup.string().required('Required')
   });
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_FormActions.default, null, _react.default.createElement("h1", null, "Edit Locomotive"), _react.default.createElement(_evergreenUi.Button, {
+    iconBefore: "trash",
+    intent: "danger",
+    onClick: function onClick() {
+      setIsDeleting(true);
+    }
+  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
     intent: "danger",
     isShown: isDeleting,
     title: "Delete Locomotive",
@@ -91227,7 +91267,7 @@ var Edit = function Edit(_ref) {
       is_dcc: data[0].is_dcc,
       is_operational: data[0].is_operational,
       location: data[0].location,
-      purchased_on: (0, _moment.default)(data[0].purchased_on).format('YYYY-MM-DD'),
+      purchased_on: (0, _moment.default)(data[0].purchased_on).isValid() ? (0, _moment.default)(data[0].purchased_on).format('YYYY-MM-DD') : undefined,
       road: data[0].road
     },
     validationSchema: EditSchema,
@@ -91250,11 +91290,7 @@ var Edit = function Edit(_ref) {
       errors: errors,
       touched: touched,
       handleSubmit: handleSubmit
-    }), _react.default.createElement(_evergreenUi.Button, {
-      onClick: function onClick() {
-        setIsDeleting(true);
-      }
-    }, "Delete"));
+    }));
   }))));
 };
 
@@ -91270,7 +91306,7 @@ Edit.propTypes = {
 };
 var _default = Edit;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","moment":"../../node_modules/moment/moment.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","./components/Form":"locomotives/components/Form.js"}],"locomotives/List.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","moment":"../../node_modules/moment/moment.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/organisms/FormActions":"components/organisms/FormActions.js","./components/Form":"locomotives/components/Form.js"}],"locomotives/List.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -99523,7 +99559,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61322" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53652" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

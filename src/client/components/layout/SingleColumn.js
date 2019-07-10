@@ -5,8 +5,11 @@ import { styledComponent } from '../../utils/styledComponent';
 import Header from '../organisms/Header';
 
 const StyledSection = styledComponent('section', {
+  '& h1': {
+    fontFamily: fontConfig.familyStylized
+  },
   fontFamily: fontConfig.familyBody,
-  margin: 20,
+  margin: 30,
 });
 
 const SingleColumn = ({ children }) => (
