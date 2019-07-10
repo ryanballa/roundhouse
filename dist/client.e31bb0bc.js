@@ -85624,12 +85624,6 @@ var Form = function Form(_ref) {
     id: "location",
     name: "location",
     component: SelectField
-  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
-    label: "Thubnail"
-  }, _react.default.createElement(_formik.Field, {
-    id: "thumbnail",
-    name: "thumbnail",
-    type: "text"
   }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
     type: "submit",
     "data-testid": "locomotiveAdd-submit",
@@ -91426,7 +91420,312 @@ List.propTypes = {
 };
 var _default = List;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/Home.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"../../node_modules/@babel/runtime/helpers/classCallCheck.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+},{}],"../../node_modules/@babel/runtime/helpers/createClass.js":[function(require,module,exports) {
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+},{}],"../../node_modules/@babel/runtime/helpers/typeof.js":[function(require,module,exports) {
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+},{}],"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js":[function(require,module,exports) {
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+},{}],"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js":[function(require,module,exports) {
+var _typeof = require("../helpers/typeof");
+
+var assertThisInitialized = require("./assertThisInitialized");
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+},{"../helpers/typeof":"../../node_modules/@babel/runtime/helpers/typeof.js","./assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js"}],"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js":[function(require,module,exports) {
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+},{}],"../../node_modules/@babel/runtime/helpers/setPrototypeOf.js":[function(require,module,exports) {
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+},{}],"../../node_modules/@babel/runtime/helpers/inherits.js":[function(require,module,exports) {
+var setPrototypeOf = require("./setPrototypeOf");
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+},{"./setPrototypeOf":"../../node_modules/@babel/runtime/helpers/setPrototypeOf.js"}],"locomotives/Upload.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _formik = require("formik");
+
+var yup = _interopRequireWildcard(require("yup"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _evergreenUi = require("evergreen-ui");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable react/no-multi-comp */
+var Thumb =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Thumb, _React$Component);
+
+  function Thumb() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Thumb);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Thumb)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "state", {
+      loading: false,
+      thumb: undefined
+    });
+    return _this;
+  }
+
+  (0, _createClass2.default)(Thumb, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      if (!nextProps.file) {
+        return;
+      }
+
+      this.setState({
+        loading: true
+      }, function () {
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+          _this2.setState({
+            loading: false,
+            thumb: reader.result
+          });
+        };
+
+        reader.readAsDataURL(nextProps.file);
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var file = this.props.file;
+      var _this$state = this.state,
+          loading = _this$state.loading,
+          thumb = _this$state.thumb;
+
+      if (!file) {
+        return null;
+      }
+
+      if (loading) {
+        return _react.default.createElement("p", null, "loading...");
+      }
+
+      return _react.default.createElement("img", {
+        src: thumb,
+        alt: file.name,
+        className: "img-thumbnail mt-2",
+        height: 200,
+        width: 200
+      });
+    }
+  }]);
+  return Thumb;
+}(_react.default.Component);
+
+function Upload() {
+  var _useState = (0, _react.useState)([{
+    file: {}
+  }]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement("h1", null, "Upload Image"), _react.default.createElement("div", {
+    className: "container"
+  }, _react.default.createElement(_formik.Formik, {
+    initialValues: {
+      file: null
+    },
+    onSubmit: function onSubmit(values, _ref) {
+      var setSubmitting = _ref.setSubmitting;
+      var bodyFormData = new FormData();
+      bodyFormData.append('file', values.file);
+
+      _axios.default.post('/api/v1/locomotives/upload', bodyFormData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(
+      /* istanbul ignore next */
+      function () {
+        /* istanbul ignore next */
+        _evergreenUi.toaster.success('Photo Added');
+
+        setSubmitting(false);
+      }).catch(function (err) {
+        console.log(err);
+      }); // alert(
+      //   JSON.stringify(
+      //     {
+      //       fileName: values.file.name,
+      //       type: values.file.type,
+      //       size: `${values.file.size} bytes`,
+      //     },
+      //     null,
+      //     2,
+      //   ),
+      // );
+
+    },
+    validationSchema: yup.object().shape({
+      file: yup.mixed().required()
+    }),
+    render: function render(_ref2) {
+      var values = _ref2.values,
+          handleSubmit = _ref2.handleSubmit,
+          setFieldValue = _ref2.setFieldValue;
+      return _react.default.createElement("form", {
+        onSubmit: handleSubmit
+      }, _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "file"
+      }, "File upload"), _react.default.createElement("input", {
+        id: "file",
+        name: "file",
+        type: "file",
+        onChange: function onChange(event) {
+          setData(event.currentTarget.files[0]);
+          setFieldValue('file', event.currentTarget.files[0]);
+        },
+        className: "form-control"
+      }), _react.default.createElement(Thumb, {
+        file: values.file
+      })), _react.default.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary"
+      }, "submit"));
+    }
+  })));
+}
+
+var _default = Upload;
+exports.default = _default;
+},{"@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","yup":"../../node_modules/yup/lib/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/Home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91496,6 +91795,8 @@ var _Edit = _interopRequireDefault(require("./locomotives/Edit"));
 
 var _List = _interopRequireDefault(require("./locomotives/List"));
 
+var _Upload = _interopRequireDefault(require("./locomotives/Upload"));
+
 var _Home = _interopRequireDefault(require("./pages/Home"));
 
 var _NotFound = _interopRequireDefault(require("./pages/NotFound"));
@@ -91519,6 +91820,10 @@ var Routes = function Routes() {
     component: _List.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
+    path: "/locomotives/upload",
+    component: _Upload.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
     path: "/locomotives/add",
     component: _Add.default
   }), _react.default.createElement(_reactRouterDom.Route, {
@@ -91531,7 +91836,7 @@ var Routes = function Routes() {
 var _default = (0, _reactRouterDom.withRouter)(Routes);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./locomotives/Upload":"locomotives/Upload.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math

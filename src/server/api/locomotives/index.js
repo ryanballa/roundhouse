@@ -1,3 +1,4 @@
+const fs = require('fs');
 const locomotives = require('express').Router();
 const { db } = require('../../../../pgAdaptor');
 /* istanbul ignore next */
@@ -98,12 +99,13 @@ locomotives.get('/:locomotiveId', (request, response) => {
     });
 });
 
-locomotives.post('/upload', (req, res) => {
+function uploadToCloudinary(req, res) {
   const upload = multer({ storage }).single('file');
   upload(req, res, err => {
     if (err) {
-      return res.send(err)
+      return res.send(err);
     }
+    console.log(req.body.file);
     console.log(req.file);
 
     const path = req.file.path;
@@ -112,22 +114,75 @@ locomotives.post('/upload', (req, res) => {
     cloudinary.uploader.upload(
       path,
       { public_id: `locomotives/${uniqueFilename}`, tags: `locomotive` }, // directory and tags are optional
-      function(err, image) {
-        if (err) return res.send(err)
-        console.log('file uploaded to Cloudinary')
+      (err, image) => {
+        if (err) return res.send(err);
+        console.log('file uploaded to Cloudinary');
         // remove file from server
-        const fs = require('fs')
-        fs.unlinkSync(path)
+        fs.unlinkSync(path);
         // return image details
-        res.json(image)
-      }
-    )
+        console.log(image);
+        //res.json(image)
+        return database('photos')
+          .insert(
+            {
+              path: image.url,
+            },
+            'id',
+          )
+          .then(photo => {
+            res.status(201).json({ id: photo[0] });
+          })
+          .catch(error => {
+            res.status(500).json({ error });
+          });
+      },
+    );
   });
+}
+
+locomotives.post('/upload', (req, res) => {
+  uploadToCloudinary(req, res);
+  // const upload = multer({ storage }).single('file');
+  // upload(req, res, err => {
+  //   if (err) {
+  //     return res.send(err);
+  //   }
+  //   console.log(req.file);
+
+  //   const path = req.file.path;
+  //   const uniqueFilename = new Date().toISOString();
+
+  //   cloudinary.uploader.upload(
+  //     path,
+  //     { public_id: `locomotives/${uniqueFilename}`, tags: `locomotive` }, // directory and tags are optional
+  //     (err, image) => {
+  //       if (err) return res.send(err);
+  //       console.log('file uploaded to Cloudinary');
+  //       // remove file from server
+  //       fs.unlinkSync(path);
+  //       // return image details
+  //       console.log(image);
+  //       //res.json(image)
+  //       return database('photos')
+  //         .insert(
+  //           {
+  //             path: image.url,
+  //           },
+  //           'id',
+  //         )
+  //         .then(photo => {
+  //           res.status(201).json({ id: photo[0] });
+  //         })
+  //         .catch(error => {
+  //           res.status(500).json({ error });
+  //         });
+  //     },
+  //   );
+  // });
 });
 
 locomotives.put('/:locomotiveId', (request, response) => {
   const id = request.params.locomotiveId;
-
   database('locomotives')
     .where('id', id)
     .update(request.body)

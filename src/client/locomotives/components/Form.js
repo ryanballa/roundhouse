@@ -151,11 +151,6 @@ const Form = ({
             </FormField>
           </li>
           <li>
-            <FormField label="Thubnail">
-              <Field id="thumbnail" name="thumbnail" type="text" />
-            </FormField>
-          </li>
-          <li>
             <Button
               type="submit"
               data-testid="locomotiveAdd-submit"
