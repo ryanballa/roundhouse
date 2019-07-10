@@ -5,6 +5,20 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../../../../knexfile')[environment];
 const database = require('knex')(configuration);
 const bodyParser = require('body-parser');
+const cloudinary = require('cloudinary').v2;
+
+// MULTER
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function(req, file, cb) {
+    console.log(file);
+    cb(null, file.originalname);
+  },
+});
 
 locomotives.use(bodyParser.urlencoded({ extended: false }));
 locomotives.use(bodyParser.json());
@@ -84,8 +98,36 @@ locomotives.get('/:locomotiveId', (request, response) => {
     });
 });
 
+locomotives.post('/upload', (req, res) => {
+  const upload = multer({ storage }).single('file');
+  upload(req, res, err => {
+    if (err) {
+      return res.send(err)
+    }
+    console.log(req.file);
+
+    const path = req.file.path;
+    const uniqueFilename = new Date().toISOString();
+
+    cloudinary.uploader.upload(
+      path,
+      { public_id: `locomotives/${uniqueFilename}`, tags: `locomotive` }, // directory and tags are optional
+      function(err, image) {
+        if (err) return res.send(err)
+        console.log('file uploaded to Cloudinary')
+        // remove file from server
+        const fs = require('fs')
+        fs.unlinkSync(path)
+        // return image details
+        res.json(image)
+      }
+    )
+  });
+});
+
 locomotives.put('/:locomotiveId', (request, response) => {
   const id = request.params.locomotiveId;
+
   database('locomotives')
     .where('id', id)
     .update(request.body)

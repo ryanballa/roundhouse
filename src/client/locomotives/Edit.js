@@ -55,6 +55,7 @@ const Edit = ({ history, match }) => {
           <div>Loading ...</div>
         ) : (
           <Pane>
+            {data[0].thumbnail && <img src={data[0].thumbnail} width="200" />}
             <Dialog
               intent="danger"
               isShown={isDeleting}
@@ -86,6 +87,7 @@ const Edit = ({ history, match }) => {
                   ? moment(data[0].purchased_on).format('YYYY-MM-DD')
                   : undefined,
                 road: data[0].road,
+                thumbnail: data[0].thumbnail || '',
               }}
               validationSchema={EditSchema}
               onSubmit={(values, { setSubmitting }) => {
@@ -104,6 +106,8 @@ const Edit = ({ history, match }) => {
                 errors,
                 touched,
                 handleSubmit,
+                setFieldValue,
+                values,
                 /* and other goodies */
               }) => (
                 <Fragment>
@@ -111,6 +115,8 @@ const Edit = ({ history, match }) => {
                     errors={errors}
                     touched={touched}
                     handleSubmit={handleSubmit}
+                    setFieldValue={setFieldValue}
+                    values={values}
                   />
                 </Fragment>
               )}

@@ -25,7 +25,14 @@ const StyledDiv = styledComponent('div', {
   paddingTop: '5px',
 });
 
-const Form = ({ errors, isSubmitting, handleSubmit, touched }) => {
+const Form = ({
+  errors,
+  isSubmitting,
+  handleSubmit,
+  setFieldValue,
+  touched,
+  values,
+}) => {
   const SwitchField = ({
     id,
     field: { name, value, onChange, onBlur },
@@ -143,16 +150,11 @@ const Form = ({ errors, isSubmitting, handleSubmit, touched }) => {
               <Field id="location" name="location" component={SelectField} />
             </FormField>
           </li>
-          {/* <li>
-            <input
-              id="file"
-              name="file"
-              type="file"
-              onChange={event => {
-                setFieldValue('file', event.currentTarget.files[0]);
-              }}
-            />
-          </li> */}
+          <li>
+            <FormField label="Thubnail">
+              <Field id="thumbnail" name="thumbnail" type="text" />
+            </FormField>
+          </li>
           <li>
             <Button
               type="submit"

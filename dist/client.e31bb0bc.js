@@ -85506,7 +85506,9 @@ var Form = function Form(_ref) {
   var errors = _ref.errors,
       isSubmitting = _ref.isSubmitting,
       handleSubmit = _ref.handleSubmit,
-      touched = _ref.touched;
+      setFieldValue = _ref.setFieldValue,
+      touched = _ref.touched,
+      values = _ref.values;
 
   var SwitchField = function SwitchField(_ref2) {
     var id = _ref2.id,
@@ -85622,6 +85624,12 @@ var Form = function Form(_ref) {
     id: "location",
     name: "location",
     component: SelectField
+  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Thubnail"
+  }, _react.default.createElement(_formik.Field, {
+    id: "thumbnail",
+    name: "thumbnail",
+    type: "text"
   }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
     type: "submit",
     "data-testid": "locomotiveAdd-submit",
@@ -91242,7 +91250,10 @@ var Edit = function Edit(_ref) {
     onClick: function onClick() {
       setIsDeleting(true);
     }
-  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
+  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, data[0].thumbnail && _react.default.createElement("img", {
+    src: data[0].thumbnail,
+    width: "200"
+  }), _react.default.createElement(_evergreenUi.Dialog, {
     intent: "danger",
     isShown: isDeleting,
     title: "Delete Locomotive",
@@ -91268,7 +91279,8 @@ var Edit = function Edit(_ref) {
       is_operational: data[0].is_operational,
       location: data[0].location,
       purchased_on: (0, _moment.default)(data[0].purchased_on).isValid() ? (0, _moment.default)(data[0].purchased_on).format('YYYY-MM-DD') : undefined,
-      road: data[0].road
+      road: data[0].road,
+      thumbnail: data[0].thumbnail || ''
     },
     validationSchema: EditSchema,
     onSubmit: function onSubmit(values, _ref3) {
@@ -91285,11 +91297,15 @@ var Edit = function Edit(_ref) {
   }, function (_ref4) {
     var errors = _ref4.errors,
         touched = _ref4.touched,
-        handleSubmit = _ref4.handleSubmit;
+        handleSubmit = _ref4.handleSubmit,
+        setFieldValue = _ref4.setFieldValue,
+        values = _ref4.values;
     return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Form.default, {
       errors: errors,
       touched: touched,
-      handleSubmit: handleSubmit
+      handleSubmit: handleSubmit,
+      setFieldValue: setFieldValue,
+      values: values
     }));
   }))));
 };
@@ -99559,7 +99575,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53652" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57497" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
