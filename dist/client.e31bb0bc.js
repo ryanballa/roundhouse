@@ -85379,7 +85379,7 @@ var _Header = _interopRequireDefault(require("../organisms/Header"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var StyledSection = (0, _styledComponent.styledComponent)('section', {
-  '& h1': {
+  '& h1, & h2': {
     fontFamily: _styles.fontConfig.familyStylized
   },
   fontFamily: _styles.fontConfig.familyBody,
@@ -85455,7 +85455,67 @@ Error.defaultProps = {
 };
 var _default = Error;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../../utils/styledComponent":"utils/styledComponent.js","../../../config/styles":"config/styles.js"}],"locomotives/components/Form.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../../utils/styledComponent":"utils/styledComponent.js","../../../config/styles":"config/styles.js"}],"components/organisms/Gallery.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _styledComponent = require("../../utils/styledComponent");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledGallery = (0, _styledComponent.styledComponent)('div', {
+  '& div': {
+    display: 'inline',
+    margin: '20px'
+  },
+  width: '50%'
+});
+var StyledGalleryImg = (0, _styledComponent.styledComponent)('div', {
+  '& img': {
+    border: '1px solid #d2d2d2',
+    borderRadius: '4px',
+    padding: '10px'
+  },
+  height: '100px',
+  width: '100px'
+});
+
+var Gallery = function Gallery(_ref) {
+  var handleSelection = _ref.handleSelection,
+      photos = _ref.photos;
+  return _react.default.createElement(StyledGallery, null, _react.default.createElement("h2", null, "Select a Photo"), photos.map(function (photo) {
+    return _react.default.createElement(StyledGalleryImg, {
+      key: photo.id,
+      onClick: function onClick() {
+        return handleSelection(photo.path);
+      }
+    }, _react.default.createElement("img", {
+      src: photo.path,
+      width: "100",
+      alt: ""
+    }));
+  }));
+};
+
+Gallery.propTypes = {
+  handleSelection: _propTypes.default.func,
+  photos: _propTypes.default.arrayOf(_propTypes.default.object)
+};
+Gallery.defaultProps = {
+  handleSelection: function handleSelection() {},
+  photos: []
+};
+var _default = Gallery;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../utils/styledComponent":"utils/styledComponent.js"}],"locomotives/components/Form.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -85480,6 +85540,8 @@ var _Error = _interopRequireDefault(require("../../components/atoms/forms/Error"
 var _styledComponent = require("../../utils/styledComponent");
 
 var _styles = require("../../config/styles");
+
+var _Gallery = _interopRequireDefault(require("../../components/organisms/Gallery"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -85506,6 +85568,7 @@ var Form = function Form(_ref) {
   var errors = _ref.errors,
       isSubmitting = _ref.isSubmitting,
       handleSubmit = _ref.handleSubmit,
+      photos = _ref.photos,
       setFieldValue = _ref.setFieldValue,
       touched = _ref.touched,
       values = _ref.values;
@@ -85573,7 +85636,11 @@ var Form = function Form(_ref) {
   return _react.default.createElement(StyledDiv, null, _react.default.createElement("form", {
     "data-testid": "locomotiveAdd-form",
     onSubmit: handleSubmit
-  }, _react.default.createElement("ul", null, _react.default.createElement("li", {
+  }, _react.default.createElement("ul", null, _react.default.createElement("li", null, values.thumbnail && _react.default.createElement("img", {
+    src: values.thumbnail,
+    width: "200",
+    alt: ""
+  })), _react.default.createElement("li", {
     "data-testid": "road"
   }, _react.default.createElement(_evergreenUi.FormField, {
     label: "Road"
@@ -85624,7 +85691,12 @@ var Form = function Form(_ref) {
     id: "location",
     name: "location",
     component: SelectField
-  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
+  }))), _react.default.createElement("li", null, _react.default.createElement(_Gallery.default, {
+    handleSelection: function handleSelection(photo) {
+      setFieldValue('thumbnail', photo);
+    },
+    photos: photos
+  })), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
     type: "submit",
     "data-testid": "locomotiveAdd-submit",
     disabled: isSubmitting
@@ -85638,20 +85710,24 @@ Form.propTypes = {
   }),
   handleSubmit: _propTypes.default.func.isRequired,
   isSubmitting: _propTypes.default.bool,
+  photos: _propTypes.default.arrayOf(_propTypes.default.object),
   setFieldValue: _propTypes.default.func,
   touched: _propTypes.default.shape({
     engine_number: _propTypes.default.bool,
     road: _propTypes.default.bool
-  }).isRequired
+  }).isRequired,
+  values: _propTypes.default.shape(_propTypes.default.object)
 };
 Form.defaultProps = {
   errors: {},
   isSubmitting: false,
-  setFieldValue: function setFieldValue() {}
+  photos: [],
+  setFieldValue: function setFieldValue() {},
+  values: {}
 };
 var _default = Form;
 exports.default = _default;
-},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/objectWithoutProperties":"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","prop-types":"../../node_modules/prop-types/index.js","../../components/atoms/forms/Error":"components/atoms/forms/Error.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js"}],"locomotives/Add.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/objectWithoutProperties":"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","prop-types":"../../node_modules/prop-types/index.js","../../components/atoms/forms/Error":"components/atoms/forms/Error.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","../../components/organisms/Gallery":"components/organisms/Gallery.js"}],"locomotives/Add.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91187,15 +91263,20 @@ var Edit = function Edit(_ref) {
       data = _useState2[0],
       setData = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(false),
+  var _useState3 = (0, _react.useState)([]),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
-      isLoading = _useState4[0],
-      setIsLoading = _useState4[1];
+      photos = _useState4[0],
+      setPhotos = _useState4[1];
 
   var _useState5 = (0, _react.useState)(false),
       _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
-      isDeleting = _useState6[0],
-      setIsDeleting = _useState6[1];
+      isLoading = _useState6[0],
+      setIsLoading = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
+      isDeleting = _useState8[0],
+      setIsDeleting = _useState8[1];
 
   (0, _react.useEffect)(function () {
     var fetchData =
@@ -91216,10 +91297,16 @@ var Edit = function Edit(_ref) {
                   }
 
                   setData(locomotive.data.locomotive);
-                  setIsLoading(false);
                 });
 
               case 3:
+                _context.next = 5;
+                return (0, _axios.default)("/api/v1/photos/").then(function (photosRes) {
+                  setPhotos(photosRes.data);
+                  setIsLoading(false);
+                });
+
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -91244,10 +91331,7 @@ var Edit = function Edit(_ref) {
     onClick: function onClick() {
       setIsDeleting(true);
     }
-  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, data[0].thumbnail && _react.default.createElement("img", {
-    src: data[0].thumbnail,
-    width: "200"
-  }), _react.default.createElement(_evergreenUi.Dialog, {
+  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
     intent: "danger",
     isShown: isDeleting,
     title: "Delete Locomotive",
@@ -91298,6 +91382,7 @@ var Edit = function Edit(_ref) {
       errors: errors,
       touched: touched,
       handleSubmit: handleSubmit,
+      photos: photos,
       setFieldValue: setFieldValue,
       values: values
     }));

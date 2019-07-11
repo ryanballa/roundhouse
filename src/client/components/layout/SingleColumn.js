@@ -5,7 +5,7 @@ import { styledComponent } from '../../utils/styledComponent';
 import Header from '../organisms/Header';
 
 const StyledSection = styledComponent('section', {
-  '& h1': {
+  '& h1, & h2': {
     fontFamily: fontConfig.familyStylized
   },
   fontFamily: fontConfig.familyBody,

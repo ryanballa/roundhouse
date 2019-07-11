@@ -11,6 +11,7 @@ import Form from './components/Form';
 
 const Edit = ({ history, match }) => {
   const [data, setData] = useState([{ engine_number: '123', road: 'Test' }]);
+  const [photos, setPhotos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -22,6 +23,9 @@ const Edit = ({ history, match }) => {
           history.push('/404');
         }
         setData(locomotive.data.locomotive);
+      });
+      await axios(`/api/v1/photos/`).then(photosRes => {
+        setPhotos(photosRes.data);
         setIsLoading(false);
       });
     };
@@ -55,7 +59,6 @@ const Edit = ({ history, match }) => {
           <div>Loading ...</div>
         ) : (
           <Pane>
-            {data[0].thumbnail && <img src={data[0].thumbnail} width="200" />}
             <Dialog
               intent="danger"
               isShown={isDeleting}
@@ -115,6 +118,7 @@ const Edit = ({ history, match }) => {
                     errors={errors}
                     touched={touched}
                     handleSubmit={handleSubmit}
+                    photos={photos}
                     setFieldValue={setFieldValue}
                     values={values}
                   />

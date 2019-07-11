@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Error from '../../components/atoms/forms/Error';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
+import Gallery from '../../components/organisms/Gallery';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -29,6 +30,7 @@ const Form = ({
   errors,
   isSubmitting,
   handleSubmit,
+  photos,
   setFieldValue,
   touched,
   values,
@@ -96,6 +98,11 @@ const Form = ({
     <StyledDiv>
       <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
         <ul>
+          <li>
+            {values.thumbnail && (
+              <img src={values.thumbnail} width="200" alt="" />
+            )}
+          </li>
           <li data-testid="road">
             <FormField label="Road">
               <Field id="road" type="text" name="road" placeholder="" />
@@ -151,6 +158,14 @@ const Form = ({
             </FormField>
           </li>
           <li>
+            <Gallery
+              handleSelection={photo => {
+                setFieldValue('thumbnail', photo);
+              }}
+              photos={photos}
+            />
+          </li>
+          <li>
             <Button
               type="submit"
               data-testid="locomotiveAdd-submit"
@@ -172,17 +187,21 @@ Form.propTypes = {
   }),
   handleSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool,
+  photos: PropTypes.arrayOf(PropTypes.object),
   setFieldValue: PropTypes.func,
   touched: PropTypes.shape({
     engine_number: PropTypes.bool,
     road: PropTypes.bool,
   }).isRequired,
+  values: PropTypes.shape(PropTypes.object),
 };
 
 Form.defaultProps = {
   errors: {},
   isSubmitting: false,
+  photos: [],
   setFieldValue: () => {},
+  values: {},
 };
 
 export default Form;
