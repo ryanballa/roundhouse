@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Pane, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import axios from 'axios';
@@ -7,6 +7,20 @@ import SingleColumn from '../components/layout/SingleColumn';
 import Form from './components/Form';
 
 function Add() {
+  const [photos, setPhotos] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      await axios(`/api/v1/photos/`).then(photosRes => {
+        setPhotos(photosRes.data);
+        setIsLoading(false);
+      });
+    };
+    fetchData();
+  }, []);
+
   const [data] = useState([
     { engine_number: '', is_operational: true, location: 'home', road: '' },
   ]);
@@ -46,11 +60,14 @@ function Add() {
                 .catch(() => {});
             }}
           >
-            {({ errors, touched, handleSubmit }) => (
+            {({ errors, touched, handleSubmit, setFieldValue, values }) => (
               <Form
                 errors={errors}
                 touched={touched}
                 handleSubmit={handleSubmit}
+                setFieldValue={setFieldValue}
+                photos={photos}
+                values={values}
               />
             )}
           </Formik>
