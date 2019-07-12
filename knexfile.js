@@ -1,17 +1,16 @@
 // Update with your config settings.
 
 module.exports = {
-
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/dev_roundhouse',
+    connection: 'postgres://localhost/test-roundhouse',
     migrations: {
-      directory: './db/migrations'
+      directory: './db/migrations',
     },
     seeds: {
-      directory: './db/seeds/dev'
+      directory: './db/seeds/dev',
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
   },
 
   staging: {

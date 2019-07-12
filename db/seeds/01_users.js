@@ -1,7 +1,10 @@
 const { users } = require('../data');
 
 exports.seed = (knex, Promise) => {
-  return knex('locomotives').del()
+  return knex('railcars').del()
+  .then(() => {
+    return knex('locomotives').del();
+  })
   .then(() => {
     return knex('users')
       .del()

@@ -13,10 +13,14 @@ function Add() {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      await axios(`/api/v1/photos/`).then(photosRes => {
-        setPhotos(photosRes.data);
-        setIsLoading(false);
-      });
+      await axios(`/api/v1/photos`)
+        .then(photosRes => {
+          setPhotos(photosRes.data);
+          setIsLoading(false);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     };
     fetchData();
   }, []);

@@ -18,8 +18,11 @@ const buildComponent = () =>
 
 describe('Locomotive Add Test', () => {
   let wrapper;
-  beforeEach(() => {
+  beforeEach(async () => {
+    const mock = new MockAdapter(axios);
+    mock.onGet('/api/v1/photos').reply(200, [{ id: '1', path: 'foo' }]);
     wrapper = buildComponent();
+    await asyncUpdates(wrapper);
   });
 
   afterEach(() => {

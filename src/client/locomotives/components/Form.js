@@ -194,7 +194,9 @@ Form.propTypes = {
     engine_number: PropTypes.bool,
     road: PropTypes.bool,
   }).isRequired,
-  values: PropTypes.shape(PropTypes.object),
+  values: PropTypes.shape({
+    required: PropTypes.bool,
+  }),
 };
 
 Form.defaultProps = {

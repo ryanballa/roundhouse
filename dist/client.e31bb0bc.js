@@ -86553,7 +86553,9 @@ Form.propTypes = {
     engine_number: _propTypes.default.bool,
     road: _propTypes.default.bool
   }).isRequired,
-  values: _propTypes.default.shape(_propTypes.default.object)
+  values: _propTypes.default.shape({
+    required: _propTypes.default.bool
+  })
 };
 Form.defaultProps = {
   errors: {},
@@ -86620,9 +86622,11 @@ function Add() {
               case 0:
                 setIsLoading(true);
                 _context.next = 3;
-                return (0, _axios.default)("/api/v1/photos/").then(function (photosRes) {
+                return (0, _axios.default)("/api/v1/photos").then(function (photosRes) {
                   setPhotos(photosRes.data);
                   setIsLoading(false);
+                }).catch(function (err) {
+                  console.log(err);
                 });
 
               case 3:
@@ -100872,7 +100876,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52148" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54707" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
