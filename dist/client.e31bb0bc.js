@@ -86077,8 +86077,8 @@ var MainNavigation = function MainNavigation() {
     to: "/locomotives"
   }, "Locomotives")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
     activeClassName: "active",
-    to: "/run/boards"
-  }, "Users")));
+    to: "/railcars"
+  }, "Railcars")));
 };
 
 var _default = MainNavigation;
@@ -91914,7 +91914,111 @@ function NotFound() {
 
 var _default = NotFound;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"Routes.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"railcars/Railcars.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _evergreenUi = require("evergreen-ui");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Railcars(_ref) {
+  var history = _ref.history;
+
+  var _useState = (0, _react.useState)([{
+    id: '1',
+    road: 'Test'
+  }]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  (0, _react.useEffect)(function () {
+    var fetchData =
+    /*#__PURE__*/
+    function () {
+      var _ref2 = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        var result;
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                setIsLoading(true);
+                _context.next = 3;
+                return (0, _axios.default)('/api/v1/railcars');
+
+              case 3:
+                result = _context.sent;
+                setData(result.data);
+                setIsLoading(false);
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function fetchData() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, []);
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement("h1", null, "Railcars"), isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement("ul", null, data.map(function (railcar) {
+    return _react.default.createElement("li", {
+      key: railcar.id
+    }, _react.default.createElement(_reactRouterDom.Link, {
+      key: railcar.id,
+      to: "railcars/".concat(railcar.id)
+    }, railcar.road));
+  })), _react.default.createElement(_evergreenUi.Button, {
+    iconBefore: "add",
+    onClick: function onClick() {
+      history.push('/railcar/add');
+    }
+  }, "Add Railcar"));
+}
+
+Railcars.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired
+};
+var _default = Railcars;
+exports.default = _default;
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"Routes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91937,6 +92041,8 @@ var _Upload = _interopRequireDefault(require("./locomotives/Upload"));
 var _Home = _interopRequireDefault(require("./pages/Home"));
 
 var _NotFound = _interopRequireDefault(require("./pages/NotFound"));
+
+var _Railcars = _interopRequireDefault(require("./railcars/Railcars"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -91967,13 +92073,17 @@ var Routes = function Routes() {
     exact: true,
     path: "/locomotives/:id",
     component: _Edit.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/railcars",
+    component: _Railcars.default
   })));
 };
 
 var _default = (0, _reactRouterDom.withRouter)(Routes);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./locomotives/Upload":"locomotives/Upload.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./locomotives/Upload":"locomotives/Upload.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -100017,7 +100127,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57676" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51631" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

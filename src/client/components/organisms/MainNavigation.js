@@ -44,8 +44,8 @@ const MainNavigation = () => (
       </NavLink>
     </li>
     <li>
-      <NavLink activeClassName="active" to="/run/boards">
-        Users
+      <NavLink activeClassName="active" to="/railcars">
+        Railcars
       </NavLink>
     </li>
   </StyledUL>
