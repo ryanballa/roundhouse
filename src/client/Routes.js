@@ -7,6 +7,8 @@ import Upload from './locomotives/Upload';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Railcars from './railcars/Railcars';
+import RailcarsAdd from './railcars/RailcarsAdd';
+import RailcarsView from './railcars/RailcarsView';
 
 const Routes = () => (
   <div className="routeWrapper">
@@ -18,6 +20,8 @@ const Routes = () => (
       <Route exact path="/locomotives/add" component={Add} />
       <Route exact path="/locomotives/:id" component={Edit} />
       <Route exact path="/railcars" component={Railcars} />
+      <Route exact path="/railcars/add" component={RailcarsAdd} />
+      <Route exact path="/railcars/:id" component={RailcarsView} />
     </Switch>
   </div>
 );

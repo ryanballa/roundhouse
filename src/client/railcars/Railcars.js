@@ -38,7 +38,7 @@ function Railcars({ history }) {
       <Button
         iconBefore="add"
         onClick={() => {
-          history.push('/railcar/add');
+          history.push('/railcars/add');
         }}
       >
         Add Railcar

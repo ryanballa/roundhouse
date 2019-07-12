@@ -92006,7 +92006,7 @@ function Railcars(_ref) {
   })), _react.default.createElement(_evergreenUi.Button, {
     iconBefore: "add",
     onClick: function onClick() {
-      history.push('/railcar/add');
+      history.push('/railcars/add');
     }
   }, "Add Railcar"));
 }
@@ -92018,7 +92018,531 @@ Railcars.propTypes = {
 };
 var _default = Railcars;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"Routes.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"railcars/components/Form.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _formik = require("formik");
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _Error = _interopRequireDefault(require("../../components/atoms/forms/Error"));
+
+var _styledComponent = require("../../utils/styledComponent");
+
+var _styles = require("../../config/styles");
+
+var _Gallery = _interopRequireDefault(require("../../components/organisms/Gallery"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/* eslint-disable react/no-multi-comp */
+var StyledDiv = (0, _styledComponent.styledComponent)('div', {
+  '& input': {
+    border: '1px solid #fffcfc',
+    borderRadius: '2px',
+    boxShadow: '0 0 0 1px rgba(67, 90, 111, 0.14)',
+    padding: '8px'
+  },
+  '& li': {
+    listStyle: 'none',
+    marginBottom: '15px'
+  },
+  '& ul': {
+    paddingLeft: 0
+  },
+  color: _styles.colors.error,
+  paddingTop: '5px'
+});
+
+var Form = function Form(_ref) {
+  var errors = _ref.errors,
+      isSubmitting = _ref.isSubmitting,
+      handleSubmit = _ref.handleSubmit,
+      photos = _ref.photos,
+      setFieldValue = _ref.setFieldValue,
+      touched = _ref.touched,
+      values = _ref.values;
+
+  var SwitchField = function SwitchField(_ref2) {
+    var id = _ref2.id,
+        _ref2$field = _ref2.field,
+        name = _ref2$field.name,
+        value = _ref2$field.value,
+        onChange = _ref2$field.onChange,
+        onBlur = _ref2$field.onBlur,
+        props = (0, _objectWithoutProperties2.default)(_ref2, ["id", "field"]);
+    return _react.default.createElement("div", null, _react.default.createElement(_evergreenUi.Switch, (0, _extends2.default)({
+      id: id,
+      name: name,
+      value: value ? value.toString() : 'false',
+      onBlur: onBlur,
+      checked: value,
+      onChange: onChange
+    }, props)));
+  };
+
+  SwitchField.propTypes = {
+    field: _propTypes.default.shape({
+      name: _propTypes.default.string,
+      onBlur: _propTypes.default.func,
+      onChange: _propTypes.default.func,
+      value: _propTypes.default.bool
+    }).isRequired,
+    id: _propTypes.default.string.isRequired
+  };
+
+  var SelectField = function SelectField(_ref3) {
+    var id = _ref3.id,
+        _ref3$field = _ref3.field,
+        name = _ref3$field.name,
+        value = _ref3$field.value,
+        onChange = _ref3$field.onChange,
+        onBlur = _ref3$field.onBlur,
+        props = (0, _objectWithoutProperties2.default)(_ref3, ["id", "field"]);
+    return _react.default.createElement("div", null, _react.default.createElement(_evergreenUi.Select, (0, _extends2.default)({
+      id: id,
+      name: name,
+      onChange: onChange,
+      value: value,
+      onBlur: onBlur
+    }, props), _react.default.createElement("option", {
+      value: "club"
+    }, "Club"), _react.default.createElement("option", {
+      value: "home"
+    }, "Home"), _react.default.createElement("option", {
+      value: "studio"
+    }, "Studio")));
+  };
+
+  SelectField.propTypes = {
+    field: _propTypes.default.shape({
+      name: _propTypes.default.string,
+      onBlur: _propTypes.default.func,
+      onChange: _propTypes.default.func,
+      value: _propTypes.default.string
+    }).isRequired,
+    id: _propTypes.default.string.isRequired
+  };
+  return _react.default.createElement(StyledDiv, null, _react.default.createElement("form", {
+    "data-testid": "locomotiveAdd-form",
+    onSubmit: handleSubmit
+  }, _react.default.createElement("ul", null, _react.default.createElement("li", null, values.thumbnail && _react.default.createElement("img", {
+    src: values.thumbnail,
+    width: "200",
+    alt: ""
+  })), _react.default.createElement("li", {
+    "data-testid": "road"
+  }, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Road"
+  }, _react.default.createElement(_formik.Field, {
+    id: "road",
+    type: "text",
+    name: "road",
+    placeholder: ""
+  })), _react.default.createElement(_Error.default, null, errors.road && touched.road ? _react.default.createElement("div", {
+    className: "error"
+  }, errors.road) : null)), _react.default.createElement("li", {
+    "data-testid": "car_number"
+  }, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Car Number"
+  }, _react.default.createElement(_formik.Field, {
+    id: "car_number",
+    type: "text",
+    name: "car_number",
+    placeholder: ""
+  })), _react.default.createElement(_Error.default, null, errors.car_number && touched.car_number ? _react.default.createElement("div", {
+    className: "error"
+  }, errors.car_number) : null)), _react.default.createElement("li", {
+    "data-testid": "purchased_on"
+  }, _react.default.createElement(_evergreenUi.FormField, {
+    label: "purchased_on"
+  }, _react.default.createElement(_formik.Field, {
+    id: "purchased_on",
+    type: "date",
+    name: "purchased_on",
+    placeholder: ""
+  }))), _react.default.createElement("li", {
+    "data-testid": "is_operational"
+  }, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Is Operational"
+  }, _react.default.createElement(_formik.Field, {
+    id: "is_operational",
+    name: "is_operational",
+    component: SwitchField
+  }))), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.FormField, {
+    label: "Location"
+  }, _react.default.createElement(_formik.Field, {
+    id: "location",
+    name: "location",
+    component: SelectField
+  }))), _react.default.createElement("li", null, _react.default.createElement(_Gallery.default, {
+    handleSelection: function handleSelection(photo) {
+      setFieldValue('thumbnail', photo);
+    },
+    photos: photos
+  })), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
+    type: "submit",
+    "data-testid": "locomotiveAdd-submit",
+    disabled: isSubmitting
+  }, "Submit")))));
+};
+
+Form.propTypes = {
+  errors: _propTypes.default.shape({
+    car_number: _propTypes.default.node,
+    road: _propTypes.default.node
+  }),
+  handleSubmit: _propTypes.default.func.isRequired,
+  isSubmitting: _propTypes.default.bool,
+  photos: _propTypes.default.arrayOf(_propTypes.default.object),
+  setFieldValue: _propTypes.default.func,
+  touched: _propTypes.default.shape({
+    car_number: _propTypes.default.bool,
+    road: _propTypes.default.bool
+  }).isRequired,
+  values: _propTypes.default.shape(_propTypes.default.object)
+};
+Form.defaultProps = {
+  errors: {},
+  isSubmitting: false,
+  photos: [],
+  setFieldValue: function setFieldValue() {},
+  values: {}
+};
+var _default = Form;
+exports.default = _default;
+},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/helpers/objectWithoutProperties":"../../node_modules/@babel/runtime/helpers/objectWithoutProperties.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","prop-types":"../../node_modules/prop-types/index.js","../../components/atoms/forms/Error":"components/atoms/forms/Error.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","../../components/organisms/Gallery":"components/organisms/Gallery.js"}],"railcars/RailcarsAdd.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _formik = require("formik");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var Yup = _interopRequireWildcard(require("yup"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _Form = _interopRequireDefault(require("./components/Form"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function RailcarsAdd() {
+  var _useState = (0, _react.useState)([]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      photos = _useState2[0],
+      setPhotos = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  (0, _react.useEffect)(function () {
+    var fetchData =
+    /*#__PURE__*/
+    function () {
+      var _ref = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                setIsLoading(true);
+                _context.next = 3;
+                return (0, _axios.default)("/api/v1/photos/").then(function (photosRes) {
+                  setPhotos(photosRes.data);
+                  setIsLoading(false);
+                });
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function fetchData() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, []);
+
+  var _useState5 = (0, _react.useState)([{
+    car_number: '',
+    is_operational: true,
+    location: 'home',
+    road: ''
+  }]),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 1),
+      data = _useState6[0];
+
+  var EditSchema = Yup.object().shape({
+    car_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 4').required('Required'),
+    road: Yup.string().required('Required')
+  });
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
+    initialValues: {
+      car_number: data[0].car_number || '',
+      is_dcc: data[0].is_dcc,
+      is_operational: data[0].is_operational,
+      location: data[0].location,
+      road: data[0].road,
+      user_id: 1
+    },
+    validationSchema: EditSchema,
+    onSubmit: function onSubmit(values, _ref2) {
+      var setSubmitting = _ref2.setSubmitting;
+
+      _axios.default.post('/api/v1/railcars/', values).then(
+      /* istanbul ignore next */
+      function () {
+        /* istanbul ignore next */
+        _evergreenUi.toaster.success('Railcar Added');
+
+        setSubmitting(false);
+      }).catch(function () {});
+    }
+  }, function (_ref3) {
+    var errors = _ref3.errors,
+        touched = _ref3.touched,
+        handleSubmit = _ref3.handleSubmit,
+        setFieldValue = _ref3.setFieldValue,
+        values = _ref3.values;
+    return _react.default.createElement(_Form.default, {
+      errors: errors,
+      touched: touched,
+      handleSubmit: handleSubmit,
+      setFieldValue: setFieldValue,
+      photos: photos,
+      values: values
+    });
+  }))));
+}
+
+var _default = RailcarsAdd;
+exports.default = _default;
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","./components/Form":"railcars/components/Form.js"}],"railcars/RailcarsView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _formik = require("formik");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var Yup = _interopRequireWildcard(require("yup"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _FormActions = _interopRequireDefault(require("../components/organisms/FormActions"));
+
+var _Form = _interopRequireDefault(require("./components/Form"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RailcarsEdit = function RailcarsEdit(_ref) {
+  var history = _ref.history,
+      match = _ref.match;
+
+  var _useState = (0, _react.useState)([{
+    car_number: '123',
+    road: 'Test'
+  }]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      data = _useState2[0],
+      setData = _useState2[1];
+
+  var _useState3 = (0, _react.useState)([]),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      photos = _useState4[0],
+      setPhotos = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      isLoading = _useState6[0],
+      setIsLoading = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
+      isDeleting = _useState8[0],
+      setIsDeleting = _useState8[1];
+
+  (0, _react.useEffect)(function () {
+    var fetchData =
+    /*#__PURE__*/
+    function () {
+      var _ref2 = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                setIsLoading(true);
+                _context.next = 3;
+                return (0, _axios.default)("/api/v1/railcars/".concat(match.params.id)).then(function (railcar) {
+                  if (!railcar.data.length) {
+                    history.push('/404');
+                  }
+
+                  setData(railcar.data);
+                });
+
+              case 3:
+                _context.next = 5;
+                return (0, _axios.default)("/api/v1/photos/").then(function (photosRes) {
+                  setPhotos(photosRes.data);
+                  setIsLoading(false);
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function fetchData() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, []);
+  var EditSchema = Yup.object().shape({
+    car_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 9999').required('Required'),
+    road: Yup.string().required('Required')
+  });
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_FormActions.default, null, _react.default.createElement("h1", null, "Edit Railcar"), _react.default.createElement(_evergreenUi.Button, {
+    iconBefore: "trash",
+    intent: "danger",
+    onClick: function onClick() {
+      setIsDeleting(true);
+    }
+  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
+    intent: "danger",
+    isShown: isDeleting,
+    title: "Delete Railcar",
+    onCloseComplete: function onCloseComplete() {
+      return setIsDeleting(false);
+    },
+    onConfirm: function onConfirm() {
+      _axios.default.delete("/api/v1/railcars/".concat(match.params.id)).then(function () {
+        setIsDeleting(false);
+
+        _evergreenUi.toaster.success('Railcar Deleted');
+
+        history.push('/railcars');
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    confirmLabel: "Delete"
+  }, "Are you sure you want to delete ", data[0].road, " ?"), _react.default.createElement(_formik.Formik, {
+    initialValues: {
+      car_number: data[0].car_number || '',
+      is_operational: data[0].is_operational,
+      location: data[0].location,
+      purchased_on: (0, _moment.default)(data[0].purchased_on).isValid() ? (0, _moment.default)(data[0].purchased_on).format('YYYY-MM-DD') : undefined,
+      road: data[0].road,
+      thumbnail: data[0].thumbnail || ''
+    },
+    validationSchema: EditSchema,
+    onSubmit: function onSubmit(values, _ref3) {
+      var setSubmitting = _ref3.setSubmitting;
+
+      _axios.default.put("/api/v1/railcars/".concat(match.params.id), values).then(function () {
+        setSubmitting(false);
+
+        _evergreenUi.toaster.success('Railcar Saved');
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, function (_ref4) {
+    var errors = _ref4.errors,
+        touched = _ref4.touched,
+        handleSubmit = _ref4.handleSubmit,
+        setFieldValue = _ref4.setFieldValue,
+        values = _ref4.values;
+    return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Form.default, {
+      errors: errors,
+      touched: touched,
+      handleSubmit: handleSubmit,
+      photos: photos,
+      setFieldValue: setFieldValue,
+      values: values
+    }));
+  }))));
+};
+
+RailcarsEdit.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired,
+  match: _propTypes.default.shape({
+    params: _propTypes.default.shape({
+      id: _propTypes.default.string.isRequired
+    }).isRequired
+  }).isRequired
+};
+var _default = RailcarsEdit;
+exports.default = _default;
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","moment":"../../node_modules/moment/moment.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/organisms/FormActions":"components/organisms/FormActions.js","./components/Form":"railcars/components/Form.js"}],"Routes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -92043,6 +92567,10 @@ var _Home = _interopRequireDefault(require("./pages/Home"));
 var _NotFound = _interopRequireDefault(require("./pages/NotFound"));
 
 var _Railcars = _interopRequireDefault(require("./railcars/Railcars"));
+
+var _RailcarsAdd = _interopRequireDefault(require("./railcars/RailcarsAdd"));
+
+var _RailcarsView = _interopRequireDefault(require("./railcars/RailcarsView"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -92077,13 +92605,21 @@ var Routes = function Routes() {
     exact: true,
     path: "/railcars",
     component: _Railcars.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/railcars/add",
+    component: _RailcarsAdd.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/railcars/:id",
+    component: _RailcarsView.default
   })));
 };
 
 var _default = (0, _reactRouterDom.withRouter)(Routes);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./locomotives/Upload":"locomotives/Upload.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./locomotives/Upload":"locomotives/Upload.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js","./railcars/RailcarsAdd":"railcars/RailcarsAdd.js","./railcars/RailcarsView":"railcars/RailcarsView.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -100127,7 +100663,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51631" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52148" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
