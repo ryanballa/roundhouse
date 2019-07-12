@@ -83859,7 +83859,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.zIndex = exports.spacing = exports.fontConfig = exports.colors = void 0;
 var colors = {
-  error: '#c52525'
+  error: '#c52525',
+  headers: '#545454'
 };
 exports.colors = colors;
 var fontConfig = {
@@ -86066,19 +86067,32 @@ var StyledUL = (0, _styledComponent.styledComponent)('ul', {
   padding: 0
 });
 
-var checkConfigureActive = function checkConfigureActive(match, location) {
-  return location.pathname.includes('configure');
+var checkLocomotivesActive = function checkLocomotivesActive(match, location) {
+  return location.pathname.includes('locomotives');
+};
+
+var checkRailcarsActive = function checkRailcarsActive(match, location) {
+  return location.pathname.includes('railcars');
+};
+
+var checkPhotosActive = function checkPhotosActive(match, location) {
+  return location.pathname.includes('photos');
 };
 
 var MainNavigation = function MainNavigation() {
   return _react.default.createElement(StyledUL, null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
-    isActive: checkConfigureActive,
+    isActive: checkLocomotivesActive,
     activeClassName: "active",
     to: "/locomotives"
   }, "Locomotives")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+    isActive: checkRailcarsActive,
     activeClassName: "active",
     to: "/railcars"
-  }, "Railcars")));
+  }, "Railcars")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.NavLink, {
+    isActive: checkPhotosActive,
+    activeClassName: "active",
+    to: "/photos"
+  }, "Photos")));
 };
 
 var _default = MainNavigation;
@@ -86236,12 +86250,17 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _styledComponent = require("../../utils/styledComponent");
 
+var _styles = require("../../config/styles");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var StyledGallery = (0, _styledComponent.styledComponent)('div', {
   '& div': {
     display: 'inline',
     margin: '20px'
+  },
+  '& h2': {
+    color: _styles.colors.headers
   },
   width: '50%'
 });
@@ -86251,18 +86270,30 @@ var StyledGalleryImg = (0, _styledComponent.styledComponent)('div', {
     borderRadius: '4px',
     padding: '10px'
   },
+  '&.deleteable:hover': {
+    '& img': {
+      backgroundColor: _styles.colors.error
+    },
+    cursor: 'pointer'
+  },
   height: '100px',
   width: '100px'
 });
 
 var Gallery = function Gallery(_ref) {
-  var handleSelection = _ref.handleSelection,
-      photos = _ref.photos;
-  return _react.default.createElement(StyledGallery, null, _react.default.createElement("h2", null, "Select a Photo"), photos.map(function (photo) {
+  var canDelete = _ref.canDelete,
+      handleSelection = _ref.handleSelection,
+      photos = _ref.photos,
+      title = _ref.title;
+  return _react.default.createElement(StyledGallery, null, title && _react.default.createElement("h2", null, title), photos.map(function (photo) {
     return _react.default.createElement(StyledGalleryImg, {
+      className: canDelete ? 'deleteable' : '',
       key: photo.id,
       onClick: function onClick() {
-        return handleSelection(photo.path);
+        return handleSelection({
+          id: photo.id,
+          path: photo.path
+        });
       }
     }, _react.default.createElement("img", {
       src: photo.path,
@@ -86273,16 +86304,20 @@ var Gallery = function Gallery(_ref) {
 };
 
 Gallery.propTypes = {
+  canDelete: _propTypes.default.bool,
   handleSelection: _propTypes.default.func,
-  photos: _propTypes.default.arrayOf(_propTypes.default.object)
+  photos: _propTypes.default.arrayOf(_propTypes.default.object),
+  title: _propTypes.default.string
 };
 Gallery.defaultProps = {
+  canDelete: false,
   handleSelection: function handleSelection() {},
-  photos: []
+  photos: [],
+  title: null
 };
 var _default = Gallery;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../utils/styledComponent":"utils/styledComponent.js"}],"locomotives/components/Form.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js"}],"locomotives/components/Form.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86460,9 +86495,10 @@ var Form = function Form(_ref) {
     component: SelectField
   }))), _react.default.createElement("li", null, _react.default.createElement(_Gallery.default, {
     handleSelection: function handleSelection(photo) {
-      setFieldValue('thumbnail', photo);
+      setFieldValue('thumbnail', photo.path);
     },
-    photos: photos
+    photos: photos,
+    title: "Select a Photo"
   })), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
     type: "submit",
     "data-testid": "locomotiveAdd-submit",
@@ -91775,7 +91811,7 @@ function (_React$Component) {
 });
 var _default = Thumb;
 exports.default = _default;
-},{"@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js"}],"locomotives/Upload.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js"}],"photos/Upload.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -92190,9 +92226,10 @@ var Form = function Form(_ref) {
     component: SelectField
   }))), _react.default.createElement("li", null, _react.default.createElement(_Gallery.default, {
     handleSelection: function handleSelection(photo) {
-      setFieldValue('thumbnail', photo);
+      setFieldValue('thumbnail', photo.path);
     },
-    photos: photos
+    photos: photos,
+    title: "Select a Photo"
   })), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
     type: "submit",
     "data-testid": "locomotiveAdd-submit",
@@ -92542,7 +92579,139 @@ RailcarsEdit.propTypes = {
 };
 var _default = RailcarsEdit;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","moment":"../../node_modules/moment/moment.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/organisms/FormActions":"components/organisms/FormActions.js","./components/Form":"railcars/components/Form.js"}],"Routes.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","moment":"../../node_modules/moment/moment.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/organisms/FormActions":"components/organisms/FormActions.js","./components/Form":"railcars/components/Form.js"}],"photos/Photos.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
+
+var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _Gallery = _interopRequireDefault(require("../components/organisms/Gallery"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Photos(_ref) {
+  var history = _ref.history;
+
+  var _useState = (0, _react.useState)([]),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      photos = _useState2[0],
+      setPhotos = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      isLoading = _useState4[0],
+      setIsLoading = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      isDeleting = _useState6[0],
+      setIsDeleting = _useState6[1];
+
+  var _useState7 = (0, _react.useState)(null),
+      _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
+      photoToDelete = _useState8[0],
+      setPhotoToDelete = _useState8[1];
+
+  (0, _react.useEffect)(function () {
+    var fetchData =
+    /*#__PURE__*/
+    function () {
+      var _ref2 = (0, _asyncToGenerator2.default)(
+      /*#__PURE__*/
+      _regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                setIsLoading(true);
+                _context.next = 3;
+                return (0, _axios.default)("/api/v1/photos/").then(function (photosRes) {
+                  setPhotos(photosRes.data);
+                  setIsLoading(false);
+                });
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      return function fetchData() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+
+    fetchData();
+  }, []);
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_evergreenUi.Dialog, {
+    intent: "danger",
+    isShown: isDeleting,
+    title: "Delete Photo",
+    onCloseComplete: function onCloseComplete() {
+      return setIsDeleting(false);
+    },
+    onConfirm: function onConfirm() {
+      _axios.default.delete("/api/v1/photos/".concat(photoToDelete)).then(function () {
+        var newPhotos = photos.filter(function (photo) {
+          return photo.id !== photoToDelete;
+        });
+        setPhotos(newPhotos);
+        setIsDeleting(false);
+        setPhotoToDelete(null);
+
+        _evergreenUi.toaster.success('Photo Deleted');
+
+        history.push('/photos');
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    confirmLabel: "Delete"
+  }, "Are you sure you want to delete ", photoToDelete, " ?"), _react.default.createElement("h1", null, "Photos"), isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_Gallery.default, {
+    canDelete: true,
+    handleSelection: function handleSelection(value) {
+      setPhotoToDelete(value.id);
+      setIsDeleting(true);
+    },
+    photos: photos
+  }), _react.default.createElement(_evergreenUi.Button, {
+    iconBefore: "add",
+    onClick: function onClick() {
+      history.push('/photos/upload');
+    }
+  }, "Add Photo"));
+}
+
+Photos.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired
+};
+var _default = Photos;
+exports.default = _default;
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/organisms/Gallery":"components/organisms/Gallery.js"}],"Routes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -92560,7 +92729,7 @@ var _Edit = _interopRequireDefault(require("./locomotives/Edit"));
 
 var _List = _interopRequireDefault(require("./locomotives/List"));
 
-var _Upload = _interopRequireDefault(require("./locomotives/Upload"));
+var _Upload = _interopRequireDefault(require("./photos/Upload"));
 
 var _Home = _interopRequireDefault(require("./pages/Home"));
 
@@ -92571,6 +92740,8 @@ var _Railcars = _interopRequireDefault(require("./railcars/Railcars"));
 var _RailcarsAdd = _interopRequireDefault(require("./railcars/RailcarsAdd"));
 
 var _RailcarsView = _interopRequireDefault(require("./railcars/RailcarsView"));
+
+var _Photos = _interopRequireDefault(require("./photos/Photos"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -92591,7 +92762,7 @@ var Routes = function Routes() {
     component: _List.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
-    path: "/locomotives/upload",
+    path: "/photos/upload",
     component: _Upload.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
@@ -92601,6 +92772,10 @@ var Routes = function Routes() {
     exact: true,
     path: "/locomotives/:id",
     component: _Edit.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/photos",
+    component: _Photos.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/railcars",
@@ -92619,7 +92794,7 @@ var Routes = function Routes() {
 var _default = (0, _reactRouterDom.withRouter)(Routes);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./locomotives/Upload":"locomotives/Upload.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js","./railcars/RailcarsAdd":"railcars/RailcarsAdd.js","./railcars/RailcarsView":"railcars/RailcarsView.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./photos/Upload":"photos/Upload.js","./pages/Home":"pages/Home.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js","./railcars/RailcarsAdd":"railcars/RailcarsAdd.js","./railcars/RailcarsView":"railcars/RailcarsView.js","./photos/Photos":"photos/Photos.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math

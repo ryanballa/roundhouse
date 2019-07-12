@@ -75,8 +75,8 @@ photos.put('/', (request, response) => {
 
 photos.delete('/:photoId', (request, response) => {
   const id = request.params.photoId;
-  database('locomotives_photos')
-    .where('locomotives_photos.photo_id', id)
+  database('photos')
+    .where('id', id)
     .del()
     .then(() => {
       database('photos')

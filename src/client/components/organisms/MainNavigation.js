@@ -29,14 +29,20 @@ const StyledUL = styledComponent('ul', {
   padding: 0,
 });
 
-const checkConfigureActive = (match, location) =>
-  location.pathname.includes('configure');
+const checkLocomotivesActive = (match, location) =>
+  location.pathname.includes('locomotives');
+
+const checkRailcarsActive = (match, location) =>
+  location.pathname.includes('railcars');
+
+const checkPhotosActive = (match, location) =>
+  location.pathname.includes('photos');
 
 const MainNavigation = () => (
   <StyledUL>
     <li>
       <NavLink
-        isActive={checkConfigureActive}
+        isActive={checkLocomotivesActive}
         activeClassName="active"
         to="/locomotives"
       >
@@ -44,8 +50,21 @@ const MainNavigation = () => (
       </NavLink>
     </li>
     <li>
-      <NavLink activeClassName="active" to="/railcars">
+      <NavLink
+        isActive={checkRailcarsActive}
+        activeClassName="active"
+        to="/railcars"
+      >
         Railcars
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
+        isActive={checkPhotosActive}
+        activeClassName="active"
+        to="/photos"
+      >
+        Photos
       </NavLink>
     </li>
   </StyledUL>

@@ -160,9 +160,10 @@ const Form = ({
           <li>
             <Gallery
               handleSelection={photo => {
-                setFieldValue('thumbnail', photo);
+                setFieldValue('thumbnail', photo.path);
               }}
               photos={photos}
+              title="Select a Photo"
             />
           </li>
           <li>
