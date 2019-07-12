@@ -1,6 +1,6 @@
 export const colors = {
   error: '#c52525',
-  headers: '#545454',
+  headers: '#82898a',
 };
 
 export const fontConfig = {

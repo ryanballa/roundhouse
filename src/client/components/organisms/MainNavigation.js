@@ -5,15 +5,16 @@ import { styledComponent } from '../../utils/styledComponent';
 const StyledUL = styledComponent('ul', {
   '& a': {
     borderRadius: '10px',
-    color: '#FFFFFF',
+    color: '#4c8294',
     letterSpacing: '2px',
     padding: '10px',
     textDecoration: 'none',
   },
   '& a.active': {
-    backgroundColor: '#b6c4d1',
+    backgroundColor: '#6AACC1',
     boxShadow: '1p 1px #ccc',
-    textShadow: '1px 1px #86909a',
+    color: '#efefef',
+    textShadow: '1px 1px #827660',
   },
   '& a:hover': {
     backgroundColor: '#b6c4d1',
@@ -24,7 +25,7 @@ const StyledUL = styledComponent('ul', {
     margin: '0 5px',
   },
   display: 'inline',
-  margin: 0,
+  margin: '0 0 0 20px',
   marginTop: '15px',
   padding: 0,
 });
