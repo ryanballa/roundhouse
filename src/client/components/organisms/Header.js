@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { styledComponent } from '../../utils/styledComponent';
-import { fontConfig, spacing, zIndex } from '../../config/styles';
+import { fontConfig, spacing } from '../../config/styles';
 import MainNavigation from './MainNavigation';
 
 const StyledHeader = styledComponent('header', {
@@ -15,8 +15,6 @@ const StyledHeader = styledComponent('header', {
   color: '#FFFFFF',
   fontFamily: fontConfig.familyStylized,
   padding: spacing.boxPadding,
-  position: 'relative',
-  zIndex: zIndex.header,
 });
 
 const Header = () => (

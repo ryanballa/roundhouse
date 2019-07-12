@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 const photos = require('express').Router();
 /* istanbul ignore next */
 const environment = process.env.NODE_ENV || 'development';
@@ -25,13 +26,14 @@ photos.get('/', (request, response) => {
 photos.post('/', (request, response) => {
   const photo = request.body;
 
-  for (const requiredParameter of ['path']) {
+  ['path'].forEach(requiredParameter => {
     if (!photo[requiredParameter]) {
       return response.status(422).send({
         error: `Expected format: { path: <String> }. You're missing a "${requiredParameter}" property.`,
       });
     }
-  }
+    return null;
+  });
 
   database('photos')
     .insert(photo, 'id')
@@ -49,13 +51,14 @@ photos.post('/', (request, response) => {
 photos.put('/', (request, response) => {
   const photo = request.body;
 
-  for (const requiredParameter of ['locomotive_id', 'photo_id']) {
+  ['locomotive_id', 'photo_id'].forEach(requiredParameter => {
     if (!photo[requiredParameter]) {
       return response.status(422).send({
         error: `Expected format: { path: <String> }. You're missing a "${requiredParameter}" property.`,
       });
     }
-  }
+    return null;
+  });
 
   database('locomotives_photos')
     .insert(photo, 'id')
@@ -68,6 +71,27 @@ photos.put('/', (request, response) => {
         response.status(500).json({ error });
       },
     );
+});
+
+photos.delete('/:photoId', (request, response) => {
+  const id = request.params.photoId;
+  database('locomotives_photos')
+    .where('locomotives_photos.photo_id', id)
+    .del()
+    .then(() => {
+      database('photos')
+        .where('id', id)
+        .del()
+        .then(photo => {
+          response.status(200).json(photo);
+        })
+        .catch(error => {
+          response.status(500).json({ error });
+        });
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
 });
 
 module.exports = photos;

@@ -86114,9 +86114,7 @@ var StyledHeader = (0, _styledComponent.styledComponent)('header', {
   boxShadow: '1px 1px 1px rgba(0, 0, 0, 0.3)',
   color: '#FFFFFF',
   fontFamily: _styles.fontConfig.familyStylized,
-  padding: _styles.spacing.boxPadding,
-  position: 'relative',
-  zIndex: _styles.zIndex.header
+  padding: _styles.spacing.boxPadding
 });
 
 var Header = function Header() {
@@ -100019,7 +100017,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57497" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57676" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,3 +1,5 @@
+/* eslint-disable import/order */
+/* eslint-disable no-template-curly-in-string */
 const fs = require('fs');
 const locomotives = require('express').Router();
 const { db } = require('../../../../pgAdaptor');
@@ -12,11 +14,10 @@ const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, 'uploads/');
   },
-  filename: function(req, file, cb) {
-    console.log(file);
+  filename: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
@@ -37,30 +38,19 @@ locomotives.get('/', (request, response) => {
         response.status(500).json({ error });
       },
     );
-  // database('locomotives')
-  // .join('users', 'users.id', 'locomotives.user_id')
-  // .join('photos', 'photos.id', 'locomotives.id')
-  // .select('photos.path as photo', 'locomotives.* as locomotive')
-  // .select('users.full_name as user', 'locomotives.* as locomotive')
-  // .then((locomotives) => {
-  //     response.status(200).json(locomotives);
-  //   })
-  //   .catch(/* istanbul ignore next */(error) => {
-  //     /* istanbul ignore next */
-  //     response.status(500).json({ error });
-  //   });
 });
 
 locomotives.post('/', (request, response) => {
   const locomotive = request.body;
 
-  for (const requiredParameter of ['road', 'location']) {
+  ['road', 'location'].forEach(requiredParameter => {
     if (!locomotive[requiredParameter]) {
       return response.status(422).send({
         error: `Expected format: { location: <String>, road: <String> }. You're missing a "${requiredParameter}" property.`,
       });
     }
-  }
+    return null;
+  });
 
   return database('locomotives')
     .insert(locomotive, 'id')
@@ -101,14 +91,11 @@ locomotives.get('/:locomotiveId', (request, response) => {
 
 function uploadToCloudinary(req, res) {
   const upload = multer({ storage }).single('file');
-  upload(req, res, err => {
-    if (err) {
-      return res.send(err);
+  upload(req, res, uploadErr => {
+    if (uploadErr) {
+      return res.send(uploadErr);
     }
-    console.log(req.body.file);
-    console.log(req.file);
-
-    const path = req.file.path;
+    const { path } = req.file;
     const uniqueFilename = new Date().toISOString();
 
     cloudinary.uploader.upload(
@@ -116,12 +103,8 @@ function uploadToCloudinary(req, res) {
       { public_id: `locomotives/${uniqueFilename}`, tags: `locomotive` }, // directory and tags are optional
       (err, image) => {
         if (err) return res.send(err);
-        console.log('file uploaded to Cloudinary');
         // remove file from server
         fs.unlinkSync(path);
-        // return image details
-        console.log(image);
-        //res.json(image)
         return database('photos')
           .insert(
             {
@@ -137,48 +120,12 @@ function uploadToCloudinary(req, res) {
           });
       },
     );
+    return null;
   });
 }
 
 locomotives.post('/upload', (req, res) => {
   uploadToCloudinary(req, res);
-  // const upload = multer({ storage }).single('file');
-  // upload(req, res, err => {
-  //   if (err) {
-  //     return res.send(err);
-  //   }
-  //   console.log(req.file);
-
-  //   const path = req.file.path;
-  //   const uniqueFilename = new Date().toISOString();
-
-  //   cloudinary.uploader.upload(
-  //     path,
-  //     { public_id: `locomotives/${uniqueFilename}`, tags: `locomotive` }, // directory and tags are optional
-  //     (err, image) => {
-  //       if (err) return res.send(err);
-  //       console.log('file uploaded to Cloudinary');
-  //       // remove file from server
-  //       fs.unlinkSync(path);
-  //       // return image details
-  //       console.log(image);
-  //       //res.json(image)
-  //       return database('photos')
-  //         .insert(
-  //           {
-  //             path: image.url,
-  //           },
-  //           'id',
-  //         )
-  //         .then(photo => {
-  //           res.status(201).json({ id: photo[0] });
-  //         })
-  //         .catch(error => {
-  //           res.status(500).json({ error });
-  //         });
-  //     },
-  //   );
-  // });
 });
 
 locomotives.put('/:locomotiveId', (request, response) => {
