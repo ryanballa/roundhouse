@@ -91410,26 +91410,35 @@ var Edit = function Edit(_ref) {
       var _ref2 = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee() {
+        var loadPhotos, loadData;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                loadData = function _ref4() {
+                  (0, _axios.default)("/api/v1/locomotives/".concat(match.params.id)).then(function (locomotive) {
+                    if (!locomotive.data.locomotive.length) {
+                      history.push('/404');
+                    }
+
+                    setData(locomotive.data.locomotive);
+                    setIsLoading(false);
+                  }).catch(function (e) {
+                    console.log(e);
+                  });
+                };
+
+                loadPhotos = function _ref3() {
+                  (0, _axios.default)("/api/v1/photos/").then(function (photosRes) {
+                    setPhotos(photosRes.data);
+                  }).catch(function (e) {
+                    console.log(e);
+                  });
+                };
+
                 setIsLoading(true);
-                _context.next = 3;
-                return (0, _axios.default)("/api/v1/locomotives/".concat(match.params.id)).then(function (locomotive) {
-                  if (!locomotive.data.locomotive.length) {
-                    history.push('/404');
-                  }
-
-                  setData(locomotive.data.locomotive);
-                });
-
-              case 3:
                 _context.next = 5;
-                return (0, _axios.default)("/api/v1/photos/").then(function (photosRes) {
-                  setPhotos(photosRes.data);
-                  setIsLoading(false);
-                });
+                return Promise.all([loadPhotos(), loadData()]);
 
               case 5:
               case "end":
@@ -91450,13 +91459,17 @@ var Edit = function Edit(_ref) {
     engine_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 9999').required('Required'),
     road: Yup.string().required('Required')
   });
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_FormActions.default, null, _react.default.createElement("h1", null, "Edit Locomotive"), _react.default.createElement(_evergreenUi.Button, {
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_FormActions.default, null, _react.default.createElement("h1", {
+    "data-testid": "locomotiveEdit-form"
+  }, "Edit Locomotive"), _react.default.createElement(_evergreenUi.Button, {
     iconBefore: "trash",
     intent: "danger",
     onClick: function onClick() {
       setIsDeleting(true);
     }
-  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
+  }, "Delete")), _react.default.createElement(_react.Fragment, null, isLoading ? _react.default.createElement("div", {
+    "data-testid": "loading"
+  }, "Loading ...") : _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_evergreenUi.Dialog, {
     intent: "danger",
     isShown: isDeleting,
     title: "Delete Locomotive",
@@ -91486,8 +91499,8 @@ var Edit = function Edit(_ref) {
       thumbnail: data[0].thumbnail || ''
     },
     validationSchema: EditSchema,
-    onSubmit: function onSubmit(values, _ref3) {
-      var setSubmitting = _ref3.setSubmitting;
+    onSubmit: function onSubmit(values, _ref5) {
+      var setSubmitting = _ref5.setSubmitting;
 
       _axios.default.put("/api/v1/locomotives/".concat(match.params.id), values).then(function () {
         setSubmitting(false);
@@ -91497,12 +91510,12 @@ var Edit = function Edit(_ref) {
         console.log(error);
       });
     }
-  }, function (_ref4) {
-    var errors = _ref4.errors,
-        touched = _ref4.touched,
-        handleSubmit = _ref4.handleSubmit,
-        setFieldValue = _ref4.setFieldValue,
-        values = _ref4.values;
+  }, function (_ref6) {
+    var errors = _ref6.errors,
+        touched = _ref6.touched,
+        handleSubmit = _ref6.handleSubmit,
+        setFieldValue = _ref6.setFieldValue,
+        values = _ref6.values;
     return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_Form.default, {
       errors: errors,
       touched: touched,

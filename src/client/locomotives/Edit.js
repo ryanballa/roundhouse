@@ -18,16 +18,32 @@ const Edit = ({ history, match }) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      await axios(`/api/v1/locomotives/${match.params.id}`).then(locomotive => {
-        if (!locomotive.data.locomotive.length) {
-          history.push('/404');
-        }
-        setData(locomotive.data.locomotive);
-      });
-      await axios(`/api/v1/photos/`).then(photosRes => {
-        setPhotos(photosRes.data);
-        setIsLoading(false);
-      });
+
+      function loadPhotos() {
+        axios(`/api/v1/photos/`)
+          .then(photosRes => {
+            setPhotos(photosRes.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+
+      function loadData() {
+        axios(`/api/v1/locomotives/${match.params.id}`)
+          .then(locomotive => {
+            if (!locomotive.data.locomotive.length) {
+              history.push('/404');
+            }
+            setData(locomotive.data.locomotive);
+            setIsLoading(false);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+
+      await Promise.all([loadPhotos(), loadData()]);
     };
     fetchData();
   }, []);
@@ -43,7 +59,7 @@ const Edit = ({ history, match }) => {
   return (
     <SingleColumn>
       <FormActions>
-        <h1>Edit Locomotive</h1>
+        <h1 data-testid="locomotiveEdit-form">Edit Locomotive</h1>
         <Button
           iconBefore="trash"
           intent="danger"
@@ -56,7 +72,7 @@ const Edit = ({ history, match }) => {
       </FormActions>
       <Fragment>
         {isLoading ? (
-          <div>Loading ...</div>
+          <div data-testid="loading">Loading ...</div>
         ) : (
           <Pane>
             <Dialog

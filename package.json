@@ -39,6 +39,7 @@
     "inline-style-prefixer": "^5.1.0",
     "jest-dom": "^3.5.0",
     "jest-mock-axios": "^3.0.0",
+    "jooks": "^0.0.16",
     "knex": "^0.18.2",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",

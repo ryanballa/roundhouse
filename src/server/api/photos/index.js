@@ -51,7 +51,7 @@ photos.post('/', (request, response) => {
 photos.put('/', (request, response) => {
   const photo = request.body;
 
-  ['locomotive_id', 'photo_id'].forEach(requiredParameter => {
+  ['path'].forEach(requiredParameter => {
     if (!photo[requiredParameter]) {
       return response.status(422).send({
         error: `Expected format: { path: <String> }. You're missing a "${requiredParameter}" property.`,
@@ -60,17 +60,15 @@ photos.put('/', (request, response) => {
     return null;
   });
 
-  database('locomotives_photos')
-    .insert(photo, 'id')
-    .then(photoResult => {
-      response.status(201).json({ id: photoResult[0] });
+  database('photos')
+    .where('id', photo.id)
+    .update(request.body)
+    .then(photoRes => {
+      response.status(200).json(photoRes);
     })
-    .catch(
-      /* istanbul ignore next */ error => {
-        /* istanbul ignore next */
-        response.status(500).json({ error });
-      },
-    );
+    .catch(error => {
+      response.status(500).json({ error });
+    });
 });
 
 photos.delete('/:photoId', (request, response) => {
@@ -84,12 +82,10 @@ photos.delete('/:photoId', (request, response) => {
         .del()
         .then(photo => {
           response.status(200).json(photo);
-        })
-        .catch(error => {
-          response.status(500).json({ error });
         });
     })
     .catch(error => {
+      /* istanbul ignore next */
       response.status(500).json({ error });
     });
 });

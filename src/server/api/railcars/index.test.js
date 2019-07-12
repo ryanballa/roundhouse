@@ -1,6 +1,5 @@
 const request = require('supertest');
 const app = require('../../index.js');
-const { railcars } = require('../../../../db/data');
 
 afterAll(async () => {
   app.close(() => {});

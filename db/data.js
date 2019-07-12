@@ -11,6 +11,14 @@ module.exports = {
   	  "user_id": 1
     }
   ],
+  photos: [
+    {
+      path: 'foo',
+    },
+    {
+      path: 'bar',
+    },
+  ],
   railcars: [
     {
       "road": "BN",
