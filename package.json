@@ -72,7 +72,7 @@
   },
   "scripts": {
     "build": "parcel build ./src/client/index.html",
-    "build-watch": "parcel watch ./src/client/index.html --log-level 5",
+    "build-watch": "parcel watch ./src/client/index.html",
     "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-watch\"",
     "lint": "eslint .",
     "migrate:test": "knex migrate:latest --env test",
