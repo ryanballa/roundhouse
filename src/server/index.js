@@ -26,6 +26,7 @@ app.get('*', (req, res) => {
 });
 
 /* istanbul ignore next */
-const server = app.listen(environment === 'test' ? 0 : 3000, () => {});
+const appPort = process.env.PORT || 5000;
+const server = app.listen(environment === 'test' ? 0 : appPort, () => {});
 
 module.exports = server;
