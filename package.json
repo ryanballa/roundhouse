@@ -35,6 +35,7 @@
     "formik": "^1.5.7",
     "glamor": ">=2",
     "glamorous": "^5.0.0",
+    "heroku": "^7.26.2",
     "http": "^0.0.0",
     "inline-style-prefixer": "^5.1.0",
     "jest-dom": "^3.5.0",
@@ -71,6 +72,9 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1"
+  },
+  "engines": {
+    "node": "10.x"
   },
   "scripts": {
     "build": "parcel build ./src/client/index.html",
