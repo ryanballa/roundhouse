@@ -85,7 +85,7 @@
     "migrate:test": "knex migrate:latest --env test",
     "start-watch": "nodemon ./src/server/index.js",
     "seed:test": "knex seed:run --env test",
-    "start": "npm run build && node ./src/server/index.js",
+    "start": "node ./src/server/index.js",
     "test": "NODE_ENV=test npm run migrate:test && npm run seed:test && jest --config config/jest/index.js"
   },
   "author": "",
