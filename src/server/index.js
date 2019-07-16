@@ -2,17 +2,23 @@ require('dotenv').config();
 require('marko/node-require');
 
 const express = require('express');
-const api = require('./api');
+
 const app = express();
 const path = require('path');
-const bodyParser = require('body-parser');
 /* istanbul ignore next */
 const environment = process.env.NODE_ENV || 'development';
+const url =
+  environment === 'development'
+    ? 'http://localhost:3000'
+    : 'https://roundhouseapp.herokuapp.com/';
 const cloudinary = require('cloudinary');
+
 const appPort = process.env.PORT || 3000;
 
 const session = require('express-session');
 const { ExpressOIDC } = require('@okta/oidc-middleware');
+
+const api = require('./api');
 
 app.use(
   session({
@@ -23,11 +29,11 @@ app.use(
 );
 
 const oidc = new ExpressOIDC({
-  appBaseUrl: 'https://localhost:3000',
+  appBaseUrl: url,
   issuer: `${process.env.OKTA_ORG}/oauth2/default`,
   client_id: process.env.OKTA_CLIENT_ID,
   client_secret: process.env.OKTA_CLIENT_SECRET,
-  redirect_uri: 'https://localhost:3000/authorization-code/callback',
+  redirect_uri: `${url}authorization-code/callback`,
   scope: 'openid profile',
 });
 
