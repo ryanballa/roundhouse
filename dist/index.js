@@ -91598,20 +91598,31 @@ function List(_ref) {
             switch (_context.prev = _context.next) {
               case 0:
                 setIsLoading(true);
-                _context.next = 3;
-                return (0, _axios.default)('/api/v1/locomotives');
+                _context.prev = 1;
+                _context.next = 4;
+                return (0, _axios.default)('/api/v1/locomotives1');
 
-              case 3:
+              case 4:
                 result = _context.sent;
                 setData(result.data);
+                _context.next = 12;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](1);
+                setIsLoading(false);
+                console.log(_context.t0);
+
+              case 12:
                 setIsLoading(false);
 
-              case 6:
+              case 13:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[1, 8]]);
       }));
 
       return function fetchData() {
@@ -91621,7 +91632,7 @@ function List(_ref) {
 
     fetchData();
   }, []);
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement("h1", null, "Locomotives"), isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement("ul", null, data.map(function (locomotive) {
+  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement("h1", null, "Locomotives"), isLoading ? _react.default.createElement("div", null, "Loading ...!") : _react.default.createElement("ul", null, data.map(function (locomotive) {
     return _react.default.createElement("li", {
       key: locomotive.id
     }, _react.default.createElement(_reactRouterDom.Link, {
@@ -100889,7 +100900,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59234" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57868" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

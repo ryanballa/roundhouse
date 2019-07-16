@@ -4,16 +4,22 @@ import { Link } from 'react-router-dom';
 import { Button } from 'evergreen-ui';
 import axios from 'axios';
 import SingleColumn from '../components/layout/SingleColumn';
+import { errorHandler } from '../utils/errorHandler';
 
 function List({ history }) {
   const [data, setData] = useState([{ id: '1', road: 'Test' }]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       setIsLoading(true);
-      const result = await axios('/api/v1/locomotives');
-      setData(result.data);
+      axios('/api/v1/locomotives')
+        .then(response => {
+          setData(response.data);
+        })
+        .catch(error => {
+          errorHandler(history, error.reponse, error.response.status);
+        });
       setIsLoading(false);
     };
     fetchData();

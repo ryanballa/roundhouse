@@ -9,6 +9,7 @@ const configuration = require('../../../../knexfile')[environment];
 const database = require('knex')(configuration);
 const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary').v2;
+const { loginRequired } = require('../../utils/loginRequired');
 
 // MULTER
 const multer = require('multer');
@@ -22,10 +23,21 @@ const storage = multer.diskStorage({
   },
 });
 
+function loginAuth(request, response) {
+  if (request.error) {
+    return response.status(request.statusCode).json({ data: request.error });
+  }
+  return null;
+}
+
 locomotives.use(bodyParser.urlencoded({ extended: false }));
 locomotives.use(bodyParser.json());
+locomotives.use((req, res, next) => {
+  loginRequired(req, res, next);
+});
 
 locomotives.get('/', (request, response) => {
+  loginAuth(request, response);
   const query = `SELECT * FROM locomotives`;
   return db
     .many(query)
@@ -41,6 +53,7 @@ locomotives.get('/', (request, response) => {
 });
 
 locomotives.post('/', (request, response) => {
+  loginAuth(request, response);
   const locomotive = request.body;
 
   ['road', 'location'].forEach(requiredParameter => {
@@ -63,6 +76,7 @@ locomotives.post('/', (request, response) => {
 });
 
 locomotives.get('/:locomotiveId', (request, response) => {
+  loginAuth(request, response);
   const id = request.params.locomotiveId;
   database('locomotives')
     .where('id', id)
@@ -125,10 +139,12 @@ function uploadToCloudinary(req, res) {
 }
 
 locomotives.post('/upload', (req, res) => {
+  loginAuth(req, res);
   uploadToCloudinary(req, res);
 });
 
 locomotives.put('/:locomotiveId', (request, response) => {
+  loginAuth(request, response);
   const id = request.params.locomotiveId;
   database('locomotives')
     .where('id', id)
@@ -142,6 +158,7 @@ locomotives.put('/:locomotiveId', (request, response) => {
 });
 
 locomotives.delete('/:locomotiveId', (request, response) => {
+  loginAuth(request, response);
   const id = request.params.locomotiveId;
   database('locomotives')
     .where('id', id)

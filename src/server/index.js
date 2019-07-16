@@ -8,37 +8,36 @@ const path = require('path');
 const bodyParser = require('body-parser');
 /* istanbul ignore next */
 const environment = process.env.NODE_ENV || 'development';
-const configuration = require('../../knexfile')[environment];
-const database = require('knex')(configuration);
 const cloudinary = require('cloudinary');
-const markoExpress = require('marko/express');
 
-const createError = require('http-errors');
-const logger = require('morgan');
 const session = require('express-session');
-const okta = require('@okta/okta-sdk-nodejs');
-const ExpressOIDC = require('@okta/oidc-middleware').ExpressOIDC;
+const { ExpressOIDC } = require('@okta/oidc-middleware');
 
-const oktaClient = new okta.Client({
-  orgUrl: process.env.OKTA_ORG,
-  token: process.env.OKTA_TOKEN_VALUE,
-});
+app.use(
+  session({
+    resave: true,
+    saveUninitialized: false,
+    secret: process.env.AUTH_STRING,
+  }),
+);
+
 const oidc = new ExpressOIDC({
+  appBaseUrl: 'http://localhost:3000',
   issuer: `${process.env.OKTA_ORG}/oauth2/default`,
   client_id: process.env.OKTA_CLIENT_ID,
   client_secret: process.env.OKTA_CLIENT_SECRET,
-  appBaseUrl: 'http://localhost:3000',
-  redirect_uri: 'http://localhost:3000/users/callback',
+  redirect_uri: 'http://localhost:3000/authorization-code/callback',
   scope: 'openid profile',
-  routes: {
-    login: {
-      path: '/users/login',
-    },
-    callback: {
-      path: '/users/callback',
-      defaultRedirect: '/locomotives',
-    },
-  },
+});
+
+app.use(oidc.router);
+
+app.get('/', (req, res) => {
+  if (req.userContext.userinfo) {
+    res.send(`Hi ${req.userContext.userinfo.name}!`);
+  } else {
+    res.send('Hi!');
+  }
 });
 
 cloudinary.config({
@@ -49,55 +48,39 @@ cloudinary.config({
 
 app.use('/', api);
 
-function loginRequired(req, res, next) {
-  if (!req.user) {
-    return res.status(401);
+app.use(express.static(path.join('dist')));
+
+app.get('/auth', (req, res) => {
+  if (!req.userContext) {
+    res.status(401).json({ error: 'User is not authorized.' });
   }
-  return next();
-}
-
-// app.use(express.static(path.join('dist')));
-app.use(markoExpress()); // enable res.marko(template, data)
-
-const template = require('./template.marko');
+  return res.status(200).json({ user: req.userContext.userinfo });
+});
 
 app.get('*', (req, res) => {
-  res.marko(template);
+  res.sendFile(path.join(`${__dirname}/../../dist/index.html`));
 });
 
-/* app.get('*', (req, res, next) => {
-  loginRequired(req, res, next);
-  res.sendFile(path.join(__dirname + '/../../dist/index.html'));
-}); */
-
-/* istanbul ignore next */
-const appPort = process.env.PORT || 5000;
-const server = app.listen(environment === 'test' ? 0 : appPort, () => {});
-
-app.use(
-  session({
-    resave: true,
-    saveUninitialized: false,
-    secret: process.env.AUTH_STRING,
-  }),
-);
-app.use(oidc.router);
-
-app.use((req, res, next) => {
-  if (!req.userinfo) {
-    return next();
-  }
-
-  oktaClient
-    .getUser(req.userinfo.sub)
-    .then(user => {
-      req.user = user;
-      res.locals.user = user;
-      next();
-    })
-    .catch(err => {
-      next(err);
-    });
+oidc.on('ready', () => {
+  const appPort = process.env.PORT || 3000;
+  app.listen(environment === 'test' ? 0 : appPort, () => {});
 });
 
-module.exports = server;
+oidc.on('error', err => {
+  console.log('Unable to configure ExpressOIDC', err);
+});
+
+module.exports = app;
+
+// let server;
+// /* istanbul ignore next */
+// oidc.on('ready', () => {
+//   const appPort = process.env.PORT || 3000;
+//   server = app.listen(environment === 'test' ? 0 : appPort, () => {});
+// });
+
+// oidc.on('error', err => {
+//   console.log('Unable to configure ExpressOIDC', err);
+// });
+
+// module.exports = server;

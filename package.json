@@ -31,6 +31,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
+    "esm": "^3.2.25",
     "evergreen-ui": "^4.17.0",
     "express": "^4.16.4",
     "express-session": "^1.16.2",
@@ -82,15 +83,15 @@
     "node": "10.x"
   },
   "scripts": {
-    "build": "parcel build ./src/client/index.js",
-    "build-watch": "parcel watch ./src/client/index.js",
+    "build": "parcel build ./src/client/index.html",
+    "build-watch": "parcel watch ./src/client/index.html",
     "cypress:open": "cypress open",
     "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-watch\"",
     "lint": "eslint .",
     "migrate:test": "knex migrate:latest --env test",
-    "start-watch": "nodemon ./src/server/index.js",
+    "start-watch": "nodemon -r esm ./src/server/index.js",
     "seed:test": "knex seed:run --env test",
-    "start": "node ./src/server/index.js",
+    "start": "npm run build && node ./src/server/index.js",
     "test": "NODE_ENV=test npm run migrate:test && npm run seed:test && jest --config config/jest/index.js"
   },
   "author": "",

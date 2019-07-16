@@ -20,7 +20,7 @@ function Railcars({ history }) {
   }, []);
 
   return (
-    <SingleColumn>
+    <SingleColumn history={history}>
       <h1>Railcars</h1>
       {isLoading ? (
         <div>Loading ...</div>

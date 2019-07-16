@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { colors, fontConfig } from '../../config/styles';
 import { styledComponent } from '../../utils/styledComponent';
@@ -16,16 +17,36 @@ const StyledSection = styledComponent('section', {
   margin: 30,
 });
 
-const SingleColumn = ({ children }) => (
-  <div>
-    <Header />
-    {/* <SubNavigation /> */}
-    <StyledSection>{children}</StyledSection>
-  </div>
-);
+const SingleColumn = ({ children, history }) => {
+  useEffect(() => {
+    const fetchData = () => {
+      axios('/auth')
+        .then(response => {
+          if (!response.data.user) {
+            history.push('/login');
+          }
+        })
+        .catch(err => {
+          history.push('/login');
+        });
+    };
+
+    fetchData();
+  }, []);
+  return (
+    <div>
+      <Header />
+      {/* <SubNavigation /> */}
+      <StyledSection>{children}</StyledSection>
+    </div>
+  );
+};
 
 SingleColumn.propTypes = {
   children: PropTypes.node.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default SingleColumn;
