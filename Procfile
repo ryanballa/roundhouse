@@ -1,1 +1,1 @@
-web: nodemon -r esm ./src/server/index.js
+web: node -r esm ./src/server/index.js

@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 /* istanbul ignore next */
 const environment = process.env.NODE_ENV || 'development';
 const cloudinary = require('cloudinary');
+const appPort = process.env.PORT || 3000;
 
 const session = require('express-session');
 const { ExpressOIDC } = require('@okta/oidc-middleware');
@@ -22,11 +23,11 @@ app.use(
 );
 
 const oidc = new ExpressOIDC({
-  appBaseUrl: 'http://localhost:3000',
+  appBaseUrl: 'https://localhost:3000',
   issuer: `${process.env.OKTA_ORG}/oauth2/default`,
   client_id: process.env.OKTA_CLIENT_ID,
   client_secret: process.env.OKTA_CLIENT_SECRET,
-  redirect_uri: 'http://localhost:3000/authorization-code/callback',
+  redirect_uri: 'https://localhost:3000/authorization-code/callback',
   scope: 'openid profile',
 });
 
@@ -62,7 +63,6 @@ app.get('*', (req, res) => {
 });
 
 oidc.on('ready', () => {
-  const appPort = process.env.PORT || 3000;
   app.listen(environment === 'test' ? 0 : appPort, () => {});
 });
 
