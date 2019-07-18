@@ -8,6 +8,7 @@ import List from './locomotives/List';
 import Upload from './photos/Upload';
 import Home from './pages/Home';
 import Error from './pages/Error';
+import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Railcars from './railcars/Railcars';
 import RailcarsAdd from './railcars/RailcarsAdd';
@@ -18,7 +19,7 @@ const Routes = ({ history }) => {
   useEffect(() => {
     const fetchData = () => {
       axios('/auth').then(response => {
-        if (!response.data.user) {
+        if (!response.data.status === 'success') {
           history.push('/login');
         }
       });
@@ -34,6 +35,7 @@ const Routes = ({ history }) => {
         <Route exact path="/404" component={NotFound} />
         <Route exact path="/locomotives" component={List} />
         <Route exact path="/photos/upload" component={Upload} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/locomotives/add" component={Add} />
         <Route exact path="/locomotives/:id" component={Edit} />
         <Route exact path="/photos" component={Photos} />

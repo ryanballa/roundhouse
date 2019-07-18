@@ -4,7 +4,7 @@ require('dotenv').config();
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/dev_roundhouse',
+    connection: 'postgres://localhost/dev-roundhouse',
     migrations: {
       directory: './db/migrations',
     },

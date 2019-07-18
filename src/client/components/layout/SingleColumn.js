@@ -22,7 +22,7 @@ const SingleColumn = ({ children, history }) => {
     const fetchData = () => {
       axios('/auth')
         .then(response => {
-          if (!response.data.user) {
+          if (!response.data.status === 'success') {
             history.push('/login');
           }
         })

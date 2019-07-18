@@ -86211,7 +86211,7 @@ var SingleColumn = function SingleColumn(_ref) {
   (0, _react.useEffect)(function () {
     var fetchData = function fetchData() {
       (0, _axios.default)('/auth').then(function (response) {
-        if (!response.data.user) {
+        if (!response.data.status === 'success') {
           history.push('/login');
         }
       }).catch(function (err) {
@@ -92012,7 +92012,99 @@ function Error() {
 
 var _default = Error;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/NotFound.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js"}],"pages/Login.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _formik = require("formik");
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _Error = _interopRequireDefault(require("../components/atoms/forms/Error"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function Login(_ref) {
+  var history = _ref.history;
+  return _react.default.createElement(_SingleColumn.default, {
+    history: history
+  }, _react.default.createElement("h1", null, "Login"), _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
+    initialValues: {
+      password: '',
+      username: ''
+    },
+    onSubmit: function onSubmit(values, _ref2) {
+      var setSubmitting = _ref2.setSubmitting;
+
+      _axios.default.post('/auth/login/', values).then(
+      /* istanbul ignore next */
+      function () {
+        /* istanbul ignore next */
+        _evergreenUi.toaster.success('Login Successful');
+
+        setSubmitting(false);
+      }).catch(function () {});
+    }
+  }, function (_ref3) {
+    var errors = _ref3.errors,
+        touched = _ref3.touched,
+        handleSubmit = _ref3.handleSubmit,
+        isSubmitting = _ref3.isSubmitting;
+    return _react.default.createElement("form", {
+      "data-testid": "locomotiveAdd-form",
+      onSubmit: handleSubmit
+    }, _react.default.createElement("ul", null, _react.default.createElement("li", {
+      "data-testid": "username"
+    }, _react.default.createElement(_evergreenUi.FormField, {
+      label: "Username"
+    }, _react.default.createElement(_formik.Field, {
+      id: "username",
+      type: "text",
+      name: "username",
+      placeholder: ""
+    })), _react.default.createElement(_Error.default, null, errors.username && touched.username ? _react.default.createElement("div", {
+      className: "error"
+    }, errors.username) : null)), _react.default.createElement("li", {
+      "data-testid": "password"
+    }, _react.default.createElement(_evergreenUi.FormField, {
+      label: "Password"
+    }, _react.default.createElement(_formik.Field, {
+      id: "password",
+      type: "text",
+      name: "password",
+      placeholder: ""
+    })), _react.default.createElement(_Error.default, null, errors.password && touched.password ? _react.default.createElement("div", {
+      className: "error"
+    }, errors.password) : null)), _react.default.createElement("li", null, _react.default.createElement(_evergreenUi.Button, {
+      type: "submit",
+      "data-testid": "login-submit",
+      disabled: isSubmitting
+    }, "Submit"))));
+  }))));
+}
+
+Login.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired
+};
+var _default = Login;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/atoms/forms/Error":"components/atoms/forms/Error.js"}],"pages/NotFound.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -92755,7 +92847,9 @@ function Photos(_ref) {
 
     fetchData();
   }, []);
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_evergreenUi.Dialog, {
+  return _react.default.createElement(_SingleColumn.default, {
+    history: history
+  }, _react.default.createElement(_evergreenUi.Dialog, {
     intent: "danger",
     isShown: isDeleting,
     title: "Delete Photo",
@@ -92829,6 +92923,8 @@ var _Home = _interopRequireDefault(require("./pages/Home"));
 
 var _Error = _interopRequireDefault(require("./pages/Error"));
 
+var _Login = _interopRequireDefault(require("./pages/Login"));
+
 var _NotFound = _interopRequireDefault(require("./pages/NotFound"));
 
 var _Railcars = _interopRequireDefault(require("./railcars/Railcars"));
@@ -92848,7 +92944,7 @@ var Routes = function Routes(_ref) {
   (0, _react.useEffect)(function () {
     var fetchData = function fetchData() {
       (0, _axios.default)('/auth').then(function (response) {
-        if (!response.data.user) {
+        if (!response.data.status === 'success') {
           history.push('/login');
         }
       });
@@ -92874,6 +92970,10 @@ var Routes = function Routes(_ref) {
     exact: true,
     path: "/photos/upload",
     component: _Upload.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/login",
+    component: _Login.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/locomotives/add",
@@ -92914,7 +93014,7 @@ Routes.propTypes = {
 var _default = (0, _reactRouterDom.withRouter)(Routes);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../../node_modules/axios/index.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./photos/Upload":"photos/Upload.js","./pages/Home":"pages/Home.js","./pages/Error":"pages/Error.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js","./railcars/RailcarsAdd":"railcars/RailcarsAdd.js","./railcars/RailcarsView":"railcars/RailcarsView.js","./photos/Photos":"photos/Photos.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../../node_modules/axios/index.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./photos/Upload":"photos/Upload.js","./pages/Home":"pages/Home.js","./pages/Error":"pages/Error.js","./pages/Login":"pages/Login.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js","./railcars/RailcarsAdd":"railcars/RailcarsAdd.js","./railcars/RailcarsView":"railcars/RailcarsView.js","./photos/Photos":"photos/Photos.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -100956,7 +101056,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49957" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60754" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

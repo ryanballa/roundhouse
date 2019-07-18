@@ -2,6 +2,11 @@ require('dotenv').config();
 require('marko/node-require');
 
 const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 
 const app = express();
 const path = require('path');
@@ -15,38 +20,55 @@ const cloudinary = require('cloudinary');
 
 const appPort = process.env.PORT || 3000;
 
-const session = require('express-session');
-const { ExpressOIDC } = require('@okta/oidc-middleware');
+// const session = require('express-session');
+// const { ExpressOIDC } = require('@okta/oidc-middleware');
 
+const authRoutes = require('./auth');
 const api = require('./api');
 
+// Setup Sessions
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+// uncomment if using express-session
 app.use(
   session({
-    resave: true,
-    saveUninitialized: false,
-    secret: process.env.AUTH_STRING,
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
   }),
 );
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
-const oidc = new ExpressOIDC({
-  appBaseUrl: url,
-  issuer: `${process.env.OKTA_ORG}/oauth2/default`,
-  client_id: process.env.OKTA_CLIENT_ID,
-  client_secret: process.env.OKTA_CLIENT_SECRET,
-  redirect_uri: `${url}/authorization-code/callback`,
-  scope: 'openid profile',
-});
+// app.use(
+//   session({
+//     resave: true,
+//     saveUninitialized: false,
+//     secret: process.env.AUTH_STRING,
+//   }),
+// );
 
-app.use(oidc.router);
+// const oidc = new ExpressOIDC({
+//   appBaseUrl: url,
+//   issuer: `${process.env.OKTA_ORG}/oauth2/default`,
+//   client_id: process.env.OKTA_CLIENT_ID,
+//   client_secret: process.env.OKTA_CLIENT_SECRET,
+//   redirect_uri: `${url}/authorization-code/callback`,
+//   scope: 'openid profile',
+// });
 
-app.get('/', (req, res) => {
-  if (req.userContext) {
-    console.log(req.userContext.userinfo);
-    res.send(`Hi ${req.userContext.userinfo.name}!`);
-  } else {
-    res.send('Hi!');
-  }
-});
+// app.use(oidc.router);
+
+// app.get('/', (req, res) => {
+//   if (req.userContext) {
+//     console.log(req.userContext.userinfo);
+//     res.send(`Hi ${req.userContext.userinfo.name}!`);
+//   } else {
+//     res.send('Hi!');
+//   }
+// });
 
 cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -55,27 +77,28 @@ cloudinary.config({
 });
 
 app.use('/', api);
+app.use('/', authRoutes);
 
 app.use(express.static(path.join('dist')));
 
-app.get('/auth', (req, res) => {
-  if (!req.userContext) {
-    res.status(401).json({ error: 'User is not authorized.' });
-  }
-  return res.status(200).json({ user: req.userContext.userinfo });
-});
+// app.get('/auth', (req, res) => {
+//   if (!req.userContext) {
+//     res.status(401).json({ error: 'User is not authorized.' });
+//   }
+//   return res.status(200).json({ user: req.userContext.userinfo });
+// });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../../dist/index.html`));
 });
 
-oidc.on('ready', () => {
-  app.listen(environment === 'test' ? 0 : appPort, () => {});
-});
+//oidc.on('ready', () => {
+app.listen(environment === 'test' ? 0 : appPort, () => {});
+//});
 
-oidc.on('error', err => {
-  console.log('Unable to configure ExpressOIDC', err);
-});
+// oidc.on('error', err => {
+//   console.log('Unable to configure ExpressOIDC', err);
+// });
 
 module.exports = app;
 

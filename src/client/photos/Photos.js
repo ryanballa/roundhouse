@@ -23,7 +23,7 @@ function Photos({ history }) {
   }, []);
 
   return (
-    <SingleColumn>
+    <SingleColumn history={history}>
       <Dialog
         intent="danger"
         isShown={isDeleting}
