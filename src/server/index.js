@@ -40,7 +40,8 @@ const oidc = new ExpressOIDC({
 app.use(oidc.router);
 
 app.get('/', (req, res) => {
-  if (req.userContext.userinfo) {
+  if (req.userContext) {
+    console.log(req.userContext.userinfo);
     res.send(`Hi ${req.userContext.userinfo.name}!`);
   } else {
     res.send('Hi!');
