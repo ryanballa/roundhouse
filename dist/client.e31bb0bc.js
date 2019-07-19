@@ -92170,7 +92170,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
 var _evergreenUi = require("evergreen-ui");
 
@@ -92184,11 +92184,22 @@ var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleC
 
 var _Error = _interopRequireDefault(require("../components/atoms/forms/Error"));
 
+var _styledComponent = require("../utils/styledComponent");
+
 var _UserProvider = require("../UserProvider");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+var Form = (0, _styledComponent.styledComponent)('div', {
+  '& li': {
+    listStyle: 'none',
+    marginBottom: '15px'
+  },
+  '& ul': {
+    paddingLeft: 0
+  },
+  paddingTop: '5px'
+});
 
 function Login(_ref) {
   var history = _ref.history;
@@ -92199,7 +92210,7 @@ function Login(_ref) {
 
   return _react.default.createElement(_SingleColumn.default, {
     history: history
-  }, _react.default.createElement("h1", null, "Login"), _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
+  }, _react.default.createElement("h1", null, "Login"), _react.default.createElement(Form, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
     initialValues: {
       password: '',
       username: ''
@@ -92269,7 +92280,7 @@ Login.propTypes = {
 };
 var _default = Login;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/atoms/forms/Error":"components/atoms/forms/Error.js","../UserProvider":"UserProvider.js"}],"pages/Logout.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/atoms/forms/Error":"components/atoms/forms/Error.js","../utils/styledComponent":"utils/styledComponent.js","../UserProvider":"UserProvider.js"}],"pages/Logout.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

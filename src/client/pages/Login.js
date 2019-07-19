@@ -1,11 +1,23 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Button, FormField, Pane, toaster } from 'evergreen-ui';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Field, Formik } from 'formik';
 import SingleColumn from '../components/layout/SingleColumn';
 import Error from '../components/atoms/forms/Error';
+import { styledComponent } from '../utils/styledComponent';
 import { userState, userDispatch } from '../UserProvider';
+
+const Form = styledComponent('div', {
+  '& li': {
+    listStyle: 'none',
+    marginBottom: '15px',
+  },
+  '& ul': {
+    paddingLeft: 0,
+  },
+  paddingTop: '5px',
+});
 
 function Login({ history }) {
   const dispatch = userDispatch();
@@ -13,7 +25,7 @@ function Login({ history }) {
   return (
     <SingleColumn history={history}>
       <h1>Login</h1>
-      <Fragment>
+      <Form>
         <Pane>
           <Formik
             initialValues={{
@@ -84,7 +96,7 @@ function Login({ history }) {
             )}
           </Formik>
         </Pane>
-      </Fragment>
+      </Form>
     </SingleColumn>
   );
 }
