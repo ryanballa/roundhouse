@@ -38,7 +38,7 @@ locomotives.use((req, res, next) => {
 
 locomotives.get('/', (request, response) => {
   loginAuth(request, response);
-  const query = `SELECT * FROM locomotives`;
+  const query = `SELECT * FROM locomotives WHERE user_id=${request.user.id}`;
   return db
     .many(query)
     .then(res => {
@@ -56,7 +56,11 @@ locomotives.post('/', (request, response) => {
   loginAuth(request, response);
   const locomotive = request.body;
 
-  ['road', 'location'].forEach(requiredParameter => {
+  if (request.user.id !== request.body.user_id) {
+    response.status(403).json({});
+  }
+
+  ['road', 'location', 'user_id'].forEach(requiredParameter => {
     if (!locomotive[requiredParameter]) {
       return response.status(422).send({
         error: `Expected format: { location: <String>, road: <String> }. You're missing a "${requiredParameter}" property.`,
@@ -92,6 +96,9 @@ locomotives.get('/:locomotiveId', (request, response) => {
             locomotive,
             photos,
           };
+          if (request.user.id !== locomotive[0].user_id) {
+            response.status(403).json({});
+          }
           response.status(200).json(result);
         })
         .catch(error => {
@@ -146,6 +153,9 @@ locomotives.post('/upload', (req, res) => {
 locomotives.put('/:locomotiveId', (request, response) => {
   loginAuth(request, response);
   const id = request.params.locomotiveId;
+  if (request.user.id !== request.body.user_id) {
+    response.status(403).json({});
+  }
   database('locomotives')
     .where('id', id)
     .update(request.body)
@@ -160,6 +170,13 @@ locomotives.put('/:locomotiveId', (request, response) => {
 locomotives.delete('/:locomotiveId', (request, response) => {
   loginAuth(request, response);
   const id = request.params.locomotiveId;
+  database('locomotives')
+    .where('id', id)
+    .then(locomotive => {
+      if (request.user.id !== locomotive[0].user_id) {
+        response.status(403).json({});
+      }
+    });
   database('locomotives')
     .where('id', id)
     .del()

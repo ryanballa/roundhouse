@@ -8,12 +8,14 @@ import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
 import FormActions from '../components/organisms/FormActions';
 import Form from './components/Form';
+import { userState } from '../UserProvider';
 
 const Edit = ({ history, match }) => {
   const [data, setData] = useState([{ engine_number: '123', road: 'Test' }]);
   const [photos, setPhotos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { user } = userState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +59,7 @@ const Edit = ({ history, match }) => {
   });
 
   return (
-    <SingleColumn>
+    <SingleColumn history={history}>
       <FormActions>
         <h1 data-testid="locomotiveEdit-form">Edit Locomotive</h1>
         <Button
@@ -107,6 +109,7 @@ const Edit = ({ history, match }) => {
                   : undefined,
                 road: data[0].road,
                 thumbnail: data[0].thumbnail || '',
+                user_id: user ? user.id : null,
               }}
               validationSchema={EditSchema}
               onSubmit={(values, { setSubmitting }) => {

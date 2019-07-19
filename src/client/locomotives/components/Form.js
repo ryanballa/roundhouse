@@ -103,6 +103,9 @@ const Form = ({
               <img src={values.thumbnail} width="200" alt="" />
             )}
           </li>
+          <li>
+            <Field type="hidden" name="user_id" />
+          </li>
           <li data-testid="road">
             <FormField label="Road">
               <Field id="road" type="text" name="road" placeholder="" />
