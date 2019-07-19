@@ -40,7 +40,7 @@ locomotives.get('/', (request, response) => {
   loginAuth(request, response);
   const query = `SELECT * FROM locomotives WHERE user_id=${request.user.id}`;
   return db
-    .many(query)
+    .manyOrNone(query)
     .then(res => {
       response.status(200).json(res);
     })

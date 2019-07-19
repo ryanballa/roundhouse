@@ -92584,6 +92584,9 @@ var Form = function Form(_ref) {
     src: values.thumbnail,
     width: "200",
     alt: ""
+  })), _react.default.createElement("li", null, _react.default.createElement(_formik.Field, {
+    type: "hidden",
+    name: "user_id"
   })), _react.default.createElement("li", {
     "data-testid": "road"
   }, _react.default.createElement(_evergreenUi.FormField, {
@@ -92682,6 +92685,8 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
 var _evergreenUi = require("evergreen-ui");
 
 var _formik = require("formik");
@@ -92694,11 +92699,15 @@ var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleC
 
 var _Form = _interopRequireDefault(require("./components/Form"));
 
+var _UserProvider = require("../UserProvider");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function RailcarsAdd() {
+function RailcarsAdd(_ref) {
+  var history = _ref.history;
+
   var _useState = (0, _react.useState)([]),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       photos = _useState2[0],
@@ -92709,11 +92718,14 @@ function RailcarsAdd() {
       isLoading = _useState4[0],
       setIsLoading = _useState4[1];
 
+  var _userState = (0, _UserProvider.userState)(),
+      user = _userState.user;
+
   (0, _react.useEffect)(function () {
     var fetchData =
     /*#__PURE__*/
     function () {
-      var _ref = (0, _asyncToGenerator2.default)(
+      var _ref2 = (0, _asyncToGenerator2.default)(
       /*#__PURE__*/
       _regenerator.default.mark(function _callee() {
         return _regenerator.default.wrap(function _callee$(_context) {
@@ -92736,7 +92748,7 @@ function RailcarsAdd() {
       }));
 
       return function fetchData() {
-        return _ref.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       };
     }();
 
@@ -92756,18 +92768,20 @@ function RailcarsAdd() {
     car_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 4').required('Required'),
     road: Yup.string().required('Required')
   });
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
+  return _react.default.createElement(_SingleColumn.default, {
+    history: history
+  }, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
     initialValues: {
       car_number: data[0].car_number || '',
       is_dcc: data[0].is_dcc,
       is_operational: data[0].is_operational,
       location: data[0].location,
       road: data[0].road,
-      user_id: 1
+      user_id: user ? user.id : ''
     },
     validationSchema: EditSchema,
-    onSubmit: function onSubmit(values, _ref2) {
-      var setSubmitting = _ref2.setSubmitting;
+    onSubmit: function onSubmit(values, _ref3) {
+      var setSubmitting = _ref3.setSubmitting;
 
       _axios.default.post('/api/v1/railcars/', values).then(
       /* istanbul ignore next */
@@ -92778,12 +92792,12 @@ function RailcarsAdd() {
         setSubmitting(false);
       }).catch(function () {});
     }
-  }, function (_ref3) {
-    var errors = _ref3.errors,
-        touched = _ref3.touched,
-        handleSubmit = _ref3.handleSubmit,
-        setFieldValue = _ref3.setFieldValue,
-        values = _ref3.values;
+  }, function (_ref4) {
+    var errors = _ref4.errors,
+        touched = _ref4.touched,
+        handleSubmit = _ref4.handleSubmit,
+        setFieldValue = _ref4.setFieldValue,
+        values = _ref4.values;
     return _react.default.createElement(_Form.default, {
       errors: errors,
       touched: touched,
@@ -92795,9 +92809,14 @@ function RailcarsAdd() {
   }))));
 }
 
+RailcarsAdd.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired
+};
 var _default = RailcarsAdd;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","./components/Form":"railcars/components/Form.js"}],"railcars/RailcarsView.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","./components/Form":"railcars/components/Form.js","../UserProvider":"UserProvider.js"}],"railcars/RailcarsView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -92831,6 +92850,8 @@ var _FormActions = _interopRequireDefault(require("../components/organisms/FormA
 
 var _Form = _interopRequireDefault(require("./components/Form"));
 
+var _UserProvider = require("../UserProvider");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -92861,6 +92882,9 @@ var RailcarsEdit = function RailcarsEdit(_ref) {
       _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
       isDeleting = _useState8[0],
       setIsDeleting = _useState8[1];
+
+  var _userState = (0, _UserProvider.userState)(),
+      user = _userState.user;
 
   (0, _react.useEffect)(function () {
     var fetchData =
@@ -92909,7 +92933,9 @@ var RailcarsEdit = function RailcarsEdit(_ref) {
     car_number: Yup.number().min(3, 'Numbers need to be at least 3 numbers').max(9999, 'Numbers cannot be more than 9999').required('Required'),
     road: Yup.string().required('Required')
   });
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement(_FormActions.default, null, _react.default.createElement("h1", null, "Edit Railcar"), _react.default.createElement(_evergreenUi.Button, {
+  return _react.default.createElement(_SingleColumn.default, {
+    history: history
+  }, _react.default.createElement(_FormActions.default, null, _react.default.createElement("h1", null, "Edit Railcar"), _react.default.createElement(_evergreenUi.Button, {
     iconBefore: "trash",
     intent: "danger",
     onClick: function onClick() {
@@ -92941,7 +92967,8 @@ var RailcarsEdit = function RailcarsEdit(_ref) {
       location: data[0].location,
       purchased_on: (0, _moment.default)(data[0].purchased_on).isValid() ? (0, _moment.default)(data[0].purchased_on).format('YYYY-MM-DD') : undefined,
       road: data[0].road,
-      thumbnail: data[0].thumbnail || ''
+      thumbnail: data[0].thumbnail || '',
+      user_id: user ? user.id : ''
     },
     validationSchema: EditSchema,
     onSubmit: function onSubmit(values, _ref3) {
@@ -92984,7 +93011,7 @@ RailcarsEdit.propTypes = {
 };
 var _default = RailcarsEdit;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","moment":"../../node_modules/moment/moment.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/organisms/FormActions":"components/organisms/FormActions.js","./components/Form":"railcars/components/Form.js"}],"photos/Photos.js":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","moment":"../../node_modules/moment/moment.js","prop-types":"../../node_modules/prop-types/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","axios":"../../node_modules/axios/index.js","yup":"../../node_modules/yup/lib/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/organisms/FormActions":"components/organisms/FormActions.js","./components/Form":"railcars/components/Form.js","../UserProvider":"UserProvider.js"}],"photos/Photos.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

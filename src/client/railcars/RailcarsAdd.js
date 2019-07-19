@@ -1,14 +1,17 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Pane, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
 import Form from './components/Form';
+import { userState } from '../UserProvider';
 
-function RailcarsAdd() {
+function RailcarsAdd({ history }) {
   const [photos, setPhotos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = userState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +37,7 @@ function RailcarsAdd() {
   });
 
   return (
-    <SingleColumn>
+    <SingleColumn history={history}>
       <Fragment>
         <Pane>
           <Formik
@@ -44,7 +47,7 @@ function RailcarsAdd() {
               is_operational: data[0].is_operational,
               location: data[0].location,
               road: data[0].road,
-              user_id: 1,
+              user_id: user ? user.id : '',
             }}
             validationSchema={EditSchema}
             onSubmit={(values, { setSubmitting }) => {
@@ -76,5 +79,11 @@ function RailcarsAdd() {
     </SingleColumn>
   );
 }
+
+RailcarsAdd.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default RailcarsAdd;
