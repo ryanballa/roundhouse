@@ -1,12 +1,9 @@
-/* eslint-disable import/order */
 /* eslint-disable no-template-curly-in-string */
 const fs = require('fs');
 const locomotives = require('express').Router();
 const { db } = require('../../../../pgAdaptor');
-/* istanbul ignore next */
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('../../../../knexfile')[environment];
-const database = require('knex')(configuration);
+const database = require('../../serverConnection');
+
 const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary').v2;
 const { loginRequired } = require('../../utils/loginRequired');

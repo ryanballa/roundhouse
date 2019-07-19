@@ -3,9 +3,7 @@
 const railcars = require('express').Router();
 const { db } = require('../../../../pgAdaptor');
 /* istanbul ignore next */
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('../../../../knexfile')[environment];
-const database = require('knex')(configuration);
+const database = require('../../serverConnection');
 const bodyParser = require('body-parser');
 const { loginRequired } = require('../../utils/loginRequired');
 

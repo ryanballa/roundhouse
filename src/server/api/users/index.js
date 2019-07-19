@@ -1,10 +1,6 @@
-/* eslint-disable import/order */
 const users = require('express').Router();
-/* istanbul ignore next */
-const environment = process.env.NODE_ENV || 'development';
-const configuration = require('../../../../knexfile')[environment];
-const database = require('knex')(configuration);
 const bodyParser = require('body-parser');
+const database = require('../../serverConnection');
 
 users.use(bodyParser.urlencoded({ extended: false }));
 users.use(bodyParser.json());

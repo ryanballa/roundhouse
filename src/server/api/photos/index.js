@@ -1,10 +1,6 @@
-/* eslint-disable import/order */
 const photos = require('express').Router();
-/* istanbul ignore next */
-const environment = process.env.NODE_ENV || 'development';
 const bodyParser = require('body-parser');
-const configuration = require('../../../../knexfile')[environment];
-const database = require('knex')(configuration);
+const database = require('../../serverConnection');
 
 photos.use(bodyParser.urlencoded({ extended: false }));
 photos.use(bodyParser.json());
