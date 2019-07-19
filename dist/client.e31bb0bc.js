@@ -86176,7 +86176,47 @@ function userDispatch() {
 UserProvider.propTypes = {
   children: _propTypes.default.node.isRequired
 };
-},{"@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js"}],"components/organisms/Header.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js"}],"components/organisms/UserMenu.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _styledComponent = require("../../utils/styledComponent");
+
+var _UserProvider = require("../../UserProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { colors } from '../../config/styles';
+var StyledUserMenu = (0, _styledComponent.styledComponent)('menu', {
+  '& li': {
+    color: 'black',
+    display: 'inline',
+    listStyle: 'none',
+    marginRight: '20px'
+  },
+  marginLeft: 'auto'
+});
+
+var UserMenu = function UserMenu() {
+  var _userState = (0, _UserProvider.userState)(),
+      user = _userState.user;
+
+  return _react.default.createElement(StyledUserMenu, null, _react.default.createElement("ul", null, _react.default.createElement("li", null, user && user.username), _react.default.createElement("li", null, user && _react.default.createElement(_reactRouterDom.Link, {
+    to: "/logout"
+  }, "Logout"))));
+};
+
+var _default = UserMenu;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js","../../UserProvider":"UserProvider.js"}],"components/organisms/Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86196,7 +86236,7 @@ var _styles = require("../../config/styles");
 
 var _MainNavigation = _interopRequireDefault(require("./MainNavigation"));
 
-var _UserProvider = require("../../UserProvider");
+var _UserMenu = _interopRequireDefault(require("./UserMenu"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -86205,6 +86245,7 @@ var StyledHeader = (0, _styledComponent.styledComponent)('header', {
     display: 'inline',
     margin: 0
   }, _styles.fontConfig.h1),
+  alignItems: 'center',
   backgroundColor: '#dedede',
   boxShadow: '1px 1px 1px rgba(0, 0, 0, 0.3)',
   color: '#FFFFFF',
@@ -86214,9 +86255,6 @@ var StyledHeader = (0, _styledComponent.styledComponent)('header', {
 });
 
 var Header = function Header() {
-  var _userState = (0, _UserProvider.userState)(),
-      user = _userState.user;
-
   return _react.default.createElement(StyledHeader, null, _react.default.createElement("h1", null, _react.default.createElement(_reactRouterDom.Link, {
     to: "/"
   }, _react.default.createElement("svg", {
@@ -86247,14 +86285,12 @@ var Header = function Header() {
     clipRule: "evenodd",
     d: "M94.6211 33.4631L5.86404 10.6568C6.67632 10.1055 7.56558 9.56925 8.52712 9.04962L99.0919 31.9927C97.6829 32.5097 96.1902 33.0006 94.6211 33.4631ZM100.713 31.3717L9.86929 8.35805C11.4808 7.56559 13.2656 6.81587 15.2053 6.11502L104.579 29.6343C103.387 30.2383 102.096 30.8184 100.713 31.3717ZM22.5077 3.8943C20.5342 4.39787 18.6617 4.94361 16.9021 5.52751L105.88 28.9428C107.376 28.1089 108.688 27.2337 109.796 26.3233L22.5077 3.8943Z",
     fill: "#343434"
-  })))), _react.default.createElement(_MainNavigation.default, null), user && _react.default.createElement(_reactRouterDom.Link, {
-    to: "/logout"
-  }, user.username));
+  })))), _react.default.createElement(_MainNavigation.default, null), _react.default.createElement(_UserMenu.default, null));
 };
 
 var _default = Header;
 exports.default = _default;
-},{"@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","./MainNavigation":"components/organisms/MainNavigation.js","../../UserProvider":"UserProvider.js"}],"components/layout/SingleColumn.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","./MainNavigation":"components/organisms/MainNavigation.js","./UserMenu":"components/organisms/UserMenu.js"}],"components/layout/SingleColumn.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { styledComponent } from '../../utils/styledComponent';
 import { fontConfig, spacing } from '../../config/styles';
 import MainNavigation from './MainNavigation';
-import { userState } from '../../UserProvider';
-
+import UserMenu from './UserMenu';
 
 const StyledHeader = styledComponent('header', {
   '& h1': {
@@ -12,6 +11,7 @@ const StyledHeader = styledComponent('header', {
     margin: 0,
     ...fontConfig.h1,
   },
+  alignItems: 'center',
   backgroundColor: '#dedede',
   boxShadow: '1px 1px 1px rgba(0, 0, 0, 0.3)',
   color: '#FFFFFF',
@@ -21,7 +21,6 @@ const StyledHeader = styledComponent('header', {
 });
 
 const Header = () => {
-  const { user } = userState();
   return (
     <StyledHeader>
       <h1>
@@ -53,7 +52,7 @@ const Header = () => {
         </Link>
       </h1>
       <MainNavigation />
-      {user && <Link to="/logout">{user.username}</Link>}
+      <UserMenu />
     </StyledHeader>
   );
 };
