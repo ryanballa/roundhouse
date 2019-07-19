@@ -5,8 +5,11 @@ import PropTypes from 'prop-types';
 import { Field, Formik } from 'formik';
 import SingleColumn from '../components/layout/SingleColumn';
 import Error from '../components/atoms/forms/Error';
+import { userState, userDispatch } from '../UserProvider';
 
 function Login({ history }) {
+  const dispatch = userDispatch();
+  const { user } = userState();
   return (
     <SingleColumn history={history}>
       <h1>Login</h1>
@@ -19,12 +22,16 @@ function Login({ history }) {
             }}
             onSubmit={(values, { setSubmitting }) => {
               axios
-                .post('/auth/login/', values)
+                .post('auth/login/', values)
                 .then(
-                  /* istanbul ignore next */ () => {
+                  /* istanbul ignore next */ data => {
+                    dispatch({ type: 'set', user: data });
+                    console.log(user);
                     /* istanbul ignore next */
                     toaster.success('Login Successful');
                     setSubmitting(false);
+                    console.log(user);
+                    history.push('/locomotives');
                   },
                 )
                 .catch(() => {});

@@ -26,7 +26,7 @@ function List({ history }) {
   }, []);
 
   return (
-    <SingleColumn>
+    <SingleColumn history={history}>
       <h1>Locomotives</h1>
       {isLoading ? (
         <div>Loading ...</div>

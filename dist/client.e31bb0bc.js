@@ -86098,7 +86098,85 @@ var MainNavigation = function MainNavigation() {
 
 var _default = MainNavigation;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js"}],"components/organisms/Header.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js"}],"UserProvider.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserProvider = UserProvider;
+exports.userState = userState;
+exports.userDispatch = userDispatch;
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var UserStateContext = _react.default.createContext();
+
+var UserDispatchContext = _react.default.createContext();
+
+function userReducer(state, action) {
+  switch (action.type) {
+    case 'set':
+      {
+        return {
+          user: action.user ? action.user.data.status : null
+        };
+      }
+
+    default:
+      {
+        throw new Error("Unhandled action type: ".concat(action.type));
+      }
+  }
+}
+
+function UserProvider(_ref) {
+  var children = _ref.children;
+
+  var _React$useReducer = _react.default.useReducer(userReducer, {
+    user: null
+  }),
+      _React$useReducer2 = (0, _slicedToArray2.default)(_React$useReducer, 2),
+      state = _React$useReducer2[0],
+      dispatch = _React$useReducer2[1];
+
+  return _react.default.createElement(UserStateContext.Provider, {
+    value: state
+  }, _react.default.createElement(UserDispatchContext.Provider, {
+    value: dispatch
+  }, children));
+}
+
+function userState() {
+  var context = _react.default.useContext(UserStateContext);
+
+  if (context === undefined) {
+    throw new Error('userState must be used within a UserProvider');
+  }
+
+  return context;
+}
+
+function userDispatch() {
+  var context = _react.default.useContext(UserDispatchContext);
+
+  if (context === undefined) {
+    throw new Error('userDispatch must be used within a UserProvider');
+  }
+
+  return context;
+}
+
+UserProvider.propTypes = {
+  children: _propTypes.default.node.isRequired
+};
+},{"@babel/runtime/helpers/slicedToArray":"../../node_modules/@babel/runtime/helpers/slicedToArray.js","react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js"}],"components/organisms/Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -86118,6 +86196,8 @@ var _styles = require("../../config/styles");
 
 var _MainNavigation = _interopRequireDefault(require("./MainNavigation"));
 
+var _UserProvider = require("../../UserProvider");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var StyledHeader = (0, _styledComponent.styledComponent)('header', {
@@ -86134,6 +86214,9 @@ var StyledHeader = (0, _styledComponent.styledComponent)('header', {
 });
 
 var Header = function Header() {
+  var _userState = (0, _UserProvider.userState)(),
+      user = _userState.user;
+
   return _react.default.createElement(StyledHeader, null, _react.default.createElement("h1", null, _react.default.createElement(_reactRouterDom.Link, {
     to: "/"
   }, _react.default.createElement("svg", {
@@ -86164,12 +86247,14 @@ var Header = function Header() {
     clipRule: "evenodd",
     d: "M94.6211 33.4631L5.86404 10.6568C6.67632 10.1055 7.56558 9.56925 8.52712 9.04962L99.0919 31.9927C97.6829 32.5097 96.1902 33.0006 94.6211 33.4631ZM100.713 31.3717L9.86929 8.35805C11.4808 7.56559 13.2656 6.81587 15.2053 6.11502L104.579 29.6343C103.387 30.2383 102.096 30.8184 100.713 31.3717ZM22.5077 3.8943C20.5342 4.39787 18.6617 4.94361 16.9021 5.52751L105.88 28.9428C107.376 28.1089 108.688 27.2337 109.796 26.3233L22.5077 3.8943Z",
     fill: "#343434"
-  })))), _react.default.createElement(_MainNavigation.default, null));
+  })))), _react.default.createElement(_MainNavigation.default, null), user && _react.default.createElement(_reactRouterDom.Link, {
+    to: "/logout"
+  }, user.username));
 };
 
 var _default = Header;
 exports.default = _default;
-},{"@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","./MainNavigation":"components/organisms/MainNavigation.js"}],"components/layout/SingleColumn.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/objectSpread":"../../node_modules/@babel/runtime/helpers/objectSpread.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","../../utils/styledComponent":"utils/styledComponent.js","../../config/styles":"config/styles.js","./MainNavigation":"components/organisms/MainNavigation.js","../../UserProvider":"UserProvider.js"}],"components/layout/SingleColumn.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -91632,7 +91717,9 @@ function List(_ref) {
 
     fetchData();
   }, []);
-  return _react.default.createElement(_SingleColumn.default, null, _react.default.createElement("h1", null, "Locomotives"), isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement("ul", null, data.map(function (locomotive) {
+  return _react.default.createElement(_SingleColumn.default, {
+    history: history
+  }, _react.default.createElement("h1", null, "Locomotives"), isLoading ? _react.default.createElement("div", null, "Loading ...") : _react.default.createElement("ul", null, data.map(function (locomotive) {
     return _react.default.createElement("li", {
       key: locomotive.id
     }, _react.default.createElement(_reactRouterDom.Link, {
@@ -92034,12 +92121,19 @@ var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleC
 
 var _Error = _interopRequireDefault(require("../components/atoms/forms/Error"));
 
+var _UserProvider = require("../UserProvider");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function Login(_ref) {
   var history = _ref.history;
+  var dispatch = (0, _UserProvider.userDispatch)();
+
+  var _userState = (0, _UserProvider.userState)(),
+      user = _userState.user;
+
   return _react.default.createElement(_SingleColumn.default, {
     history: history
   }, _react.default.createElement("h1", null, "Login"), _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, _react.default.createElement(_formik.Formik, {
@@ -92050,13 +92144,21 @@ function Login(_ref) {
     onSubmit: function onSubmit(values, _ref2) {
       var setSubmitting = _ref2.setSubmitting;
 
-      _axios.default.post('/auth/login/', values).then(
+      _axios.default.post('auth/login/', values).then(
       /* istanbul ignore next */
-      function () {
+      function (data) {
+        dispatch({
+          type: 'set',
+          user: data
+        });
+        console.log(user);
         /* istanbul ignore next */
+
         _evergreenUi.toaster.success('Login Successful');
 
         setSubmitting(false);
+        console.log(user);
+        history.push('/locomotives');
       }).catch(function () {});
     }
   }, function (_ref3) {
@@ -92104,7 +92206,65 @@ Login.propTypes = {
 };
 var _default = Login;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/atoms/forms/Error":"components/atoms/forms/Error.js"}],"pages/NotFound.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","formik":"../../node_modules/formik/dist/formik.esm.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../components/atoms/forms/Error":"components/atoms/forms/Error.js","../UserProvider":"UserProvider.js"}],"pages/Logout.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _evergreenUi = require("evergreen-ui");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _SingleColumn = _interopRequireDefault(require("../components/layout/SingleColumn"));
+
+var _UserProvider = require("../UserProvider");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function Logout(_ref) {
+  var history = _ref.history;
+  var dispatch = (0, _UserProvider.userDispatch)();
+  (0, _react.useEffect)(function () {
+    var fetchData = function fetchData() {
+      _axios.default.get('/auth/logout/').then(
+      /* istanbul ignore next */
+      function () {
+        /* istanbul ignore next */
+        dispatch({
+          type: 'set',
+          user: null
+        });
+
+        _evergreenUi.toaster.success('Logout Successful');
+
+        history.push('/login');
+      }).catch(function () {});
+    };
+
+    fetchData();
+  }, []);
+  return _react.default.createElement(_SingleColumn.default, {
+    history: history
+  }, _react.default.createElement("h1", null, "Logout"), _react.default.createElement(_react.Fragment, null, _react.default.createElement(_evergreenUi.Pane, null, "Logging out...")));
+}
+
+Logout.propTypes = {
+  history: _propTypes.default.shape({
+    push: _propTypes.default.func.isRequired
+  }).isRequired
+};
+var _default = Logout;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","evergreen-ui":"../../node_modules/evergreen-ui/esm/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","../components/layout/SingleColumn":"components/layout/SingleColumn.js","../UserProvider":"UserProvider.js"}],"pages/NotFound.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -92925,6 +93085,8 @@ var _Error = _interopRequireDefault(require("./pages/Error"));
 
 var _Login = _interopRequireDefault(require("./pages/Login"));
 
+var _Logout = _interopRequireDefault(require("./pages/Logout"));
+
 var _NotFound = _interopRequireDefault(require("./pages/NotFound"));
 
 var _Railcars = _interopRequireDefault(require("./railcars/Railcars"));
@@ -92935,6 +93097,8 @@ var _RailcarsView = _interopRequireDefault(require("./railcars/RailcarsView"));
 
 var _Photos = _interopRequireDefault(require("./photos/Photos"));
 
+var _UserProvider = require("./UserProvider");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
@@ -92944,7 +93108,7 @@ var Routes = function Routes(_ref) {
   (0, _react.useEffect)(function () {
     var fetchData = function fetchData() {
       (0, _axios.default)('/auth').then(function (response) {
-        if (!response.data.status === 'success') {
+        if (response.data.status === 'error') {
           history.push('/login');
         }
       });
@@ -92954,7 +93118,7 @@ var Routes = function Routes(_ref) {
   }, []);
   return _react.default.createElement("div", {
     className: "routeWrapper"
-  }, _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
+  }, _react.default.createElement(_UserProvider.UserProvider, null, _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/",
     component: _Home.default
@@ -92974,6 +93138,10 @@ var Routes = function Routes(_ref) {
     exact: true,
     path: "/login",
     component: _Login.default
+  }), _react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/logout",
+    component: _Logout.default
   }), _react.default.createElement(_reactRouterDom.Route, {
     exact: true,
     path: "/locomotives/add",
@@ -93002,7 +93170,7 @@ var Routes = function Routes(_ref) {
     exact: true,
     path: "/error",
     component: _Error.default
-  })));
+  }))));
 };
 
 Routes.propTypes = {
@@ -93014,7 +93182,7 @@ Routes.propTypes = {
 var _default = (0, _reactRouterDom.withRouter)(Routes);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../../node_modules/axios/index.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./photos/Upload":"photos/Upload.js","./pages/Home":"pages/Home.js","./pages/Error":"pages/Error.js","./pages/Login":"pages/Login.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js","./railcars/RailcarsAdd":"railcars/RailcarsAdd.js","./railcars/RailcarsView":"railcars/RailcarsView.js","./photos/Photos":"photos/Photos.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","axios":"../../node_modules/axios/index.js","./locomotives/Add":"locomotives/Add.js","./locomotives/Edit":"locomotives/Edit.js","./locomotives/List":"locomotives/List.js","./photos/Upload":"photos/Upload.js","./pages/Home":"pages/Home.js","./pages/Error":"pages/Error.js","./pages/Login":"pages/Login.js","./pages/Logout":"pages/Logout.js","./pages/NotFound":"pages/NotFound.js","./railcars/Railcars":"railcars/Railcars.js","./railcars/RailcarsAdd":"railcars/RailcarsAdd.js","./railcars/RailcarsView":"railcars/RailcarsView.js","./photos/Photos":"photos/Photos.js","./UserProvider":"UserProvider.js"}],"../../node_modules/core-js/modules/_global.js":[function(require,module,exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
@@ -101056,7 +101224,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60754" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59373" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
