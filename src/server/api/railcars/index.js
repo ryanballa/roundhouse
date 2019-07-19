@@ -16,7 +16,7 @@ railcars.use((req, res, next) => {
 });
 
 railcars.get('/', (request, response) => {
-  const query = `SELECT * FROM railcars`;
+  const query = `SELECT * FROM railcars WHERE user_id=${request.user.id}`;
   return db
     .manyOrNone(query)
     .then(res => {
