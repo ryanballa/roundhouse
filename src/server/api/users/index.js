@@ -44,4 +44,20 @@ users.post('/', (request, response) => {
     );
 });
 
+users.put('/:userId', (request, response) => {
+  const id = request.params.userId;
+  if (request.user.id !== request.body.id) {
+    response.status(403).json({});
+  }
+  database('users')
+    .where('id', id)
+    .update(request.body)
+    .then(user => {
+      response.status(200).json(user);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 module.exports = users;
