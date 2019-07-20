@@ -62,6 +62,7 @@ function Add({ history }) {
                     /* istanbul ignore next */
                     toaster.success('Locomotive Added');
                     setSubmitting(false);
+                    history.push('/locomotives');
                   },
                 )
                 .catch(() => {});

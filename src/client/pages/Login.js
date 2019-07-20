@@ -38,11 +38,9 @@ function Login({ history }) {
                 .then(
                   /* istanbul ignore next */ data => {
                     dispatch({ type: 'set', user: data });
-                    console.log(user);
                     /* istanbul ignore next */
                     toaster.success('Login Successful');
                     setSubmitting(false);
-                    console.log(user);
                     history.push('/locomotives');
                   },
                 )

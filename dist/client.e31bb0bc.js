@@ -86834,6 +86834,7 @@ function Add(_ref) {
         _evergreenUi.toaster.success('Locomotive Added');
 
         setSubmitting(false);
+        history.push('/locomotives');
       }).catch(function () {});
     }
   }, function (_ref4) {
@@ -91675,6 +91676,8 @@ var Edit = function Edit(_ref) {
         setSubmitting(false);
 
         _evergreenUi.toaster.success('Locomotive Saved');
+
+        history.push('/locomotives');
       }).catch(function (error) {
         console.log(error);
       });
@@ -92225,13 +92228,11 @@ function Login(_ref) {
           type: 'set',
           user: data
         });
-        console.log(user);
         /* istanbul ignore next */
 
         _evergreenUi.toaster.success('Login Successful');
 
         setSubmitting(false);
-        console.log(user);
         history.push('/locomotives');
       }).catch(function () {});
     }
@@ -92260,7 +92261,7 @@ function Login(_ref) {
       label: "Password"
     }, _react.default.createElement(_formik.Field, {
       id: "password",
-      type: "text",
+      type: "password",
       name: "password",
       placeholder: ""
     })), _react.default.createElement(_Error.default, null, errors.password && touched.password ? _react.default.createElement("div", {
@@ -92801,6 +92802,7 @@ function RailcarsAdd(_ref) {
         _evergreenUi.toaster.success('Railcar Added');
 
         setSubmitting(false);
+        history.push('/railcars');
       }).catch(function () {});
     }
   }, function (_ref4) {
@@ -92989,6 +92991,8 @@ var RailcarsEdit = function RailcarsEdit(_ref) {
         setSubmitting(false);
 
         _evergreenUi.toaster.success('Railcar Saved');
+
+        history.push('/railcars');
       }).catch(function (error) {
         console.log(error);
       });
@@ -101325,7 +101329,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56267" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59172" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

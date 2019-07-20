@@ -101,6 +101,7 @@ const RailcarsEdit = ({ history, match }) => {
                   .then(() => {
                     setSubmitting(false);
                     toaster.success('Railcar Saved');
+                    history.push('/railcars');
                   })
                   .catch(error => {
                     console.log(error);

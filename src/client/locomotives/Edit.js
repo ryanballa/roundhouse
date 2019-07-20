@@ -118,6 +118,7 @@ const Edit = ({ history, match }) => {
                   .then(() => {
                     setSubmitting(false);
                     toaster.success('Locomotive Saved');
+                    history.push('/locomotives');
                   })
                   .catch(error => {
                     console.log(error);

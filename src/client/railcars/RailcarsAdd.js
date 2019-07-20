@@ -58,6 +58,7 @@ function RailcarsAdd({ history }) {
                     /* istanbul ignore next */
                     toaster.success('Railcar Added');
                     setSubmitting(false);
+                    history.push('/railcars');
                   },
                 )
                 .catch(() => {});

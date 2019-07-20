@@ -78,9 +78,7 @@ railcars.put('/:railcarId', (request, response) => {
     .where('id', id)
     .update(request.body)
     .then(railCar => {
-      if (request.user.id !== railCar[0].user_id) {
-        response.status(403).json({});
-      }
+      response.status(200).json(railCar);
     })
     .catch(error => {
       response.status(500).json({ error });
