@@ -71,7 +71,7 @@ function Login({ history }) {
                     <FormField label="Password">
                       <Field
                         id="password"
-                        type="text"
+                        type="password"
                         name="password"
                         placeholder=""
                       />
