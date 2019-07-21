@@ -35,7 +35,8 @@ locomotives.use((req, res, next) => {
 
 locomotives.get('/', (request, response) => {
   loginAuth(request, response);
-  const query = `SELECT * FROM locomotives WHERE user_id=${request.user.id}`;
+  const user = request.user ? request.user.id : 0;
+  const query = `SELECT * FROM locomotives WHERE user_id=${user}`;
   return db
     .manyOrNone(query)
     .then(res => {

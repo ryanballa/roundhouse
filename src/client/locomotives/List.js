@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
+/* eslint-disable react/no-multi-comp */
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
@@ -85,17 +86,15 @@ function List({ history }) {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <>
-          <ReactDataGrid
-            columns={columns}
-            rowGetter={i => rows[i]}
-            rowsCount={3}
-            minHeight={150}
-            onGridSort={(sortColumn, sortDirection) =>
-              setRows(sortRows(data, sortColumn, sortDirection))
-            }
-          />
-        </>
+        <ReactDataGrid
+          columns={columns}
+          rowGetter={i => rows[i]}
+          rowsCount={3}
+          minHeight={150}
+          onGridSort={(sortColumn, sortDirection) =>
+            setRows(sortRows(data, sortColumn, sortDirection))
+          }
+        />
       )}
       <Button
         iconBefore="add"

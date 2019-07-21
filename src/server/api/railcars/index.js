@@ -14,7 +14,8 @@ railcars.use((req, res, next) => {
 });
 
 railcars.get('/', (request, response) => {
-  const query = `SELECT * FROM railcars WHERE user_id=${request.user.id}`;
+  const user = request.user ? request.user.id : 0;
+  const query = `SELECT * FROM railcars WHERE user_id=${user}`;
   return db
     .manyOrNone(query)
     .then(res => {
@@ -81,6 +82,7 @@ railcars.put('/:railcarId', (request, response) => {
       response.status(200).json(railCar);
     })
     .catch(error => {
+      console.log(error);
       response.status(500).json({ error });
     });
 });

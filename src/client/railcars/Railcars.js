@@ -1,23 +1,72 @@
+/* eslint-disable react/no-multi-comp */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Button } from 'evergreen-ui';
 import axios from 'axios';
+import ReactDataGrid from 'react-data-grid';
 import SingleColumn from '../components/layout/SingleColumn';
 
 function Railcars({ history }) {
   const [data, setData] = useState([{ id: '1', road: 'Test' }]);
   const [isLoading, setIsLoading] = useState(false);
+  const [rows, setRows] = useState(data);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios('/api/v1/railcars');
       setData(result.data);
+      setRows(result.data);
       setIsLoading(false);
     };
     fetchData();
   }, []);
+
+  const booleanFormatter = ({ value }) => {
+    return value ? 'Yes' : 'No';
+  };
+
+  const dateFormatter = ({ value }) =>
+    value ? moment(value).format('MM/DD/YYYY') : '';
+
+  const linkFormatter = ({ row }) => (
+    <Link to={`railcars/${row.id}`}>{row.road}</Link>
+  );
+
+  const defaultColumnProperties = {
+    sortable: true,
+  };
+
+  const columns = [
+    { key: 'id', name: 'ID', sortDescendingFirst: true, width: 120 },
+    { formatter: linkFormatter, key: 'road', name: 'Road', width: 220 },
+    { key: 'car_number', name: 'Car Number', width: 180 },
+    {
+      formatter: booleanFormatter,
+      key: 'is_operational',
+      name: 'Operational',
+      width: 120,
+    },
+    { key: 'location', name: 'Location', width: 120 },
+    {
+      formatter: dateFormatter,
+      key: 'purchased_on',
+      name: 'Purchase Date',
+      width: 250,
+    },
+  ].map(c => ({ ...c, ...defaultColumnProperties }));
+
+  const sortRows = (initialRows, sortColumn, sortDirection) => rows => {
+    const comparer = (a, b) => {
+      if (sortDirection === 'ASC') {
+        return a[sortColumn] > b[sortColumn] ? 1 : -1;
+      }
+      return a[sortColumn] < b[sortColumn] ? 1 : -1;
+    };
+    return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
+  };
 
   return (
     <SingleColumn history={history}>
@@ -25,15 +74,15 @@ function Railcars({ history }) {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <ul>
-          {data.map(railcar => (
-            <li key={railcar.id}>
-              <Link key={railcar.id} to={`railcars/${railcar.id}`}>
-                {railcar.road}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ReactDataGrid
+          columns={columns}
+          rowGetter={i => rows[i]}
+          rowsCount={3}
+          minHeight={150}
+          onGridSort={(sortColumn, sortDirection) =>
+            setRows(sortRows(data, sortColumn, sortDirection))
+          }
+        />
       )}
       <Button
         iconBefore="add"
