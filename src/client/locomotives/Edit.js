@@ -104,12 +104,15 @@ const Edit = ({ history, match }) => {
                 is_dcc: data[0].is_dcc,
                 is_operational: data[0].is_operational,
                 location: data[0].location,
+                notes: data[0].notes,
+                purchase_price: data[0].purchase_price,
                 purchased_on: moment(data[0].purchased_on).isValid()
                   ? moment(data[0].purchased_on).format('YYYY-MM-DD')
                   : undefined,
                 road: data[0].road,
                 thumbnail: data[0].thumbnail || '',
                 user_id: user ? user.id : null,
+                value: data[0].value,
               }}
               validationSchema={EditSchema}
               onSubmit={(values, { setSubmitting }) => {

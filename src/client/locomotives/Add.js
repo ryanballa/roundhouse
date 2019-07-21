@@ -29,7 +29,15 @@ function Add({ history }) {
   }, []);
 
   const [data] = useState([
-    { engine_number: '', is_operational: true, location: 'home', road: '' },
+    {
+      engine_number: '',
+      is_operational: true,
+      location: 'home',
+      notes: '',
+      purchase_price: '0',
+      road: '',
+      value: '0',
+    },
   ]);
 
   const EditSchema = Yup.object().shape({
