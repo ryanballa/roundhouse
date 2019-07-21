@@ -90,7 +90,7 @@ function List({ history }) {
           columns={columns}
           rowGetter={i => rows[i]}
           rowsCount={3}
-          minHeight={150}
+          minHeight={800}
           onGridSort={(sortColumn, sortDirection) =>
             setRows(sortRows(data, sortColumn, sortDirection))
           }
