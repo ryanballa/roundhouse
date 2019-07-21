@@ -8,8 +8,8 @@ function handleResponse(res, code, statusMsg) {
   res.status(code).json({ status: statusMsg });
 }
 
-router.get('/', authHelpers.loginRequired, (req, res, next) => {
-  handleResponse(res, 200, 'success');
+router.get('/', authHelpers.loginRequired, (req, res) => {
+  res.status(200).json({ status: 'success', user: req.user });
 });
 
 router.post('/login', (req, res, next) => {

@@ -8,7 +8,7 @@ function userReducer(state, action) {
   switch (action.type) {
     case 'set': {
       return {
-        user: action.user ? action.user.data.status : null,
+        user: action.user ? action.user : null,
       };
     }
     default: {

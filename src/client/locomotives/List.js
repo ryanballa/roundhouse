@@ -89,8 +89,8 @@ function List({ history }) {
         <ReactDataGrid
           columns={columns}
           rowGetter={i => rows[i]}
-          rowsCount={3}
-          minHeight={800}
+          rowsCount={50}
+          minHeight={500}
           onGridSort={(sortColumn, sortDirection) =>
             setRows(sortRows(data, sortColumn, sortDirection))
           }

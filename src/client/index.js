@@ -1,17 +1,17 @@
 import React from 'react';
+import 'babel-polyfill';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
-import { BrowserRouter as Router } from "react-router-dom";
-import "babel-polyfill";
-
+import { UserProvider } from './UserProvider';
 
 ReactDOM.render(
   <main>
-    <div>
+    <UserProvider>
       <Router>
         <Routes />
       </Router>
-    </div>
+    </UserProvider>
   </main>,
   document.getElementById('root'),
 );

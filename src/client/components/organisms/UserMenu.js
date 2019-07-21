@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { styledComponent } from '../../utils/styledComponent';
 import { userState } from '../../UserProvider';
-// import { colors } from '../../config/styles';
 
 const StyledUserMenu = styledComponent('menu', {
   '& li': {

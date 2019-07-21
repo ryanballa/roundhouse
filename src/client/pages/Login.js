@@ -37,7 +37,7 @@ function Login({ history }) {
                 .post('auth/login/', values)
                 .then(
                   /* istanbul ignore next */ data => {
-                    dispatch({ type: 'set', user: data });
+                    dispatch({ type: 'set', user: data.data.status });
                     /* istanbul ignore next */
                     toaster.success('Login Successful');
                     setSubmitting(false);
