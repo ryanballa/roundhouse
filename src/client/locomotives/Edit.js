@@ -40,8 +40,8 @@ const Edit = ({ history, match }) => {
             setData(locomotive.data.locomotive);
             setIsLoading(false);
           })
-          .catch(e => {
-            console.log(e);
+          .catch(() => {
+            setIsLoading(false);
           });
       }
 

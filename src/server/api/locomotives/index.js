@@ -127,6 +127,7 @@ function uploadToCloudinary(req, res) {
           .insert(
             {
               path: image.url,
+              user_id: req.user.id,
             },
             'id',
           )

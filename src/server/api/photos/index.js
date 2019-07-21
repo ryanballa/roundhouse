@@ -6,8 +6,10 @@ photos.use(bodyParser.urlencoded({ extended: false }));
 photos.use(bodyParser.json());
 
 photos.get('/', (request, response) => {
+  const userId = request.user ? request.user.id : 0;
   database('photos')
     .select()
+    .where('user_id', userId)
     .then(photoResults => {
       response.status(200).json(photoResults);
     })
@@ -21,7 +23,7 @@ photos.get('/', (request, response) => {
 
 photos.post('/', (request, response) => {
   const photo = request.body;
-
+  photo.user_id = request.user.id;
   ['path'].forEach(requiredParameter => {
     if (!photo[requiredParameter]) {
       return response.status(422).send({
@@ -46,7 +48,7 @@ photos.post('/', (request, response) => {
 
 photos.put('/', (request, response) => {
   const photo = request.body;
-
+  photo.user_id = request.user.id;
   ['path'].forEach(requiredParameter => {
     if (!photo[requiredParameter]) {
       return response.status(422).send({
