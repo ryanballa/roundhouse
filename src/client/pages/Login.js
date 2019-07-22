@@ -53,6 +53,7 @@ function Login({ history }) {
                   <li data-testid="username">
                     <FormField label="Username">
                       <Field
+                        autoComplete="username"
                         id="username"
                         type="text"
                         name="username"
@@ -68,6 +69,7 @@ function Login({ history }) {
                   <li data-testid="password">
                     <FormField label="Password">
                       <Field
+                        autoComplete="current-password"
                         id="password"
                         type="password"
                         name="password"
