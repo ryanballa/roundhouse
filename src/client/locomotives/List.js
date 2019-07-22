@@ -19,8 +19,15 @@ function List({ history }) {
       setIsLoading(true);
       axios('/api/v1/locomotives')
         .then(response => {
+          const values = response.data.map(value => {
+            return value.value;
+          });
+          const reducer = (accumulator, currentValue) =>
+            Math.round(accumulator) + Math.round(currentValue);
+
+          const totalValues = values.reduce(reducer);
           setData(response.data);
-          setRows(response.data);
+          setRows({ ...response.data, totalValues });
         })
         .catch(error => {
           errorHandler(history, error.reponse, error.response.status);
@@ -86,15 +93,25 @@ function List({ history }) {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <ReactDataGrid
-          columns={columns}
-          rowGetter={i => rows[i]}
-          rowsCount={50}
-          minHeight={500}
-          onGridSort={(sortColumn, sortDirection) =>
-            setRows(sortRows(data, sortColumn, sortDirection))
-          }
-        />
+        <>
+          <ReactDataGrid
+            columns={columns}
+            rowGetter={i => rows[i]}
+            rowsCount={50}
+            minHeight={500}
+            onGridSort={(sortColumn, sortDirection) =>
+              setRows(sortRows(data, sortColumn, sortDirection))
+            }
+          />
+          <h2>Collection</h2>
+          <ul>
+            <li>
+              <b>Locomotives:</b>
+              {rows.length}
+            </li>
+            <li>Value: ${rows.totalValues}</li>
+          </ul>
+        </>
       )}
       <Button
         iconBefore="add"
