@@ -22,12 +22,14 @@ const Routes = ({ history }) => {
 
   useEffect(() => {
     const fetchData = () => {
-      axios('/auth').then(response => {
-        if (response.data.status === 'error') {
-          history.push('/login');
-        }
-        dispatch({ type: 'set', user: response.data.user });
-      });
+      axios('/auth')
+        .then(response => {
+          if (response.data.status === 'error') {
+            history.push('/login');
+          }
+          dispatch({ type: 'set', user: response.data.user });
+        })
+        .catch(() => {});
     };
 
     fetchData();
@@ -49,6 +51,7 @@ const Routes = ({ history }) => {
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
         <Route exact path="/error" component={Error} />
+        <Route component={NotFound} />
       </Switch>
     </div>
   );

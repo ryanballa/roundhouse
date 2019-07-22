@@ -17,7 +17,7 @@ const StyledSection = styledComponent('section', {
   margin: 30,
 });
 
-const SingleColumn = ({ children, history }) => {
+const SingleColumn = ({ authProtected, children, history }) => {
   useEffect(() => {
     const fetchData = () => {
       axios('/auth')
@@ -26,12 +26,12 @@ const SingleColumn = ({ children, history }) => {
             history.push('/login');
           }
         })
-        .catch(err => {
+        .catch(() => {
           history.push('/login');
         });
     };
 
-    fetchData();
+    if (authProtected) fetchData();
   }, []);
   return (
     <div>
@@ -43,10 +43,15 @@ const SingleColumn = ({ children, history }) => {
 };
 
 SingleColumn.propTypes = {
+  authProtected: PropTypes.bool,
   children: PropTypes.node.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+};
+
+SingleColumn.defaultProps = {
+  authProtected: true,
 };
 
 export default SingleColumn;

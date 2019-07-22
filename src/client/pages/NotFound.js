@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import SingleColumn from '../components/layout/SingleColumn';
 
-function NotFound() {
+function NotFound({ history }) {
   return (
-    <SingleColumn>
+    <SingleColumn history={history} authProtected={false}>
       <h1>Not Found</h1>
       <p>
         We cannot find that. Maybe it was deleted or your link is incorrect.
@@ -21,5 +22,11 @@ function NotFound() {
     </SingleColumn>
   );
 }
+
+NotFound.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default NotFound;

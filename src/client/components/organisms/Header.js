@@ -4,6 +4,7 @@ import { styledComponent } from '../../utils/styledComponent';
 import { fontConfig, spacing } from '../../config/styles';
 import MainNavigation from './MainNavigation';
 import UserMenu from './UserMenu';
+import { userState } from '../../UserProvider';
 
 const StyledHeader = styledComponent('header', {
   '& h1': {
@@ -21,6 +22,7 @@ const StyledHeader = styledComponent('header', {
 });
 
 const Header = () => {
+  const { user } = userState();
   return (
     <StyledHeader>
       <h1>
@@ -51,7 +53,7 @@ const Header = () => {
           </svg>
         </Link>
       </h1>
-      <MainNavigation />
+      {user && <MainNavigation />}
       <UserMenu />
     </StyledHeader>
   );
