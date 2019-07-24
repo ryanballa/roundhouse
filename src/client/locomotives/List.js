@@ -5,14 +5,15 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Button } from 'evergreen-ui';
 import axios from 'axios';
-import ReactDataGrid from 'react-data-grid';
+import BaseTable, { Column } from 'react-base-table';
 import SingleColumn from '../components/layout/SingleColumn';
 import { errorHandler } from '../utils/errorHandler';
+import 'react-base-table/styles.css';
 
 function List({ history }) {
-  const [data, setData] = useState([{ id: '1', road: 'Test' }]);
+  const [data, setData] = useState({ data: [{ id: '1', road: 'Test' }] });
+  const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
   const [isLoading, setIsLoading] = useState(false);
-  const [rows, setRows] = useState(data);
 
   useEffect(() => {
     const fetchData = () => {
@@ -26,8 +27,7 @@ function List({ history }) {
             Math.round(accumulator) + Math.round(currentValue);
 
           const totalValues = values.reduce(reducer);
-          setData(response.data);
-          setRows({ ...response.data, totalValues });
+          setData({ data: response.data, totalValues });
         })
         .catch(error => {
           errorHandler(history, error.reponse, error.response.status);
@@ -37,54 +37,34 @@ function List({ history }) {
     fetchData();
   }, []);
 
-  const booleanFormatter = ({ value }) => {
-    return value ? 'Yes' : 'No';
+  const booleanFormatter = ({ cellData }) => {
+    return cellData ? 'Yes' : 'No';
   };
 
-  const dateFormatter = ({ value }) =>
-    value ? moment(value).format('MM/DD/YYYY') : '';
+  const dateFormatter = ({ cellData }) =>
+    cellData ? moment(cellData).format('MM/DD/YYYY') : '';
 
-  const linkFormatter = ({ row }) => (
-    <Link to={`locomotives/${row.id}`}>{row.road}</Link>
+  const linkFormatter = ({ rowData }) => (
+    <Link to={`locomotives/${rowData.id}`}>{rowData.road}</Link>
   );
 
-  const defaultColumnProperties = {
-    sortable: true,
+  const sortArrayOfObjects = (arr, key, order) => {
+    return arr.sort((a, b) => {
+      if (order === 'asc') {
+        return a[key] > b[key] ? 1 : -1;
+      }
+      return a[key] < b[key] ? 1 : -1;
+    });
   };
 
-  const columns = [
-    { key: 'id', name: 'ID', sortDescendingFirst: true, width: 120 },
-    { formatter: linkFormatter, key: 'road', name: 'Road', width: 220 },
-    { key: 'engine_number', name: 'Engine Number', width: 180 },
-    {
-      formatter: booleanFormatter,
-      key: 'is_operational',
-      name: 'Operational',
-      width: 120,
-    },
-    {
-      formatter: booleanFormatter,
-      key: 'is_dcc',
-      name: 'DCC Equipped',
-      width: 180,
-    },
-    { key: 'location', name: 'Location', width: 120 },
-    {
-      formatter: dateFormatter,
-      key: 'purchased_on',
-      name: 'Purchase Date',
-      width: 250,
-    },
-  ].map(c => ({ ...c, ...defaultColumnProperties }));
-
-  const sortRows = (initialRows, sortColumn, sortDirection) => rows => {
-    const comparer = (a, b) => {
-      if (sortDirection === 'ASC') {
-        return a[sortColumn] > b[sortColumn] ? 1 : -1;
-      }
-      return a[sortColumn] < b[sortColumn] ? 1 : -1;
-    };
-    return sortDirection === 'NONE' ? initialRows : [...rows].sort(comparer);
+  const onColumnSort = sortByVal => {
+    const sortedData = sortArrayOfObjects(
+      data.data,
+      sortByVal.key,
+      sortByVal.order,
+    );
+    setSortBy(sortByVal);
+    setData({ data: sortedData, totalValues: data.totalValues });
   };
 
   return (
@@ -94,22 +74,68 @@ function List({ history }) {
         <div>Loading ...</div>
       ) : (
         <>
-          <ReactDataGrid
-            columns={columns}
-            rowGetter={i => rows[i]}
-            rowsCount={50}
-            minHeight={500}
-            onGridSort={(sortColumn, sortDirection) =>
-              setRows(sortRows(data, sortColumn, sortDirection))
-            }
-          />
+          <BaseTable
+            onColumnSort={onColumnSort}
+            data={data.data}
+            sortBy={sortBy}
+            width={1000}
+            height={400}
+          >
+            <Column sortable title="Id" key="id" dataKey="id" width={100} />
+            <Column
+              cellRenderer={linkFormatter}
+              title="Road"
+              key="road"
+              dataKey="road"
+              sortable
+              width={300}
+            />
+            <Column
+              title="Engine Number"
+              key="engine_number"
+              dataKey="engine_number"
+              sortable
+              width={250}
+            />
+            <Column
+              cellRenderer={booleanFormatter}
+              title="Operational"
+              key="is_operational"
+              dataKey="is_operational"
+              sortable
+              width={250}
+            />
+            <Column
+              cellRenderer={booleanFormatter}
+              title="DCC Equipped"
+              key="is_dcc"
+              dataKey="is_dcc"
+              sortable
+              width={200}
+            />
+            <Column
+              title="Location"
+              key="location"
+              dataKey="location"
+              sortable
+              width={200}
+            />
+            <Column
+              cellRenderer={dateFormatter}
+              title="Purchase Date"
+              key="purchased_on"
+              dataKey="purchased_on"
+              sortable
+              width={220}
+            />
+          </BaseTable>
           <h2>Collection</h2>
           <ul>
             <li>
               <b>Locomotives:</b>
-              {rows.length}
+              {data.data.length}
             </li>
-            <li>Value: ${rows.totalValues}</li>
+            <li>Value: ${data.totalValues}</li>
           </ul>
         </>
       )}

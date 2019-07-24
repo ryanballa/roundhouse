@@ -61,7 +61,7 @@
     "pg-promise": "^8.7.3",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
-    "react-data-grid": "^6.1.0",
+    "react-base-table": "^1.6.5",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "supertest": "^4.0.2",
