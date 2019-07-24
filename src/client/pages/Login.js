@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { Button, FormField, Pane, toaster } from 'evergreen-ui';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -21,7 +21,8 @@ const Form = styledComponent('div', {
 
 function Login({ history }) {
   const dispatch = userDispatch();
-  const { user } = userState();
+  const [submitError, setSubmitError] = useState(false);
+
   return (
     <SingleColumn history={history}>
       <h1>Login</h1>
@@ -33,6 +34,7 @@ function Login({ history }) {
               username: '',
             }}
             onSubmit={(values, { setSubmitting }) => {
+              setSubmitError(false);
               axios
                 .post('auth/login/', values)
                 .then(
@@ -44,11 +46,15 @@ function Login({ history }) {
                     history.push('/locomotives');
                   },
                 )
-                .catch(() => {});
+                .catch(() => {
+                  setSubmitError(true);
+                  setSubmitting(false);
+                });
             }}
           >
             {({ errors, touched, handleSubmit, isSubmitting }) => (
               <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
+                {submitError && <span>Please check your username or password</span>}
                 <ul>
                   <li data-testid="username">
                     <FormField label="Username">
