@@ -78,7 +78,7 @@ function List({ history }) {
             onColumnSort={onColumnSort}
             data={data.data}
             sortBy={sortBy}
-            width={1000}
+            width={1200}
             height={400}
           >
             <Column sortable title="Id" key="id" dataKey="id" width={100} />
