@@ -96,8 +96,10 @@
     "migrate:test": "knex migrate:latest --env test",
     "start-watch": "nodemon -r esm ./src/server/index.js",
     "seed:test": "knex seed:run --env test",
-    "start": "npm run build && node ./src/server/index.js",
-    "test": "NODE_ENV=test npm run migrate:test && npm run seed:test && jest --config config/jest/index.js"
+    "seed:dev": "knex seed:run --env dev",
+    "start": "npm run build && node -r esm ./src/server/index.js",
+    "test": "NODE_ENV=test npm run migrate:test && npm run seed:test && jest --config config/jest/index.js",
+    "test:seed": "NODE_ENV=test npm run migrate:test &&  npm run seed:test && NODE_ENV=test node -r esm ./src/server/index.js"
   },
   "author": "",
   "license": "ISC"

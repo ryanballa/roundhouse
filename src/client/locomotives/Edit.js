@@ -63,6 +63,7 @@ const Edit = ({ history, match }) => {
       <FormActions>
         <h1 data-testid="locomotiveEdit-form">Edit Locomotive</h1>
         <Button
+          data-testid="locomotiveEdit-delete"
           iconBefore="trash"
           intent="danger"
           onClick={() => {
@@ -94,7 +95,7 @@ const Edit = ({ history, match }) => {
                     console.log(error);
                   });
               }}
-              confirmLabel="Delete"
+              confirmLabel="Delete Locomotive"
             >
               Are you sure you want to delete {data[0].road} ?
             </Dialog>

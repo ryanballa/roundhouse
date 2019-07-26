@@ -33,7 +33,9 @@ module.exports = {
   ],
   users: [
     {
-      "full_name": "Ryan Balla"
+      "full_name": "Ryan Balla",
+      "username": "rballa",
+      "password": "$2a$10$hw3NVHwIdoSe89qQj6frROpbvIfmJNfrK5xRdbpXqa0j23q3xrkeu"
     }
   ]
 };

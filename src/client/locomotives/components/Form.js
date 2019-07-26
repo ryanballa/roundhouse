@@ -68,7 +68,7 @@ const Form = ({
     field: { name, value, onChange, onBlur },
     ...props
   }) => (
-    <div>
+    <div data-testid={name}>
       <Select
         id={id}
         name={name}
@@ -150,7 +150,7 @@ const Form = ({
               />
             </FormField>
           </li>
-          <li>
+          <li data-testid="is_dcc">
             <FormField label="Is DCC">
               <Field id="is_dcc" name="is_dcc" component={SwitchField} />
             </FormField>
