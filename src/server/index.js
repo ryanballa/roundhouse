@@ -11,13 +11,12 @@ const app = express();
 const path = require('path');
 /* istanbul ignore next */
 const environment = process.env.NODE_ENV || 'development';
-const url =
-  environment === 'development'
-    ? 'http://localhost:3000'
-    : 'https://roundhouseapp.herokuapp.com';
 const cloudinary = require('cloudinary');
 
-const appPort = process.env.PORT || 3000;
+let appPort = process.env.PORT || 3000;
+if (environment === 'test') {
+  appPort = 4000;
+}
 
 const authRoutes = require('./auth');
 const api = require('./api');
@@ -53,8 +52,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/../../dist/index.html`));
 });
 
-app.listen(environment === 'test' ? 4000 : appPort, () => {
-  console.log('Listenting on port 4000');
+app.listen(appPort, () => {
+  console.log(`Listenting on port ${appPort}`);
 });
 
 module.exports = app;
