@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../../index.js');
 
 afterAll(async () => {
-  app.close(() => {});
+  // app.close(() => {});
 });
 
 describe('GET /api/v1/railcars', () => {

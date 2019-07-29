@@ -1,12 +1,19 @@
 const request = require('supertest');
+const passportStub = require('passport-stub');
 const app = require('../../index.js');
 
+passportStub.install(app);
+
 afterAll(async () => {
-  app.close(() => {});
+  // app.close(() => {});
 });
 
 describe('GET /api/v1/locomotives', () => {
   it('respond with json containing a list of all locomotives', async () => {
+    passportStub.login({
+      password: 'test',
+      username: 'rballa',
+    });
     const response = await request(app)
       .get('/api/v1/locomotives')
       .set('Accept', 'application/json');

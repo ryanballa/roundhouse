@@ -7,10 +7,12 @@ const database = require('../../serverConnection');
 const bodyParser = require('body-parser');
 const cloudinary = require('cloudinary').v2;
 const { loginRequired } = require('../../utils/loginRequired');
+const authHelpers = require('../../auth/_helpers');
 
 // MULTER
 const multer = require('multer');
 
+/* istanbul ignore next */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/');
@@ -20,46 +22,46 @@ const storage = multer.diskStorage({
   },
 });
 
-function loginAuth(request, response) {
-  if (request.error) {
-    return response.status(request.statusCode).json({ data: request.error });
-  }
-  return null;
-}
-
 locomotives.use(bodyParser.urlencoded({ extended: false }));
 locomotives.use(bodyParser.json());
 locomotives.use((req, res, next) => {
   loginRequired(req, res, next);
 });
 
-locomotives.get('/', (request, response) => {
-  loginAuth(request, response);
-  const user = request.user ? request.user.id : 0;
+locomotives.get('/', authHelpers.loginRequired, (request, response) => {
+  const user = request.user.id;
   const query = `SELECT * FROM locomotives WHERE user_id=${user}`;
   return db
     .manyOrNone(query)
     .then(res => {
-      response.status(200).json(res);
+      /* istanbul ignore next */
+      if (!response.headersSent) {
+        response.status(200).json(res);
+      }
     })
     .catch(
       /* istanbul ignore next */ error => {
+        console.log(error);
         /* istanbul ignore next */
-        response.status(500).json({ error });
+        if (!response.headersSent) {
+          response.status(500).json({ error });
+        }
       },
     );
 });
 
-locomotives.post('/', (request, response) => {
-  loginAuth(request, response);
+locomotives.post('/', authHelpers.loginRequired, (request, response) => {
   const locomotive = request.body;
 
   if (request.user.id !== request.body.user_id) {
-    response.status(403).json({});
+    /* istanbul ignore next */
+    if (!response.headersSent) {
+      response.status(403).json({});
+    }
   }
 
   ['road', 'location', 'user_id'].forEach(requiredParameter => {
-    if (!locomotive[requiredParameter]) {
+    if (!locomotive[requiredParameter] && !response.headersSent) {
       return response.status(422).send({
         error: `Expected format: { location: <String>, road: <String> }. You're missing a "${requiredParameter}" property.`,
       });
@@ -73,41 +75,50 @@ locomotives.post('/', (request, response) => {
       response.status(201).json({ id: loco[0] });
     })
     .catch(error => {
-      response.status(500).json({ error });
+      if (!response.headersSent) {
+        response.status(500).json({ error });
+      }
     });
 });
 
-locomotives.get('/:locomotiveId', (request, response) => {
-  loginAuth(request, response);
-  const id = request.params.locomotiveId;
-  database('locomotives')
-    .where('id', id)
-    .then(locomotive => {
-      db.any(
-        'SELECT * FROM photos LEFT JOIN locomotives_photos ON locomotives_photos.photo_id = photos.id WHERE locomotive_id = ${id}',
-        {
-          id,
+locomotives.get(
+  '/:locomotiveId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.locomotiveId;
+    database('locomotives')
+      .where('id', id)
+      .then(locomotive => {
+        db.any(
+          'SELECT * FROM photos LEFT JOIN locomotives_photos ON locomotives_photos.photo_id = photos.id WHERE locomotive_id = ${id}',
+          {
+            id,
+          },
+        )
+          .then(photos => {
+            const result = {
+              locomotive,
+              photos,
+            };
+            if (request.user.id !== locomotive[0].user_id) {
+              return response.status(403).json({});
+            }
+            response.status(200).json(result);
+          })
+          .catch(error => {
+            response.status(500).json({ error });
+          });
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */ response.status(500).json({ error });
         },
-      )
-        .then(photos => {
-          const result = {
-            locomotive,
-            photos,
-          };
-          if (request.user.id !== locomotive[0].user_id) {
-            response.status(403).json({});
-          }
-          response.status(200).json(result);
-        })
-        .catch(error => {
-          response.status(500).json({ error });
-        });
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
-});
+      );
+  },
+);
 
+// Easier to test in E2E
+/* istanbul ignore next */
 function uploadToCloudinary(req, res) {
   const upload = multer({ storage }).single('file');
   upload(req, res, uploadErr => {
@@ -143,48 +154,65 @@ function uploadToCloudinary(req, res) {
     return null;
   });
 }
-
-locomotives.post('/upload', (req, res) => {
-  loginAuth(req, res);
+/* istanbul ignore next */
+locomotives.post('/upload', authHelpers.loginRequired, (req, res) => {
+  /* istanbul ignore next */
   uploadToCloudinary(req, res);
 });
 
-locomotives.put('/:locomotiveId', (request, response) => {
-  loginAuth(request, response);
-  const id = request.params.locomotiveId;
-  if (request.user.id !== request.body.user_id) {
-    response.status(403).json({});
-  }
-  database('locomotives')
-    .where('id', id)
-    .update(request.body)
-    .then(locomotive => {
-      response.status(200).json(locomotive);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
-});
+locomotives.put(
+  '/:locomotiveId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.locomotiveId;
+    if (request.user.id !== request.body.user_id) {
+      response.status(403).json({});
+    }
+    database('locomotives')
+      .where('id', id)
+      .update(request.body)
+      .then(locomotive => {
+        if (!response.headersSent) {
+          response.status(200).json(locomotive);
+        }
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */
+          response.status(500).json({ error });
+        },
+      );
+  },
+);
 
-locomotives.delete('/:locomotiveId', (request, response) => {
-  loginAuth(request, response);
-  const id = request.params.locomotiveId;
-  database('locomotives')
-    .where('id', id)
-    .then(locomotive => {
-      if (request.user.id !== locomotive[0].user_id) {
-        response.status(403).json({});
-      }
-    });
-  database('locomotives')
-    .where('id', id)
-    .del()
-    .then(locomotive => {
-      response.status(200).json(locomotive);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
-});
+locomotives.delete(
+  '/:locomotiveId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.locomotiveId;
+    database('locomotives')
+      .where('id', id)
+      .then(locomotive => {
+        if (!locomotive[0]) {
+          return response.status(403).json({});
+        }
+        if (locomotive && request.user.id !== locomotive[0].user_id) {
+          return response.status(403).json({});
+        }
+        database('locomotives')
+          .where('id', id)
+          .del()
+          .then(locomotiveRes => {
+            return response.status(200).json(locomotiveRes);
+          })
+          .catch(
+            /* istanbul ignore next */ errorRes => {
+              /* istanbul ignore next */
+              return response.status(500).json({ errorRes });
+            },
+          );
+      });
+  },
+);
 
 module.exports = locomotives;

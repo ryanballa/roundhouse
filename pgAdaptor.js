@@ -6,7 +6,7 @@ const pgp = pgPromise({});
 const config = {
   database:
     process.env.NODE_ENV === 'test'
-      ? 'test_roundhouse'
+      ? 'testRoundhouse'
       : process.env.POSTGRES_DB,
   host: process.env.POSTGRES_HOST,
   password: process.env.POSTGRES_PASSWORD,

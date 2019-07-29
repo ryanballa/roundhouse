@@ -9,6 +9,11 @@ module.exports = {
       "road": "Frisco",
   	  "location": "studio",
   	  "user_id": 1
+    },
+    {
+      "road": "Santa Fe",
+  	  "location": "studio",
+  	  "user_id": 2
     }
   ],
   photos: [
@@ -29,12 +34,20 @@ module.exports = {
       "road": "Frisco",
   	  "location": "studio",
   	  "user_id": 1
+    },
+    {
+      "road": "Santa Fe",
+  	  "location": "studio",
+  	  "user_id": 2
     }
   ],
   users: [
     {
-      "full_name": "Ryan Balla",
       "username": "rballa",
+      "password": "$2a$10$hw3NVHwIdoSe89qQj6frROpbvIfmJNfrK5xRdbpXqa0j23q3xrkeu"
+    },
+    {
+      "username": "second",
       "password": "$2a$10$hw3NVHwIdoSe89qQj6frROpbvIfmJNfrK5xRdbpXqa0j23q3xrkeu"
     }
   ]

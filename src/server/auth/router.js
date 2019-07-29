@@ -17,7 +17,7 @@ router.post('/login', (req, res, next) => {
     if (err) {
       handleResponse(res, 500, 'error');
     }
-    if (!user) {
+    if (!user && !res.headersSent) {
       handleResponse(res, 404, 'User not found');
     }
     if (user) {

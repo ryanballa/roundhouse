@@ -8,7 +8,7 @@ exports.up = async function(knex) {
 };
 
 exports.down = async function(knex) {
-  await knex.schema.table('photos', function (table) {
+  await knex.schema.table('locomotives', function (table) {
     table.dropColumn('value');
     table.dropColumn('purchase_price');
     table.dropColumn('notes');
