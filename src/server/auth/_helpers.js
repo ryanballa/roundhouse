@@ -1,7 +1,15 @@
 const bcrypt = require('bcryptjs');
+
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../../../knexfile')[environment];
 const database = require('knex')(configuration);
+
+function loginRedirect(req, res, next) {
+  if (req.user) {
+    return res.status(401).json({ status: 'You are already logged in' });
+  }
+  return next();
+}
 
 function comparePass(userPassword, databasePassword) {
   return bcrypt.compareSync(userPassword, databasePassword);
@@ -12,8 +20,8 @@ function createUser(req) {
   const hash = bcrypt.hashSync(req.body.password, salt);
   return database('users')
     .insert({
-      username: req.body.username,
       password: hash,
+      username: req.body.username,
     })
     .returning('*');
 }
@@ -26,5 +34,6 @@ function loginRequired(req, res, next) {
 module.exports = {
   comparePass,
   createUser,
+  loginRedirect,
   loginRequired,
 };

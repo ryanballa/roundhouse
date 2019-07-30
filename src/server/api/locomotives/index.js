@@ -1,16 +1,13 @@
 /* eslint-disable no-template-curly-in-string */
 const fs = require('fs');
 const locomotives = require('express').Router();
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
 const { db } = require('../../../../pgAdaptor');
 const database = require('../../serverConnection');
-
-const bodyParser = require('body-parser');
-const cloudinary = require('cloudinary').v2;
 const { loginRequired } = require('../../utils/loginRequired');
 const authHelpers = require('../../auth/_helpers');
-
-// MULTER
-const multer = require('multer');
 
 /* istanbul ignore next */
 const storage = multer.diskStorage({

@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const authHelpers = require('./_helpers');
@@ -12,7 +13,7 @@ router.get('/', authHelpers.loginRequired, (req, res) => {
   res.status(200).json({ status: 'success', user: req.user });
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       handleResponse(res, 500, 'error');
@@ -21,7 +22,7 @@ router.post('/login', (req, res, next) => {
       handleResponse(res, 404, 'User not found');
     }
     if (user) {
-      req.logIn(user, (err) => {
+      req.logIn(user, err => {
         if (err) {
           handleResponse(res, 500, 'error');
         }
@@ -31,7 +32,7 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.post('/register', (req, res, next) => {
+router.post('/register', authHelpers.loginRedirect, (req, res, next) => {
   return authHelpers
     .createUser(req, res)
     .then(response => {
