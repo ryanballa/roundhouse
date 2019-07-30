@@ -6,7 +6,6 @@ node_js:
   - "10"
 env:
   - CXX=g++-4.8]
-  - DB=postgres
 addons:
   apt:
     sources:
