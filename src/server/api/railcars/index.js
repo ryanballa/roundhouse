@@ -5,6 +5,7 @@ const { db } = require('../../../../pgAdaptor');
 /* istanbul ignore next */
 const database = require('../../serverConnection');
 const bodyParser = require('body-parser');
+const authHelpers = require('../../auth/_helpers');
 const { loginRequired } = require('../../utils/loginRequired');
 
 railcars.use(bodyParser.urlencoded({ extended: false }));
@@ -13,7 +14,7 @@ railcars.use((req, res, next) => {
   loginRequired(req, res, next);
 });
 
-railcars.get('/', (request, response) => {
+railcars.get('/', authHelpers.loginRequired, (request, response) => {
   const user = request.user ? request.user.id : 0;
   const query = `SELECT * FROM railcars WHERE user_id=${user}`;
   return db
@@ -29,11 +30,11 @@ railcars.get('/', (request, response) => {
     );
 });
 
-railcars.post('/', (request, response) => {
+railcars.post('/', authHelpers.loginRequired, (request, response) => {
   const locomotive = request.body;
 
   if (request.user.id !== request.body.user_id) {
-    response.status(403).json({});
+    return response.status(403).json({});
   }
 
   ['car_number', 'road', 'location'].forEach(requiredParameter => {
@@ -48,14 +49,20 @@ railcars.post('/', (request, response) => {
   return database('railcars')
     .insert(locomotive, 'id')
     .then(loco => {
-      response.status(201).json({ id: loco[0] });
+      /* istanbul ignore next */
+      if (!response.headersSent) {
+        response.status(201).json({ id: loco[0] });
+      }
     })
     .catch(error => {
-      response.status(500).json({ error });
+      /* istanbul ignore next */
+      if (!response.headersSent) {
+        response.status(500).json({ error });
+      }
     });
 });
 
-railcars.get('/:railcarId', (request, response) => {
+railcars.get('/:railcarId', authHelpers.loginRequired, (request, response) => {
   const id = request.params.railcarId;
   database('railcars')
     .where('id', id)
@@ -66,14 +73,17 @@ railcars.get('/:railcarId', (request, response) => {
       response.status(200).json(railCar);
     })
     .catch(error => {
-      response.status(500).json({ error });
+      /* istanbul ignore next */
+      if (!response.headersSent) {
+        response.status(500).json({ error });
+      }
     });
 });
 
-railcars.put('/:railcarId', (request, response) => {
+railcars.put('/:railcarId', authHelpers.loginRequired, (request, response) => {
   const id = request.params.railcarId;
   if (request.user.id !== request.body.user_id) {
-    response.status(403).json({});
+    return response.status(403).json({});
   }
   database('railcars')
     .where('id', id)
@@ -81,33 +91,45 @@ railcars.put('/:railcarId', (request, response) => {
     .then(railCar => {
       response.status(200).json(railCar);
     })
-    .catch(error => {
-      console.log(error);
-      response.status(500).json({ error });
-    });
+    .catch(
+      /* istanbul ignore next */ error => {
+        /* istanbul ignore next */
+        response.status(500).json({ error });
+      },
+    );
 });
 
-railcars.delete('/:railcarId', (request, response) => {
-  const id = request.params.railcarId;
-  database('railcars')
-    .where('id', id)
-    .then(railCar => {
-      if (request.user.id !== railCar[0].user_id) {
-        response.status(403).json({});
-      }
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
-  database('railcars')
-    .where('id', id)
-    .del()
-    .then(railCar => {
-      response.status(200).json(railCar);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
-});
+railcars.delete(
+  '/:railcarId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.railcarId;
+    database('railcars')
+      .where('id', id)
+      .then(railCar => {
+        if (request.user.id !== railCar[0].user_id) {
+          return response.status(403).json({});
+        }
+        database('railcars')
+          .where('id', id)
+          .del()
+          .then(railCarRes => {
+            return response.status(200).json(railCarRes);
+          })
+          .catch(
+            /* istanbul ignore next */ error => {
+              /* istanbul ignore next */
+              return response.status(500).json({ error });
+            },
+          );
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */
+          return response.status(500).json({ error });
+        },
+      );
+  },
+);
 
 module.exports = railcars;

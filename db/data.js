@@ -26,16 +26,19 @@ module.exports = {
   ],
   railcars: [
     {
+      "car_number": 123,
       "road": "BN",
   	  "location": "home",
   	  "user_id": 1
     },
     {
+      "car_number": 456,
       "road": "Frisco",
   	  "location": "studio",
   	  "user_id": 1
     },
     {
+      "car_number": 789,
       "road": "Santa Fe",
   	  "location": "studio",
   	  "user_id": 2

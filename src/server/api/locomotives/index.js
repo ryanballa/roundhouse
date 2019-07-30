@@ -6,7 +6,6 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { db } = require('../../../../pgAdaptor');
 const database = require('../../serverConnection');
-const { loginRequired } = require('../../utils/loginRequired');
 const authHelpers = require('../../auth/_helpers');
 
 /* istanbul ignore next */
@@ -21,9 +20,6 @@ const storage = multer.diskStorage({
 
 locomotives.use(bodyParser.urlencoded({ extended: false }));
 locomotives.use(bodyParser.json());
-locomotives.use((req, res, next) => {
-  loginRequired(req, res, next);
-});
 
 locomotives.get('/', authHelpers.loginRequired, (request, response) => {
   const user = request.user.id;
