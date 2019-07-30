@@ -23,4 +23,5 @@ services:
 deploy:
   provider: heroku
   api_key:
-    secure: "cf0e05d9-4eca-4948-a012-b91fe9704bab"
+    secure: "17c9077e-3526-4306-aefa-928c3ad8ed48"
+  app: "roundhouseapp"
