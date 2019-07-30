@@ -104,7 +104,7 @@
     "seed:test": "knex seed:run --env test",
     "seed:dev": "knex seed:run --env dev",
     "start": "npm run build && node -r esm ./src/server/index.js",
-    "test:mocha": "npm run seed:test && nyc --reporter=html ./node_modules/mocha/bin/_mocha './src/server/**/*.test.js' --exit",
+    "test:mocha": "NODE_ENV=test npm run migrate:test && npm run seed:test && nyc --reporter=html ./node_modules/mocha/bin/_mocha './src/server/**/*.test.js' --exit",
     "test": "NODE_ENV=test npm run migrate:test && npm run seed:test",
     "test:seed": "NODE_ENV=test npm run migrate:test &&  npm run seed:test && NODE_ENV=test node -r esm ./src/server/index.js"
   },

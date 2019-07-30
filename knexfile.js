@@ -51,7 +51,7 @@ module.exports = {
 
   test: {
     client: 'pg',
-    connection: 'postgres://localhost/testRoundhouse',
+    connection: 'postgres://localhost/testroundhouse',
     migrations: {
       directory: './db/migrations'
     },

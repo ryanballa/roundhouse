@@ -15,7 +15,7 @@ addons:
       - g++-4.8
 before_script:
   - echo "Create Database"
-  - psql -c 'create database testRoundhouse;' -U postgres
+  - psql -c 'create database testroundhouse;' -U postgres
 script:
   - npm run test:mocha
 services:
