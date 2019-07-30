@@ -7,13 +7,8 @@ cache:
 node_js:
   - "10"
 env:
-  - CXX=g++-4.8
-  - POSTGRES_HOST=localhost
-  - POSTGRES_PORT=5433
-  - POSTGRES_DB=testRoundhouse
-  - POSTGRES_USER=postgres
-  - POSTGRES_PASSWORD=
-  - SECRET_KEY=asdfasd7897asdfa6h2nkajkhaeynakuinayyuieyaaehwwunas
+  - CXX=g++-4.8]
+  - DB=postgres
 addons:
   apt:
     sources:
