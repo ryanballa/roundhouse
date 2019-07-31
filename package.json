@@ -99,7 +99,7 @@
     "build-watch": "parcel watch ./src/client/index.html",
     "ci": "start-server-and-test start:test http://localhost:4000 cypress:run",
     "cypress:open": "concurrently --kill-others \"yarn run start:test\" \"cypress open\"",
-    "cypress:run": "cypress run",
+    "cypress:run": "$(npm bin)/cypress run",
     "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-watch\"",
     "lint": "eslint .",
     "migrate:test": "knex migrate:latest --env test",
