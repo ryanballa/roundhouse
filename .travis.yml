@@ -7,11 +7,13 @@ node_js:
 env:
   - CXX=g++-4.8]
 addons:
+  chrome: stable
   apt:
     sources:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
+      - libgconf-2-4
 before_script:
   - echo "Create Database"
   - psql -c 'create database testroundhouse;' -U postgres
