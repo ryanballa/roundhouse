@@ -96,7 +96,8 @@
   "scripts": {
     "build": "parcel build ./src/client/index.html",
     "build-watch": "parcel watch ./src/client/index.html",
-    "cypress:open": "cypress open",
+    "cypress:open": "concurrently --kill-others \"yarn run start:test\" \"cypress open\"",
+    "cypress:run": "cypress run",
     "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-watch\"",
     "lint": "eslint .",
     "migrate:test": "knex migrate:latest --env test",
@@ -104,6 +105,7 @@
     "seed:test": "knex seed:run --env test",
     "seed:dev": "knex seed:run --env dev",
     "start": "npm run build && node -r esm ./src/server/index.js",
+    "start:test": "NODE_ENV=test node -r esm ./src/server/index.js",
     "test:mocha": "NODE_ENV=test npm run migrate:test && npm run seed:test && nyc --reporter=html ./node_modules/mocha/bin/_mocha './src/server/**/*.test.js' --exit",
     "test": "NODE_ENV=test npm run migrate:test && npm run seed:test",
     "test:seed": "NODE_ENV=test npm run migrate:test &&  npm run seed:test && NODE_ENV=test node -r esm ./src/server/index.js"

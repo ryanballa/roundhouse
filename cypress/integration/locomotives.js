@@ -5,15 +5,8 @@ describe('Locomotives', function () {
   })
 
   beforeEach(function () {
-    // cy.request('POST', '/auth/login', {
-    //   username: 'rballa',
-    //   password: 'test',
-    // })
     cy.visit('/login')
-
     cy.get('input[name=username]').type('rballa')
-
-    // {enter} causes the form to submit
     cy.get('input[name=password]').type(`test{enter}`)
   })
 
@@ -27,7 +20,8 @@ describe('Locomotives', function () {
     cy.get('[data-testid=is_operational]').get('label').first().click();
     cy.get('[data-testid=is_dcc] label').get('label').first().click();
     cy.get('input[name=purchase_price]').type('130');
-    cy.get('input[name=notes]').type('These are some notes.{enter}');
+    cy.get('input[name=notes]').type('These are some notes.');
+    cy.get('[data-testid=locomotiveAdd-form]').submit();
     cy.url().should('include', '/locomotives')
     cy.contains('Rock Island') 
   });
@@ -35,9 +29,12 @@ describe('Locomotives', function () {
   it('Edits a Locomotive', function() {
     cy.visit('/locomotives');
     cy.contains('Rock Island').click();
-    cy.get('input[name=road]').clear().type('Rock Island 1{enter}');
+    cy.wait(500);
+    cy.get('input[name=road]').clear().type('Rock Island 1');
+    cy.get('[data-testid=locomotiveAdd-form]').submit();
     cy.contains('Rock Island 1').click();
-    cy.get('input[name=road]').clear().type('Rock Island{enter}');
+    cy.get('input[name=road]').clear().type('Rock Island');
+    cy.get('[data-testid=locomotiveAdd-form]').submit();
   });
 
   it('Deletes a Locomotive', function() {

@@ -5,6 +5,8 @@ npm-debug.log
 # built files
 **/.cache
 **/coverage
+cypress/screenshots
+cypress/videos
 
 # misc
 .env
