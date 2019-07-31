@@ -17,6 +17,7 @@ before_script:
   - psql -c 'create database testroundhouse;' -U postgres
 script:
   - npm run test:mocha
+  - $(npm bin)/cypress run --record
 services:
   - postgresql
 deploy:
