@@ -21,6 +21,7 @@ describe('Locomotives', function () {
     cy.get('[data-testid=is_dcc] label').get('label').first().click();
     cy.get('input[name=purchase_price]').type('130');
     cy.get('input[name=notes]').type('These are some notes.');
+    cy.wait(500);
     cy.get('[data-testid=locomotiveAdd-form]').submit();
     cy.url().should('include', '/locomotives')
     cy.contains('Rock Island') 
@@ -34,6 +35,7 @@ describe('Locomotives', function () {
     cy.get('[data-testid=locomotiveAdd-form]').submit();
     cy.contains('Rock Island 1').click();
     cy.get('input[name=road]').clear().type('Rock Island');
+    cy.wait(500);
     cy.get('[data-testid=locomotiveAdd-form]').submit();
   });
 
