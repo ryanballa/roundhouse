@@ -1,11 +1,12 @@
 export const colors = {
   error: '#c52525',
   headers: '#82898a',
+  links: '#626262',
 };
 
 export const fontConfig = {
   familyBody: 'sans-serif',
-  familyStylized: "'Dosis', 'sans-serif'",
+  familyStylized: "'Catamaran', 'sans-serif'",
   h1: {
     fontSize: '1.2em',
     letterSpacing: '0.1em',

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { styledComponent } from '../../utils/styledComponent';
-import { fontConfig, spacing } from '../../config/styles';
+import { colors, fontConfig, spacing } from '../../config/styles';
 import MainNavigation from './MainNavigation';
 import UserMenu from './UserMenu';
 import { userState } from '../../UserProvider';
@@ -13,11 +13,10 @@ const StyledHeader = styledComponent('header', {
     ...fontConfig.h1,
   },
   alignItems: 'center',
-  backgroundColor: '#dedede',
-  boxShadow: '1px 1px 1px rgba(0, 0, 0, 0.3)',
-  color: '#FFFFFF',
+  color: colors.links,
   display: 'flex',
   fontFamily: fontConfig.familyStylized,
+  justifyContent: 'space-between',
   padding: spacing.boxPadding,
 });
 

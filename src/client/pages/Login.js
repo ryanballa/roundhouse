@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Field, Formik } from 'formik';
 import SingleColumn from '../components/layout/SingleColumn';
 import Error from '../components/atoms/forms/Error';
+import Menu from '../components/atoms/Menu';
 import { styledComponent } from '../utils/styledComponent';
 import { userState, userDispatch } from '../UserProvider';
 
