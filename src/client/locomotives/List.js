@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Button } from 'evergreen-ui';
 import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
+import AddButton from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
 import { errorHandler } from '../utils/errorHandler';
 import 'react-base-table/styles.css';
@@ -74,6 +74,7 @@ function List({ history }) {
         <div>Loading ...</div>
       ) : (
         <>
+          <AddButton to="/locomotives/add">Add Locomotive</AddButton>
           <BaseTable
             onColumnSort={onColumnSort}
             data={data.data}
@@ -139,14 +140,6 @@ function List({ history }) {
           </ul>
         </>
       )}
-      <Button
-        iconBefore="add"
-        onClick={() => {
-          history.push('/locomotives/add');
-        }}
-      >
-        Add Locomotive
-      </Button>
     </SingleColumn>
   );
 }

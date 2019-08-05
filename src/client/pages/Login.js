@@ -1,13 +1,14 @@
-import React, { useState }  from 'react';
-import { Button, FormField, Pane, toaster } from 'evergreen-ui';
+import React, { useState } from 'react';
+import { Pane, toaster } from 'evergreen-ui';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Field, Formik } from 'formik';
+import { Formik } from 'formik';
 import SingleColumn from '../components/layout/SingleColumn';
+import Button from '../components/atoms/Button';
 import Error from '../components/atoms/forms/Error';
 import Input from '../components/atoms/forms/Input';
 import { styledComponent } from '../utils/styledComponent';
-import { userState, userDispatch } from '../UserProvider';
+import { userDispatch } from '../UserProvider';
 
 const Form = styledComponent('div', {
   '& li': {
@@ -55,19 +56,12 @@ function Login({ history }) {
           >
             {({ errors, touched, handleSubmit, isSubmitting }) => (
               <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
-                {submitError && <span>Please check your username or password</span>}
+                {submitError && (
+                  <Error>Please check your username or password</Error>
+                )}
                 <ul>
                   <li data-testid="username">
                     <Input label="Username" name="username" />
-                    {/* <FormField label="Username">
-                      <Field
-                        autoComplete="username"
-                        id="username"
-                        type="text"
-                        name="username"
-                        placeholder=""
-                      />
-                    </FormField> */}
                     <Error>
                       {errors.username && touched.username ? (
                         <div className="error">{errors.username}</div>
@@ -76,15 +70,6 @@ function Login({ history }) {
                   </li>
                   <li data-testid="password">
                     <Input label="Password" name="password" type="password" />
-                    {/* <FormField label="Password">
-                      <Field
-                        autoComplete="current-password"
-                        id="password"
-                        type="password"
-                        name="password"
-                        placeholder=""
-                      />
-                    </FormField> */}
                     <Error>
                       {errors.password && touched.password ? (
                         <div className="error">{errors.password}</div>
@@ -93,12 +78,9 @@ function Login({ history }) {
                   </li>
                   <li>
                     <Button
-                      type="submit"
                       data-testid="login-submit"
                       disabled={isSubmitting}
-                    >
-                      Submit
-                    </Button>
+                    />
                   </li>
                 </ul>
               </form>

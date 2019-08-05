@@ -9,11 +9,15 @@ const StyledSection = styledComponent('section', {
   '& a': {
     color: colors.headers,
   },
+  '& h1': {
+    fontSize: '3em',
+  },
   '& h1, & h2': {
     color: colors.headers,
-    fontFamily: fontConfig.familyStylized,
+    fontFamily: fontConfig.familyHeaders,
+    fontWeight: 'normal',
   },
-  fontFamily: fontConfig.familyBody,
+  fontFamily: fontConfig.familyStylized,
   margin: 30,
 });
 
