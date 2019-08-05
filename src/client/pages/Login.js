@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Field, Formik } from 'formik';
 import SingleColumn from '../components/layout/SingleColumn';
 import Error from '../components/atoms/forms/Error';
-import Menu from '../components/atoms/Menu';
+import Input from '../components/atoms/forms/Input';
 import { styledComponent } from '../utils/styledComponent';
 import { userState, userDispatch } from '../UserProvider';
 
@@ -58,7 +58,8 @@ function Login({ history }) {
                 {submitError && <span>Please check your username or password</span>}
                 <ul>
                   <li data-testid="username">
-                    <FormField label="Username">
+                    <Input label="Username" name="username" />
+                    {/* <FormField label="Username">
                       <Field
                         autoComplete="username"
                         id="username"
@@ -66,7 +67,7 @@ function Login({ history }) {
                         name="username"
                         placeholder=""
                       />
-                    </FormField>
+                    </FormField> */}
                     <Error>
                       {errors.username && touched.username ? (
                         <div className="error">{errors.username}</div>
@@ -74,7 +75,8 @@ function Login({ history }) {
                     </Error>
                   </li>
                   <li data-testid="password">
-                    <FormField label="Password">
+                    <Input label="Password" name="password" type="password" />
+                    {/* <FormField label="Password">
                       <Field
                         autoComplete="current-password"
                         id="password"
@@ -82,7 +84,7 @@ function Login({ history }) {
                         name="password"
                         placeholder=""
                       />
-                    </FormField>
+                    </FormField> */}
                     <Error>
                       {errors.password && touched.password ? (
                         <div className="error">{errors.password}</div>

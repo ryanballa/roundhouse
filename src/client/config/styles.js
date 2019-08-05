@@ -1,5 +1,10 @@
 export const colors = {
   error: '#c52525',
+  form: {
+    background: '#EFEFEF',
+    label: '#4B4B4B',
+    stroke: '#CECECE',
+  },
   headers: '#82898a',
   links: '#626262',
 };
