@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
@@ -31,15 +32,19 @@ const StyledDiv = styledComponent('div', {
   },
 });
 
-function List({ history }) {
+function List({ history, location }) {
   const [data, setData] = useState({ data: [{ id: '1', road: 'Test' }] });
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
   const [isLoading, setIsLoading] = useState(false);
+  const qsValues = queryString.parse(location.search);
+  if (Object.entries(qsValues).length === 0) {
+    qsValues.running = 'true';
+  }
 
   useEffect(() => {
     const fetchData = () => {
       setIsLoading(true);
-      axios('/api/v1/locomotives')
+      axios(`/api/v1/locomotives?running=${qsValues.running}`)
         .then(response => {
           const values = response.data.map(value => {
             return value.value;
@@ -51,12 +56,12 @@ function List({ history }) {
           setData({ data: response.data, totalValues });
         })
         .catch(error => {
-          errorHandler(history, error.reponse, error.response.status);
+          console.log(error);
         });
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [location]);
 
   const booleanFormatter = ({ cellData }) => {
     return cellData ? 'Yes' : 'No';
@@ -97,11 +102,11 @@ function List({ history }) {
         <StyledDiv>
           <Addbutton to="/locomotives/add">Add Locomotive</Addbutton>
           <TabMenu>
-            <li className="active">
-              <Link to="">Running</Link>
+            <li className={qsValues.running === 'true' ? 'active' : ''}>
+              <Link to="/locomotives?running=true">Running</Link>
             </li>
-            <li>
-              <Link to="">Needs Work</Link>
+            <li className={qsValues.running === 'false' ? 'active' : ''}>
+              <Link to="/locomotives?running=false">Needs Work</Link>
             </li>
           </TabMenu>
           <BaseTable
@@ -176,6 +181,9 @@ function List({ history }) {
 List.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string,
   }).isRequired,
 };
 

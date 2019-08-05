@@ -7,6 +7,9 @@ const cloudinary = require('cloudinary').v2;
 const { db } = require('../../../../pgAdaptor');
 const database = require('../../serverConnection');
 const authHelpers = require('../../auth/_helpers');
+const {
+  filterRunningLocomotives,
+} = require('./transforms/filterRunningLocomotives');
 
 /* istanbul ignore next */
 const storage = multer.diskStorage({
@@ -24,12 +27,15 @@ locomotives.use(bodyParser.json());
 locomotives.get('/', authHelpers.loginRequired, (request, response) => {
   const user = request.user.id;
   const query = `SELECT * FROM locomotives WHERE user_id=${user}`;
+
+  const { running } = request.query;
+
   return db
     .manyOrNone(query)
     .then(res => {
       /* istanbul ignore next */
       if (!response.headersSent) {
-        response.status(200).json(res);
+        response.status(200).json(filterRunningLocomotives(res, running));
       }
     })
     .catch(
