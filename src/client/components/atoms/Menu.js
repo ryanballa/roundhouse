@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { styledComponent } from '../../utils/styledComponent';
 
-const StyledDiv = styledComponent('header', {
+const StyledDiv = styledComponent('div', {
   '& .icon': {
     marginRight: '10px',
   },

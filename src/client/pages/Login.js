@@ -9,8 +9,15 @@ import Error from '../components/atoms/forms/Error';
 import Input from '../components/atoms/forms/Input';
 import { styledComponent } from '../utils/styledComponent';
 import { userDispatch } from '../UserProvider';
+import { colors } from '../config/styles';
 
 const Form = styledComponent('div', {
+  '& h1': {
+    marginTop: 0,
+  },
+  '& input': {
+    width: '360px',
+  },
   '& li': {
     listStyle: 'none',
     marginBottom: '15px',
@@ -18,7 +25,11 @@ const Form = styledComponent('div', {
   '& ul': {
     paddingLeft: 0,
   },
-  paddingTop: '5px',
+  border: `1px solid ${colors.form.stroke}`,
+  borderRadius: '4px',
+  margin: '0 auto',
+  padding: '25px',
+  width: '400px',
 });
 
 function Login({ history }) {
@@ -27,8 +38,8 @@ function Login({ history }) {
 
   return (
     <SingleColumn history={history}>
-      <h1>Login</h1>
       <Form>
+        <h1>Login</h1>
         <Pane>
           <Formik
             initialValues={{

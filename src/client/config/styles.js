@@ -1,5 +1,7 @@
 export const colors = {
   addButtonBackground: '#61A3C5',
+  body: '#848484',
+  border: '#D6D6D6',
   error: '#c52525',
   form: {
     background: '#EFEFEF',
@@ -10,6 +12,10 @@ export const colors = {
   },
   headers: '#4F4F4F',
   links: '#626262',
+  menu: {
+    active: '#61A3C5',
+    links: '#7E7E7E',
+  },
 };
 
 export const fontConfig = {

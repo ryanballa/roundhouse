@@ -5,10 +5,31 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
-import AddButton from '../components/atoms/AddButton';
+import Addbutton from '../components/atoms/Addbutton';
+import TabMenu from '../components/atoms/TabMenu';
 import SingleColumn from '../components/layout/SingleColumn';
+import { styledComponent } from '../utils/styledComponent';
 import { errorHandler } from '../utils/errorHandler';
 import 'react-base-table/styles.css';
+import { colors } from '../config/styles';
+
+const StyledDiv = styledComponent('div', {
+  '& .BaseTable__body': {
+    color: colors.body,
+    fontSize: '16px',
+  },
+  '& .BaseTable__header-row': {
+    borderBottom: `1px solid ${colors.border}`,
+    fontSize: '16px',
+    fontWeight: 600,
+  },
+  '& .BaseTable__row': {
+    border: 'none',
+  },
+  '& .BaseTable__table': {
+    outline: 'none',
+  },
+});
 
 function List({ history }) {
   const [data, setData] = useState({ data: [{ id: '1', road: 'Test' }] });
@@ -73,8 +94,16 @@ function List({ history }) {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <>
-          <AddButton to="/locomotives/add">Add Locomotive</AddButton>
+        <StyledDiv>
+          <Addbutton to="/locomotives/add">Add Locomotive</Addbutton>
+          <TabMenu>
+            <li className="active">
+              <Link to="">Running</Link>
+            </li>
+            <li>
+              <Link to="">Needs Work</Link>
+            </li>
+          </TabMenu>
           <BaseTable
             onColumnSort={onColumnSort}
             data={data.data}
@@ -138,7 +167,7 @@ function List({ history }) {
             </li>
             <li>Value: ${data.totalValues}</li>
           </ul>
-        </>
+        </StyledDiv>
       )}
     </SingleColumn>
   );

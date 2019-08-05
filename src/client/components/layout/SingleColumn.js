@@ -18,7 +18,8 @@ const StyledSection = styledComponent('section', {
     fontWeight: 'normal',
   },
   fontFamily: fontConfig.familyStylized,
-  margin: 30,
+  margin: '30px auto',
+  width: '1200px',
 });
 
 const SingleColumn = ({ authProtected, children, history }) => {

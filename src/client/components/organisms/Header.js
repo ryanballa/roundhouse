@@ -17,7 +17,9 @@ const StyledHeader = styledComponent('header', {
   display: 'flex',
   fontFamily: fontConfig.familyStylized,
   justifyContent: 'space-between',
+  margin: '0 auto',
   padding: spacing.boxPadding,
+  width: '1200px',
 });
 
 const Header = () => {
