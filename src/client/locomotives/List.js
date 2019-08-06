@@ -5,6 +5,8 @@ import moment from 'moment';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { PieChart } from 'react-chartkick';
+import 'chart.js';
 import BaseTable, { Column } from 'react-base-table';
 import AddButton from '../components/atoms/AddButton';
 import TabMenu from '../components/atoms/TabMenu';
@@ -33,6 +35,13 @@ const StyledDiv = styledComponent('div', {
   '& .addLocomotive': {
     float: 'right',
   },
+  '& .itemCallout': {
+    width: '50%',
+  },
+  '& .items': {
+    display: 'flex',
+    marginTop: '20px',
+  },
 });
 
 function List({ history, location }) {
@@ -49,6 +58,20 @@ function List({ history, location }) {
       setIsLoading(true);
       axios(`/api/v1/locomotives?running=${qsValues.running}`)
         .then(response => {
+          const steam = response.data.filter(item => item.type === 'steam');
+          const diesel = response.data.filter(item => item.type === 'diesel');
+          const trolley = response.data.filter(item => item.type === 'trolley');
+          const other = response.data.filter(item => item.type === 'other');
+
+          const typeGraphData = [
+            ['Steam', steam.length],
+            ['Diesel', diesel.length],
+            ['Trolley', trolley.length],
+            ['Other', other.length],
+          ];
+
+          console.log(steam, diesel, trolley);
+
           const values = response.data.map(value => {
             return value.value;
           });
@@ -56,7 +79,7 @@ function List({ history, location }) {
             Math.round(accumulator) + Math.round(currentValue);
 
           const totalValues = values.reduce(reducer);
-          setData({ data: response.data, totalValues });
+          setData({ data: response.data, totalValues, typeGraphData });
         })
         .catch(error => {
           console.log(error);
@@ -169,14 +192,22 @@ function List({ history, location }) {
               width={220}
             />
           </BaseTable>
-          <h2>Collection</h2>
-          <ul>
-            <li>
-              <b>Locomotives:</b>
-              {data.data.length}
-            </li>
-            <li>Value: ${data.totalValues}</li>
-          </ul>
+          <div className="items">
+            <div className="itemCallout">
+              <h2>Collection</h2>
+              <ul>
+                <li>
+                  <b>Locomotives:</b>
+                  {data.data.length}
+                </li>
+                <li>Value: ${data.totalValues}</li>
+              </ul>
+            </div>
+            <div className="itemCallout">
+              <h2>Equipment</h2>
+              <PieChart data={data.typeGraphData} />
+            </div>
+          </div>
         </StyledDiv>
       )}
     </SingleColumn>
