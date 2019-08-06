@@ -70,7 +70,7 @@ const Menu = ({ children, icon, title }) => {
   }
 
   return (
-    <StyledDiv>
+    <StyledDiv className="menuWrapper">
       <button
         className={openToggle ? 'open' : 'closed'}
         onClick={handleMenuOpen}

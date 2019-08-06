@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { userState } from '../../UserProvider';
+import { styledComponent } from '../../utils/styledComponent';
 import Menu from '../atoms/Menu';
+
+const StyledDiv = styledComponent('div', {
+  '& .menuWrapper': {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+});
 
 const UserMenu = () => {
   const { user } = userState();
@@ -30,13 +38,13 @@ const UserMenu = () => {
     </svg>
   );
   return (
-    <div>
+    <StyledDiv>
       {user && (
         <Menu icon={userIcon} title={user.username}>
           <li>{user && <Link to="/logout">Logout</Link>}</li>
         </Menu>
       )}
-    </div>
+    </StyledDiv>
   );
 };
 

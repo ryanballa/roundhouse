@@ -30,6 +30,9 @@ const StyledDiv = styledComponent('div', {
   '& .BaseTable__table': {
     outline: 'none',
   },
+  '& .addLocomotive': {
+    float: 'right',
+  },
 });
 
 function List({ history, location }) {
@@ -100,7 +103,9 @@ function List({ history, location }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <AddButton to="/locomotives/add">Add Locomotive</AddButton>
+          <AddButton className="addLocomotive" to="/locomotives/add">
+            Add Locomotive
+          </AddButton>
           <TabMenu>
             <li className={qsValues.running === 'true' ? 'active' : ''}>
               <Link to="/locomotives?running=true">Running</Link>
