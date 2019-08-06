@@ -3,7 +3,7 @@
 module.exports = {
   automock: false,
   collectCoverage: true,
-  collectCoverageFrom: ['<rootDir>/src/**/*.js', '<rootDir>/packages/**/*.js'],
+  collectCoverageFrom: ['<rootDir>/src/client/**/*.js'],
   coverageDirectory: '<rootDir>/coverage/',
   coveragePathIgnorePatterns: [
     '<rootDir>\\/src\\/server\\/(lib|middleware)\\/\\w*\\/index\\.js',
@@ -30,7 +30,7 @@ module.exports = {
   ],
   // but it will be defined in this file.
   setupFilesAfterEnv: ['<rootDir>/config/jest/extensions.js'],
-  testMatch: ['<rootDir>/src/**/*.test.js', '<rootDir>/packages/**/*.test.js'],
+  testMatch: ['<rootDir>/src/client/**/*.test.js'],
   testURL: 'http://test',
   transform: {
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',

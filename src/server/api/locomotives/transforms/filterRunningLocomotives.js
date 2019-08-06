@@ -13,5 +13,5 @@ exports.filterRunningLocomotives = (locomotives, isOperationalQuery) => {
     return loco.is_operational === (query === 'true');
   });
 
-  return results || [];
+  return results;
 };

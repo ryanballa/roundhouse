@@ -112,7 +112,7 @@
     "start": "npm run build && node -r esm ./src/server/index.js",
     "start:test": "NODE_ENV=test node -r esm ./src/server/index.js",
     "test:mocha": "NODE_ENV=test npm run migrate:test && npm run seed:test && nyc --reporter=html ./node_modules/mocha/bin/_mocha './src/server/**/*.test.js' --exit",
-    "test": "NODE_ENV=test npm run migrate:test && npm run seed:test",
+    "test:jest": "NODE_ENV=test jest --config config/jest/index.js",
     "test:seed": "NODE_ENV=test npm run migrate:test &&  npm run seed:test && NODE_ENV=test node -r esm ./src/server/index.js"
   },
   "author": "",
