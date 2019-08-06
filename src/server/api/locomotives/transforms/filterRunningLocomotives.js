@@ -3,8 +3,14 @@ exports.filterRunningLocomotives = (locomotives, isOperationalQuery) => {
     return [];
   }
 
+  let query = isOperationalQuery;
+
+  if (!isOperationalQuery) {
+    query = 'true';
+  }
+
   const results = locomotives.filter(loco => {
-    return loco.is_operational === (isOperationalQuery === 'true');
+    return loco.is_operational === (query === 'true');
   });
 
   return results || [];

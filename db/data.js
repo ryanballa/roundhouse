@@ -2,17 +2,20 @@ module.exports = {
   locomotives: [
     {
       "road": "BN",
-  	  "location": "home",
+      "location": "home",
+      "is_operational": true,
   	  "user_id": 1
     },
     {
       "road": "Frisco",
-  	  "location": "studio",
+      "location": "studio",
+      "is_operational": true,
   	  "user_id": 1
     },
     {
       "road": "Santa Fe",
-  	  "location": "studio",
+      "location": "studio",
+      "is_operational": true,
   	  "user_id": 2
     }
   ],
