@@ -112,6 +112,7 @@ const Edit = ({ history, match }) => {
                   : undefined,
                 road: data[0].road,
                 thumbnail: data[0].thumbnail || '',
+                type: data[0].type,
                 user_id: user ? user.id : null,
                 value: data[0].value,
               }}

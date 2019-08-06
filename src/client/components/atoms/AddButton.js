@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 
-const StyledLink = styledComponent('Addbutton', {
+const StyledLink = styledComponent('div', {
   '& a.link': {
     color: `${colors.form.buttonPrimaryBacgkround} !important`,
     fontSize: '18px',
@@ -23,7 +23,7 @@ const StyledLink = styledComponent('Addbutton', {
   marginBottom: '15px',
 });
 
-const Addbutton = ({ children, to, ...otherProps }) => (
+const AddButton = ({ children, to, ...otherProps }) => (
   <StyledLink {...otherProps}>
     <svg
       width="27"
@@ -55,13 +55,13 @@ const Addbutton = ({ children, to, ...otherProps }) => (
   </StyledLink>
 );
 
-Addbutton.propTypes = {
+AddButton.propTypes = {
   children: PropTypes.string,
   to: PropTypes.string.isRequired,
 };
 
-Addbutton.defaultProps = {
+AddButton.defaultProps = {
   children: 'Add',
 };
 
-export default Addbutton;
+export default AddButton;

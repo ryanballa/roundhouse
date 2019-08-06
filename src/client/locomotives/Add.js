@@ -59,6 +59,7 @@ function Add({ history }) {
               is_operational: data[0].is_operational,
               location: data[0].location,
               road: data[0].road,
+              type: data[0].type,
               user_id: user ? user.id : null,
             }}
             validationSchema={EditSchema}

@@ -84,6 +84,28 @@ const Form = ({
     </div>
   );
 
+  const SelectFieldType = ({
+    id,
+    field: { name, value, onChange, onBlur },
+    ...props
+  }) => (
+    <div data-testid={name}>
+      <Select
+        id={id}
+        name={name}
+        onChange={onChange}
+        value={value}
+        onBlur={onBlur}
+        {...props}
+      >
+        <option value="steam">Steam Engine</option>
+        <option value="diesel">Diesel Engine</option>
+        <option value="trolley">Trolley</option>
+        <option value="other">Other</option>
+      </Select>
+    </div>
+  );
+
   SelectField.propTypes = {
     field: PropTypes.shape({
       name: PropTypes.string,
@@ -158,6 +180,11 @@ const Form = ({
           <li>
             <FormField label="Location">
               <Field id="location" name="location" component={SelectField} />
+            </FormField>
+          </li>
+          <li>
+            <FormField label="Type">
+              <Field id="type" name="type" component={SelectFieldType} />
             </FormField>
           </li>
           <li>

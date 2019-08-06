@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
-import Addbutton from '../components/atoms/Addbutton';
+import AddButton from '../components/atoms/AddButton';
 import TabMenu from '../components/atoms/TabMenu';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
@@ -100,7 +100,7 @@ function List({ history, location }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <Addbutton to="/locomotives/add">Add Locomotive</Addbutton>
+          <AddButton to="/locomotives/add">Add Locomotive</AddButton>
           <TabMenu>
             <li className={qsValues.running === 'true' ? 'active' : ''}>
               <Link to="/locomotives?running=true">Running</Link>
