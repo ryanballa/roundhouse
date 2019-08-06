@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import Add from './locomotives/Add';
-import Edit from './locomotives/Edit';
+import EditContainer from './locomotives/EditContainer';
 import List from './locomotives/List';
 import Upload from './photos/Upload';
 import Home from './pages/Home';
@@ -45,7 +45,7 @@ const Routes = ({ history }) => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
         <Route exact path="/locomotives/add" component={Add} />
-        <Route exact path="/locomotives/:id" component={Edit} />
+        <Route exact path="/locomotives/:id" component={EditContainer} />
         <Route exact path="/photos" component={Photos} />
         <Route exact path="/railcars" component={Railcars} />
         <Route exact path="/railcars/add" component={RailcarsAdd} />
