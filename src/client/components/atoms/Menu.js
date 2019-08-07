@@ -8,7 +8,7 @@ const StyledDiv = styledComponent('div', {
   },
   '& button': {
     '&.open svg.arrow': {
-      transform: 'rotate(180deg)',
+      transform: 'rotate(0deg)',
     },
     '&:hover': {
       cursor: 'pointer',
@@ -21,6 +21,7 @@ const StyledDiv = styledComponent('div', {
     marginLeft: '6px',
     position: 'relative',
     top: '5px',
+    transform: 'rotate(180deg)',
   },
   '& ul': {
     backgroundColor: '#ffffff',
