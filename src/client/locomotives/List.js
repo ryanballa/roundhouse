@@ -49,29 +49,30 @@ function List({ history, location }) {
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
   const [isLoading, setIsLoading] = useState(false);
   const qsValues = queryString.parse(location.search);
+
   if (Object.entries(qsValues).length === 0) {
     qsValues.running = 'true';
   }
+
+  const generateGraphData = engineData => {
+    const steam = engineData.filter(item => item.type === 'steam');
+    const diesel = engineData.filter(item => item.type === 'diesel');
+    const trolley = engineData.filter(item => item.type === 'trolley');
+    const other = engineData.filter(item => item.type === 'other');
+
+    return [
+      ['Steam', steam.length],
+      ['Diesel', diesel.length],
+      ['Trolley', trolley.length],
+      ['Other', other.length],
+    ];
+  };
 
   useEffect(() => {
     const fetchData = () => {
       setIsLoading(true);
       axios(`/api/v1/locomotives?running=${qsValues.running}`)
         .then(response => {
-          const steam = response.data.filter(item => item.type === 'steam');
-          const diesel = response.data.filter(item => item.type === 'diesel');
-          const trolley = response.data.filter(item => item.type === 'trolley');
-          const other = response.data.filter(item => item.type === 'other');
-
-          const typeGraphData = [
-            ['Steam', steam.length],
-            ['Diesel', diesel.length],
-            ['Trolley', trolley.length],
-            ['Other', other.length],
-          ];
-
-          console.log(steam, diesel, trolley);
-
           const values = response.data.map(value => {
             return value.value;
           });
@@ -79,7 +80,11 @@ function List({ history, location }) {
             Math.round(accumulator) + Math.round(currentValue);
 
           const totalValues = values.reduce(reducer);
-          setData({ data: response.data, totalValues, typeGraphData });
+          setData({
+            data: response.data,
+            totalValues,
+            typeGraphData: generateGraphData(response.data),
+          });
         })
         .catch(error => {
           console.log(error);
@@ -116,7 +121,11 @@ function List({ history, location }) {
       sortByVal.order,
     );
     setSortBy(sortByVal);
-    setData({ data: sortedData, totalValues: data.totalValues });
+    setData({
+      data: sortedData,
+      totalValues: data.totalValues,
+      typeGraphData: generateGraphData(sortedData),
+    });
   };
 
   return (

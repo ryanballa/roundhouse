@@ -54,6 +54,7 @@ const Header = () => {
         </Link>
       </h1>
       {user && <MainNavigation />}
+      {!user && <Link to="/login">Login</Link>}
       <UserMenu />
     </StyledHeader>
   );
