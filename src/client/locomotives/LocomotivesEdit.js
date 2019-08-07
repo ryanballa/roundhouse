@@ -6,6 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
 import FormActions from '../components/organisms/FormActions';
+import Breadcrumb from '../components/atoms/Breadcrumb';
 import Form from './components/Form';
 
 const LocomotivesEdit = ({
@@ -28,6 +29,12 @@ const LocomotivesEdit = ({
 
   return (
     <SingleColumn history={history}>
+      <Breadcrumb
+        items={[
+          { link: '/locomotives', text: 'Locomotives' },
+          { text: 'Edit Locomotive' },
+        ]}
+      />
       <FormActions>
         <h1 data-testid="locomotiveEdit-form">Edit Locomotive</h1>
         <Button
