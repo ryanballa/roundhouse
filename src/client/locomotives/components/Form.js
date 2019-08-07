@@ -7,6 +7,7 @@ import Error from '../../components/atoms/forms/Error';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import Gallery from '../../components/organisms/Gallery';
+import Input from '../../components/atoms/forms/Input';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -14,6 +15,7 @@ const StyledDiv = styledComponent('div', {
     borderRadius: '2px',
     boxShadow: '0 0 0 1px rgba(67, 90, 111, 0.14)',
     padding: '8px',
+    width: '50%',
   },
   '& li': {
     listStyle: 'none',
@@ -129,9 +131,16 @@ const Form = ({
             <Field type="hidden" name="user_id" />
           </li>
           <li data-testid="road">
-            <FormField label="Road">
+            {/* <FormField label="Road">
               <Field id="road" type="text" name="road" placeholder="" />
-            </FormField>
+            </FormField> */}
+            <Input
+              label="Road"
+              id="road"
+              type="text"
+              name="road"
+              placeholder=""
+            />
             <Error>
               {errors.road && touched.road ? (
                 <div className="error">{errors.road}</div>
@@ -139,14 +148,21 @@ const Form = ({
             </Error>
           </li>
           <li data-testid="engine_number">
-            <FormField label="Engine Number">
+            {/* <FormField label="Engine Number">
               <Field
                 id="engine_number"
                 type="text"
                 name="engine_number"
                 placeholder=""
               />
-            </FormField>
+            </FormField> */}
+            <Input
+              label="Engine Number"
+              id="engine_number"
+              type="text"
+              name="engine_number"
+              placeholder=""
+            />
             <Error>
               {errors.engine_number && touched.engine_number ? (
                 <div className="error">{errors.engine_number}</div>
@@ -188,24 +204,45 @@ const Form = ({
             </FormField>
           </li>
           <li>
-            <FormField label="Value">
+            <Input
+              label="Value"
+              id="value"
+              type="text"
+              name="value"
+              placeholder="0"
+            />
+            {/* <FormField label="Value">
               <Field id="value" type="text" name="value" placeholder="0" />
-            </FormField>
+            </FormField> */}
           </li>
           <li>
-            <FormField label="Purchase Price">
+            <Input
+              label="Purchase Price"
+              id="purchase_price"
+              type="text"
+              name="purchase_price"
+              placeholder="0"
+            />
+            {/* <FormField label="Purchase Price">
               <Field
                 id="purchase_price"
                 type="text"
                 name="purchase_price"
                 placeholder="0"
               />
-            </FormField>
+            </FormField> */}
           </li>
           <li>
-            <FormField label="Notes">
+            {/* <FormField label="Notes">
               <Field id="notes" type="text" name="notes" placeholder="" />
-            </FormField>
+            </FormField> */}
+            <Input
+              label="Notes"
+              id="notes"
+              type="text"
+              name="notes"
+              placeholder=""
+            />
           </li>
           <li>
             <Gallery

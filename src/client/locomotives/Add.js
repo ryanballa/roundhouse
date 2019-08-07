@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
+import Breadcrumb from '../components/atoms/Breadcrumb';
 import Form from './components/Form';
 import { userState } from '../UserProvider';
 
@@ -50,6 +51,13 @@ function Add({ history }) {
 
   return (
     <SingleColumn history={history}>
+      <Breadcrumb
+        items={[
+          { link: '/locomotives', text: 'Locomotives' },
+          { text: 'Add Locomotive' },
+        ]}
+      />
+      <h1>Add Locomotive</h1>
       <Fragment>
         <Pane>
           <Formik

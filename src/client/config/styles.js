@@ -2,6 +2,12 @@ export const colors = {
   addButtonBackground: '#61A3C5',
   body: '#848484',
   border: '#D6D6D6',
+  buttons: {
+    secondary: {
+      background: '#646d71',
+      textColor: '#FFFFFF',
+    },
+  },
   error: '#c52525',
   form: {
     background: '#EFEFEF',

@@ -3,10 +3,37 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Button } from 'evergreen-ui';
 import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
+import AddButton from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
+import { styledComponent } from '../utils/styledComponent';
+import { colors } from '../config/styles';
+
+const StyledDiv = styledComponent('div', {
+  '& .BaseTable__body': {
+    color: colors.body,
+    fontSize: '16px',
+  },
+  '& .BaseTable__header-row': {
+    borderBottom: `1px solid ${colors.border}`,
+    fontSize: '16px',
+    fontWeight: 600,
+  },
+  '& .BaseTable__row': {
+    border: 'none',
+  },
+  '& .BaseTable__table': {
+    outline: 'none',
+  },
+  '& .itemCallout': {
+    width: '50%',
+  },
+  '& .items': {
+    display: 'flex',
+    marginTop: '20px',
+  },
+});
 
 function Railcars({ history }) {
   const [data, setData] = useState([{ id: '1', road: 'Test' }]);
@@ -55,62 +82,59 @@ function Railcars({ history }) {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <BaseTable
-          onColumnSort={onColumnSort}
-          data={data}
-          sortBy={sortBy}
-          width={1200}
-          height={400}
-        >
-          <Column sortable title="Id" key="id" dataKey="id" width={100} />
-          <Column
-            cellRenderer={linkFormatter}
-            title="Road"
-            key="road"
-            dataKey="road"
-            sortable
-            width={300}
-          />
-          <Column
-            title="Car Number"
-            key="car_number"
-            dataKey="car_number"
-            sortable
-            width={250}
-          />
-          <Column
-            cellRenderer={booleanFormatter}
-            title="Operational"
-            key="is_operational"
-            dataKey="is_operational"
-            sortable
-            width={250}
-          />
-          <Column
-            title="Location"
-            key="location"
-            dataKey="location"
-            sortable
-            width={200}
-          />
-          <Column
-            cellRenderer={dateFormatter}
-            title="Purchase Date"
-            key="purchased_on"
-            dataKey="purchased_on"
-            sortable
-            width={220}
-          />
-        </BaseTable>
+        <StyledDiv>
+          <AddButton className="addRailcar" to="/railcars/add">
+            Add Railcar
+          </AddButton>
+          <BaseTable
+            onColumnSort={onColumnSort}
+            data={data}
+            sortBy={sortBy}
+            width={1200}
+            height={400}
+          >
+            <Column sortable title="Id" key="id" dataKey="id" width={100} />
+            <Column
+              cellRenderer={linkFormatter}
+              title="Road"
+              key="road"
+              dataKey="road"
+              sortable
+              width={300}
+            />
+            <Column
+              title="Car Number"
+              key="car_number"
+              dataKey="car_number"
+              sortable
+              width={250}
+            />
+            <Column
+              cellRenderer={booleanFormatter}
+              title="Operational"
+              key="is_operational"
+              dataKey="is_operational"
+              sortable
+              width={250}
+            />
+            <Column
+              title="Location"
+              key="location"
+              dataKey="location"
+              sortable
+              width={200}
+            />
+            <Column
+              cellRenderer={dateFormatter}
+              title="Purchase Date"
+              key="purchased_on"
+              dataKey="purchased_on"
+              sortable
+              width={220}
+            />
+          </BaseTable>
+        </StyledDiv>
       )}
-      <Button
-        iconBefore="add"
-        onClick={() => {
-          history.push('/railcars/add');
-        }}
-      >
-        Add Railcar
-      </Button>
     </SingleColumn>
   );
 }

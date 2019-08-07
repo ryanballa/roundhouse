@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Dialog, toaster } from 'evergreen-ui';
+import { Dialog, toaster } from 'evergreen-ui';
 import axios from 'axios';
+import Button from '../components/atoms/Button';
 import SingleColumn from '../components/layout/SingleColumn';
 import Gallery from '../components/organisms/Gallery';
 
@@ -64,7 +65,7 @@ function Photos({ history }) {
         />
       )}
       <Button
-        iconBefore="add"
+        icon="add"
         onClick={() => {
           history.push('/photos/upload');
         }}

@@ -72,6 +72,7 @@
     "react-base-table": "^1.6.5",
     "react-chartkick": "^0.3.2",
     "react-dom": "^16.8.6",
+    "react-modal": "^3.9.1",
     "react-router-dom": "^5.0.1",
     "start-server-and-test": "^1.9.1",
     "supertest": "^4.0.2",
