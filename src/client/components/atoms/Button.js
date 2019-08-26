@@ -87,7 +87,7 @@ const Button = ({ children, icon, variant, ...otherProps }) => (
 
 Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  icon: PropTypes.oneOf(['close', 'delete']),
+  icon: PropTypes.oneOf(['add', 'close', 'delete']),
   variant: PropTypes.oneOf(['primary', 'secondary']),
 };
 

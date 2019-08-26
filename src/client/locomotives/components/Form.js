@@ -8,6 +8,7 @@ import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import Gallery from '../../components/organisms/Gallery';
 import Input from '../../components/atoms/forms/Input';
+import Toggle from '../../components/atoms/forms/Toggle';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -180,18 +181,32 @@ const Form = ({
             </FormField>
           </li>
           <li data-testid="is_operational">
-            <FormField label="Is Operational">
+            <Field
+              label="Operational"
+              id="is_operational"
+              name="is_operational"
+              component={Toggle}
+              setFieldValue={setFieldValue}
+            />
+            {/* <FormField label="Is Operational">
               <Field
                 id="is_operational"
                 name="is_operational"
                 component={SwitchField}
               />
-            </FormField>
+            </FormField> */}
           </li>
           <li data-testid="is_dcc">
-            <FormField label="Is DCC">
+            <Field
+              label="DCC Equipped"
+              id="is_dcc"
+              name="is_dcc"
+              component={Toggle}
+              setFieldValue={setFieldValue}
+            />
+            {/* <FormField label="Is DCC">
               <Field id="is_dcc" name="is_dcc" component={SwitchField} />
-            </FormField>
+            </FormField> */}
           </li>
           <li>
             <FormField label="Location">
@@ -246,6 +261,7 @@ const Form = ({
           </li>
           <li>
             <Gallery
+              canSelect
               handleSelection={photo => {
                 setFieldValue('thumbnail', photo.path);
               }}
