@@ -6,6 +6,8 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const express_graphql = require('express-graphql');
+const { GraphQLSchema } = require('graphql');
 
 const app = express();
 const path = require('path');
@@ -28,9 +30,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // uncomment if using express-session
 app.use(
   session({
-    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
+    secret: process.env.SECRET_KEY,
   }),
 );
 app.use(passport.initialize());
@@ -42,6 +44,23 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 });
+
+const { query } = require('./schemas/queries');
+
+const schema = new GraphQLSchema({
+  query,
+});
+
+app.use(
+  '/graphql',
+  express_graphql({
+    graphiql: true,
+    schema,
+  }),
+);
+app.listen(4000, () =>
+  console.log('Express GraphQL Server Now Running On localhost:4000/graphql'),
+);
 
 app.use('/', api);
 app.use('/', authRoutes);
