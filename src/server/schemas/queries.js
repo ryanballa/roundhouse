@@ -1,9 +1,36 @@
 const { GraphQLList, GraphQLObjectType, GraphQLID } = require('graphql');
 const { db } = require('../../../pgAdaptor');
-const { LocomotiveType, UserType } = require('./types');
+const {
+  DestinationWorkOrdersType,
+  DestinationType,
+  LocomotiveType,
+  UserType,
+  WorkOrderType,
+} = require('./types');
 
 const RootQuery = new GraphQLObjectType({
   fields: {
+    destinationWorkOrders: {
+      resolve() {
+        const query = `SELECT * FROM work_orders_destinations`;
+        return db
+          .manyOrNone(query)
+          .then(res => res)
+          .catch(err => err);
+      },
+      type: new GraphQLList(DestinationWorkOrdersType),
+    },
+    destinations: {
+      resolve() {
+        const query = `SELECT * FROM destinations`;
+
+        return db
+          .manyOrNone(query)
+          .then(res => res)
+          .catch(err => err);
+      },
+      type: new GraphQLList(DestinationType),
+    },
     locomotives: {
       resolve() {
         const query = `SELECT * FROM locomotives`;
@@ -27,6 +54,17 @@ const RootQuery = new GraphQLObjectType({
           .catch(err => err);
       },
       type: UserType,
+    },
+    workOrders: {
+      resolve() {
+        const query = `SELECT * FROM work_orders`;
+
+        return db
+          .manyOrNone(query)
+          .then(res => res)
+          .catch(err => err);
+      },
+      type: new GraphQLList(WorkOrderType),
     },
   },
   name: 'RootQueryType',

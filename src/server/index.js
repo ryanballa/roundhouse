@@ -46,8 +46,10 @@ cloudinary.config({
 });
 
 const { query } = require('./schemas/queries');
+const { mutation } = require('./schemas/mutations');
 
 const schema = new GraphQLSchema({
+  mutation,
   query,
 });
 
