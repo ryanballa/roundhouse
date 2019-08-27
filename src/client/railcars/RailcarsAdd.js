@@ -40,6 +40,7 @@ function RailcarsAdd({ history }) {
     <SingleColumn history={history}>
       <Fragment>
         <Pane>
+          <h1>Add Railcar</h1>
           <Formik
             initialValues={{
               car_number: data[0].car_number || '',

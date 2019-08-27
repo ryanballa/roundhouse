@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
-import { Button, FormField, Switch } from 'evergreen-ui';
+import { Button } from 'evergreen-ui';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Error from '../../components/atoms/forms/Error';
@@ -10,6 +10,7 @@ import Gallery from '../../components/organisms/Gallery';
 import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
 import Toggle from '../../components/atoms/forms/Toggle';
+import DatePickerField from '../../components/atoms/forms/DatePickerField';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -131,14 +132,20 @@ const Form = ({
             </Error>
           </li>
           <li data-testid="purchased_on">
-            <FormField label="purchased_on">
+            <DatePickerField
+              label="Purchased On"
+              name="purchased_on"
+              setFieldValue={setFieldValue}
+              values={values || []}
+            />
+            {/* <FormField label="purchased_on">
               <Field
                 id="purchased_on"
                 type="date"
                 name="purchased_on"
                 placeholder=""
               />
-            </FormField>
+            </FormField> */}
           </li>
           <li data-testid="is_operational">
             <Field
@@ -150,13 +157,7 @@ const Form = ({
             />
           </li>
           <li>
-            <Select
-              label="Type"
-              id="type"
-              type="text"
-              name="type"
-              placeholder=""
-            >
+            <Select label="Location" id="location" name="location">
               <option value="club">Club</option>
               <option value="home">Home</option>
               <option value="studio">Studio</option>
