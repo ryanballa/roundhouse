@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { Fragment, useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -85,13 +86,17 @@ const RailcarsEdit = ({ history, match }) => {
             <Formik
               initialValues={{
                 car_number: data[0].car_number || '',
+                color: data[0].color || '',
                 is_operational: data[0].is_operational,
+                length: data[0].length || '',
                 location: data[0].location,
                 purchased_on: moment(data[0].purchased_on).isValid()
                   ? moment(data[0].purchased_on).format('YYYY-MM-DD')
                   : undefined,
+                reporting_marks: data[0].reporting_marks,
                 road: data[0].road,
                 thumbnail: data[0].thumbnail || '',
+                type: data[0].type || '',
                 user_id: user ? user.id : '',
               }}
               validationSchema={EditSchema}

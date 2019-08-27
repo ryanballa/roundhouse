@@ -1,12 +1,15 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
-import { Button, FormField, Select, Switch } from 'evergreen-ui';
+import { Button, FormField, Switch } from 'evergreen-ui';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Error from '../../components/atoms/forms/Error';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import Gallery from '../../components/organisms/Gallery';
+import Input from '../../components/atoms/forms/Input';
+import Select from '../../components/atoms/forms/Select';
+import Toggle from '../../components/atoms/forms/Toggle';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -35,65 +38,6 @@ const Form = ({
   touched,
   values,
 }) => {
-  const SwitchField = ({
-    id,
-    field: { name, value, onChange, onBlur },
-    ...props
-  }) => (
-    <div>
-      <Switch
-        id={id}
-        name={name}
-        value={value ? value.toString() : 'false'}
-        onBlur={onBlur}
-        checked={value}
-        onChange={onChange}
-        {...props}
-      />
-    </div>
-  );
-
-  SwitchField.propTypes = {
-    field: PropTypes.shape({
-      name: PropTypes.string,
-      onBlur: PropTypes.func,
-      onChange: PropTypes.func,
-      value: PropTypes.bool,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-  };
-
-  const SelectField = ({
-    id,
-    field: { name, value, onChange, onBlur },
-    ...props
-  }) => (
-    <div>
-      <Select
-        id={id}
-        name={name}
-        onChange={onChange}
-        value={value}
-        onBlur={onBlur}
-        {...props}
-      >
-        <option value="club">Club</option>
-        <option value="home">Home</option>
-        <option value="studio">Studio</option>
-      </Select>
-    </div>
-  );
-
-  SelectField.propTypes = {
-    field: PropTypes.shape({
-      name: PropTypes.string,
-      onBlur: PropTypes.func,
-      onChange: PropTypes.func,
-      value: PropTypes.string,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-  };
-
   return (
     <StyledDiv>
       <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
@@ -107,24 +51,79 @@ const Form = ({
             <Field type="hidden" name="user_id" />
           </li>
           <li data-testid="road">
-            <FormField label="Road">
-              <Field id="road" type="text" name="road" placeholder="" />
-            </FormField>
+            <Input
+              label="Road"
+              id="road"
+              type="text"
+              name="road"
+              placeholder=""
+            />
             <Error>
               {errors.road && touched.road ? (
                 <div className="error">{errors.road}</div>
               ) : null}
             </Error>
           </li>
+          <li data-testid="length">
+            <Input
+              label="Length"
+              id="length"
+              type="text"
+              name="length"
+              placeholder=""
+            />
+          </li>
+          <li data-testid="color">
+            <Input
+              label="Color"
+              id="color"
+              type="text"
+              name="color"
+              placeholder=""
+            />
+          </li>
+          <li data-testid="reporting_marks">
+            <Input
+              label="Reporting Marks"
+              id="reporting_marks"
+              type="text"
+              name="reporting_marks"
+              placeholder=""
+            />
+          </li>
+          <li data-testid="type">
+            <Select
+              label="Type"
+              id="type"
+              type="text"
+              name="type"
+              placeholder=""
+            >
+              <option value="arack">Auto Rack</option>
+              <option value="box">Boxcar</option>
+              <option value="bulk">Bulkhead Flat</option>
+              <option value="cmthpr">Cement Hopper</option>
+              <option value="coal">Coal Car</option>
+              <option value="cvhop">Covered Hopper</option>
+              <option value="cntrbm">Centerbeam</option>
+              <option value="exp">Express</option>
+              <option value="flat">Flat Car</option>
+              <option value="gon">Gondola</option>
+              <option value="ore">Ore Car</option>
+              <option value="other">Other</option>
+              <option value="pass">Passenger Car</option>
+              <option value="ref">Reefer</option>
+              <option value="tnk">Tank Car</option>
+            </Select>
+          </li>
           <li data-testid="car_number">
-            <FormField label="Car Number">
-              <Field
-                id="car_number"
-                type="text"
-                name="car_number"
-                placeholder=""
-              />
-            </FormField>
+            <Input
+              label="Car Number"
+              id="car_number"
+              type="text"
+              name="car_number"
+              placeholder=""
+            />
             <Error>
               {errors.car_number && touched.car_number ? (
                 <div className="error">{errors.car_number}</div>
@@ -142,18 +141,26 @@ const Form = ({
             </FormField>
           </li>
           <li data-testid="is_operational">
-            <FormField label="Is Operational">
-              <Field
-                id="is_operational"
-                name="is_operational"
-                component={SwitchField}
-              />
-            </FormField>
+            <Field
+              label="Operational"
+              id="is_operational"
+              name="is_operational"
+              component={Toggle}
+              setFieldValue={setFieldValue}
+            />
           </li>
           <li>
-            <FormField label="Location">
-              <Field id="location" name="location" component={SelectField} />
-            </FormField>
+            <Select
+              label="Type"
+              id="type"
+              type="text"
+              name="type"
+              placeholder=""
+            >
+              <option value="club">Club</option>
+              <option value="home">Home</option>
+              <option value="studio">Studio</option>
+            </Select>
           </li>
           <li>
             <Gallery
