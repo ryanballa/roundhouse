@@ -16,6 +16,7 @@ import RailcarsAdd from './railcars/RailcarsAdd';
 import RailcarsView from './railcars/RailcarsView';
 import Photos from './photos/Photos';
 import { userDispatch } from './UserProvider';
+import WorkOrdersView from './workOrders/WorkOrdersView';
 
 const Routes = ({ history }) => {
   const dispatch = userDispatch();
@@ -51,6 +52,7 @@ const Routes = ({ history }) => {
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
         <Route exact path="/error" component={Error} />
+        <Route exact path="/workOrders/:id" component={WorkOrdersView} />
         <Route component={NotFound} />
       </Switch>
     </div>
