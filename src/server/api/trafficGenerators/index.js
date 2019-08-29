@@ -30,38 +30,24 @@ trafficGenerators.get('/', authHelpers.loginRequired, (request, response) => {
     );
 });
 
-// workOrders.get('/:workOrderId', (request, response) => {
-//   const workOrder = request.params.workOrderId;
-//   const query = `SELECT * FROM destinations LEFT JOIN work_orders_destinations ON work_orders_destinations.destination_id = destinations.id WHERE work_order_id = ${workOrder}`;
+trafficGenerators.get(
+  '/:trafficGeneratorId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.trafficGeneratorId;
+    database('traffic_generators')
+      .where('id', id)
+      .then(trafficGeneratorRes => {
+        response.status(200).json(trafficGeneratorRes);
+      })
+      .catch(error => {
+        console.log(error);
+        response.status(500).json({ error });
+      });
+  },
+);
 
-//   const fetchDestinations = () => {
-//     return db.manyOrNone(query);
-//   };
-
-//   const fetchTasks = () => {
-//     return database('tasks').where('work_order_id', workOrder);
-//   };
-
-//   const fetchWorkOrders = () => {
-//     return database('work_orders').where('id', workOrder);
-//   };
-
-//   // TODO: Add error handling
-//   const fetchItems = async () => {
-//     const [destinations, tasks, workOrdersResults] = await Promise.all([
-//       fetchDestinations(),
-//       fetchTasks(),
-//       fetchWorkOrders(),
-//     ]);
-//     if (!response.headersSent) {
-//       response.status(200).json({ destinations, tasks, workOrdersResults });
-//     }
-//   };
-
-//   fetchItems();
-// });
-
-trafficGenerators.post('/', (request, response) => {
+trafficGenerators.post('/', authHelpers.loginRequired, (request, response) => {
   const trafficGenerator = request.body;
 
   ['name'].forEach(requiredParameter => {
@@ -86,20 +72,41 @@ trafficGenerators.post('/', (request, response) => {
     );
 });
 
-trafficGenerators.put('/:trafficGeneratorId', (request, response) => {
-  const id = request.params.trafficGeneratorId;
-  if (request.user.id !== request.body.user_id) {
-    response.status(403).json({});
-  }
-  database('traffic_generators')
-    .where('id', id)
-    .update(request.body)
-    .then(trafficGeneratorRes => {
-      response.status(200).json(trafficGeneratorRes);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
-});
+trafficGenerators.put(
+  '/:trafficGeneratorId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.trafficGeneratorId;
+    if (request.user.id !== request.body.user_id) {
+      response.status(403).json({});
+    }
+    database('traffic_generators')
+      .where('id', id)
+      .update(request.body)
+      .then(trafficGeneratorRes => {
+        response.status(200).json(trafficGeneratorRes);
+      })
+      .catch(error => {
+        response.status(500).json({ error });
+      });
+  },
+);
+
+trafficGenerators.get(
+  '/:trafficGeneratorId/railcars',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.trafficGeneratorId;
+    database('railcars')
+      .where('traffic_generator_id', id)
+      .then(trafficGeneratorRes => {
+        response.status(200).json(trafficGeneratorRes);
+      })
+      .catch(error => {
+        console.log(error);
+        response.status(500).json({ error });
+      });
+  },
+);
 
 module.exports = trafficGenerators;

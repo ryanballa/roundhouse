@@ -23,6 +23,7 @@ tasks.get('/:taskId', authHelpers.loginRequired, (request, response) => {
 tasks.post('/', (request, response) => {
   const task = request.body;
 
+  task.user_id = request.user.id;
   // ['railcar_id'].forEach(requiredParameter => {
   //   if (!task[requiredParameter]) {
   //     return response.status(422).send({
@@ -59,6 +60,35 @@ tasks.put('/:taskId', (request, response) => {
     .catch(error => {
       response.status(500).json({ error });
     });
+});
+
+tasks.delete('/:taskId', authHelpers.loginRequired, (request, response) => {
+  const id = request.params.taskId;
+  database('tasks')
+    .where('id', id)
+    .then(task => {
+      if (request.user.id !== task[0].user_id) {
+        return response.status(403).json({});
+      }
+      database('tasks')
+        .where('id', id)
+        .del()
+        .then(taskRes => {
+          return response.status(200).json(taskRes);
+        })
+        .catch(
+          /* istanbul ignore next */ error => {
+            /* istanbul ignore next */
+            return response.status(500).json({ error });
+          },
+        );
+    })
+    .catch(
+      /* istanbul ignore next */ error => {
+        /* istanbul ignore next */
+        return response.status(500).json({ error });
+      },
+    );
 });
 
 module.exports = tasks;

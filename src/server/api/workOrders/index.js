@@ -30,101 +30,106 @@ workOrders.get('/', authHelpers.loginRequired, (request, response) => {
     );
 });
 
-workOrders.get('/:workOrderId', (request, response) => {
-  const workOrder = request.params.workOrderId;
-  const destinationsQuery = `SELECT * FROM destinations LEFT JOIN work_orders_destinations ON work_orders_destinations.destination_id = destinations.id WHERE work_order_id = ${workOrder}`;
-  const tasksQuery = `SELECT tasks.id, tasks.type AS tasksType, tasks.traffic_generator_id, tasks.destination_id, railcars.road, railcars.type, railcars.car_number, railcars.length, railcars.color FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_order_id = ${workOrder}`;
+workOrders.get(
+  '/:workOrderId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const workOrder = request.params.workOrderId;
+    const destinationsQuery = `SELECT * FROM destinations LEFT JOIN work_orders_destinations ON work_orders_destinations.destination_id = destinations.id WHERE work_order_id = ${workOrder}`;
+    const tasksQuery = `SELECT tasks.id, tasks.type AS tasksType, tasks.traffic_generator_id, tasks.destination_id, railcars.road, railcars.type, railcars.car_number, railcars.length, railcars.color FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_order_id = ${workOrder}`;
 
-  const fetchDestinations = () => {
-    return db.manyOrNone(destinationsQuery);
-  };
+    const fetchDestinations = () => {
+      return db.manyOrNone(destinationsQuery);
+    };
 
-  const fetchTasks = () => {
-    return db.manyOrNone(tasksQuery);
-  };
+    const fetchTasks = () => {
+      return db.manyOrNone(tasksQuery);
+    };
 
-  const fetchTrafficGenerators = () => {
-    return database('traffic_generators').where('user_id', request.user.id);
-  };
+    const fetchTrafficGenerators = () => {
+      return database('traffic_generators').where('user_id', request.user.id);
+    };
 
-  const fetchWorkOrders = () => {
-    return database('work_orders').where('id', workOrder);
-  };
+    const fetchWorkOrders = () => {
+      return database('work_orders').where('id', workOrder);
+    };
 
-  const fetchRailcars = () => {
-    return database('railcars').where('user_id', request.user.id);
-  };
+    const fetchRailcars = () => {
+      return database('railcars').where('user_id', request.user.id);
+    };
 
-  const tasksForDestination = (tasks, destination) => {
-    return tasks.filter(task => task.destination_id === destination.id);
-  };
+    const tasksForDestination = (tasks, destination) => {
+      return tasks.filter(task => task.destination_id === destination.id);
+    };
 
-  const taskTrafficGeneratorName = (tasks, filteredTrafficGenerators) => {
-    return tasks.map(task => {
-      const trafficGenerator = filteredTrafficGenerators.filter(
-        tg => tg.id === task.traffic_generator_id,
-      );
-      console.log(trafficGenerator[0].name);
-      return { ...task, destinationName: trafficGenerator[0].name };
-    });
-  };
+    const taskTrafficGeneratorName = (tasks, filteredTrafficGenerators) => {
+      return tasks.map(task => {
+        const trafficGenerator = filteredTrafficGenerators.filter(
+          tg => tg.id === task.traffic_generator_id,
+        );
+        return {
+          ...task,
+          destinationName: trafficGenerator[0] ? trafficGenerator[0].name : '',
+        };
+      });
+    };
 
-  const trafficGeneratorsPerDestination = (
-    trafficGenerators,
-    destinations,
-    tasks,
-  ) => {
-    return destinations.map(destination => {
-      const filteredTrafficGenerators = trafficGenerators.filter(
-        tg => tg.destination_id === destination.id,
-      );
-      const filterdTasks = tasksForDestination(tasks, destination);
-      const tasksWithDestinationNames = taskTrafficGeneratorName(
-        filterdTasks,
-        filteredTrafficGenerators,
-      );
-      console.log(tasksWithDestinationNames);
-      return {
-        destination,
-        filteredTrafficGenerators,
-        tasks: tasksWithDestinationNames,
-      };
-    });
-  };
-
-  // TODO: Add error handling
-  const fetchItems = async () => {
-    const [
+    const trafficGeneratorsPerDestination = (
+      trafficGenerators,
       destinations,
       tasks,
-      trafficGenerators,
-      workOrdersResults,
-      railcars,
-    ] = await Promise.all([
-      fetchDestinations(),
-      fetchTasks(),
-      fetchTrafficGenerators(),
-      fetchWorkOrders(),
-      fetchRailcars(),
-    ]);
-    if (!response.headersSent) {
-      const transformedTraffic = trafficGeneratorsPerDestination(
-        trafficGenerators,
-        destinations,
-        tasks,
-      );
-      response.status(200).json({
-        destinations,
-        railcars,
-        tasks,
-        traffic: transformedTraffic,
-        workOrdersResults,
+    ) => {
+      return destinations.map(destination => {
+        const filteredTrafficGenerators = trafficGenerators.filter(
+          tg => tg.destination_id === destination.id,
+        );
+        const filterdTasks = tasksForDestination(tasks, destination);
+        const tasksWithDestinationNames = taskTrafficGeneratorName(
+          filterdTasks,
+          filteredTrafficGenerators,
+        );
+        return {
+          destination,
+          filteredTrafficGenerators,
+          tasks: tasksWithDestinationNames,
+        };
       });
-    }
-  };
+    };
 
-  fetchItems();
-});
+    // TODO: Add error handling
+    const fetchItems = async () => {
+      const [
+        destinations,
+        tasks,
+        trafficGenerators,
+        workOrdersResults,
+        railcars,
+      ] = await Promise.all([
+        fetchDestinations(),
+        fetchTasks(),
+        fetchTrafficGenerators(),
+        fetchWorkOrders(),
+        fetchRailcars(),
+      ]);
+      if (!response.headersSent) {
+        const transformedTraffic = trafficGeneratorsPerDestination(
+          trafficGenerators,
+          destinations,
+          tasks,
+        );
+        response.status(200).json({
+          destinations,
+          railcars,
+          tasks,
+          traffic: transformedTraffic,
+          workOrdersResults,
+        });
+      }
+    };
+
+    fetchItems();
+  },
+);
 
 workOrders.post('/', (request, response) => {
   const workOrder = request.body;

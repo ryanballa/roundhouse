@@ -145,6 +145,11 @@ const MainNavigation = () => (
         Photos
       </NavLink>
     </li>
+    <li>
+      <NavLink activeClassName="active" to="/work-orders">
+        Work Orders
+      </NavLink>
+    </li>
   </StyledUL>
 );
 
