@@ -7,6 +7,16 @@ const authHelpers = require('../../auth/_helpers');
 tasks.use(bodyParser.urlencoded({ extended: false }));
 tasks.use(bodyParser.json());
 
+tasks.get('/', authHelpers.loginRequired, (request, response) => {
+  return database('tasks')
+    .then(tasksRes => {
+      response.status(200).json(tasksRes);
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 tasks.get('/:taskId', authHelpers.loginRequired, (request, response) => {
   const id = request.params.taskId;
 
@@ -67,9 +77,9 @@ tasks.delete('/:taskId', authHelpers.loginRequired, (request, response) => {
   database('tasks')
     .where('id', id)
     .then(task => {
-      if (request.user.id !== task[0].user_id) {
-        return response.status(403).json({});
-      }
+      // if (request.user.id !== task[0].user_id) {
+      //   return response.status(403).json({});
+      // }
       database('tasks')
         .where('id', id)
         .del()

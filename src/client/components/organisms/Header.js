@@ -19,7 +19,7 @@ const StyledHeader = styledComponent('header', {
   justifyContent: 'space-between',
   margin: '0 auto',
   padding: spacing.boxPadding,
-  width: '1200px',
+  width: '1400px',
 });
 
 const Header = () => {

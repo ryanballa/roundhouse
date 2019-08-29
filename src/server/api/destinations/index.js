@@ -72,6 +72,73 @@ destinations.post('/', (request, response) => {
     );
 });
 
+destinations.post(
+  '/:destinationId/work-order/:workOrderId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const { destinationId, workOrderId } = request.params;
+
+    database('work_orders_destinations')
+      .insert({
+        destination_id: destinationId,
+        order: request.body.order,
+        task_id: request.body.task_id,
+        work_order_id: workOrderId,
+      })
+      .then(destinationRes => {
+        response.status(201).json({ id: destinationRes[0] });
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */
+          response.status(500).json({ error });
+        },
+      );
+  },
+);
+
+destinations.get(
+  '/:destinationId/work-order/:workOrderId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const destinationId = request.params.destinationId;
+    const workOrderId = request.params.workOrderId;
+
+    database('work_orders_destinations')
+      .where({ destination_id: destinationId, work_order_id: workOrderId })
+      .then(destinationRes => {
+        response.status(201).json(destinationRes);
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */
+          response.status(500).json({ error });
+        },
+      );
+  },
+);
+
+destinations.delete(
+  '/:destinationId/work-order/:workOrderId/:destinationWorkOrderId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const { destinationWorkOrderId } = request.params;
+
+    database('work_orders_destinations')
+      .where('id', destinationWorkOrderId)
+      .del()
+      .then(res => {
+        return response.status(200).json(res);
+      })
+      .catch(
+        /* istanbul ignore next */ errorRes => {
+          /* istanbul ignore next */
+          return response.status(500).json({ errorRes });
+        },
+      );
+  },
+);
+
 destinations.put('/:destinationId', (request, response) => {
   const id = request.params.destinationId;
   if (request.user.id !== request.body.user_id) {
