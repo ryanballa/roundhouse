@@ -9,6 +9,7 @@ import DeleteTask from './components/DeleteTask';
 
 const WorkOrdersView = ({ history, match }) => {
   const [workOrder, setWorkOrder] = useState({
+    workItems: [],
     destinations: [],
     traffic: [],
     workOrdersResults: [{}],
@@ -41,7 +42,36 @@ const WorkOrdersView = ({ history, match }) => {
       />
       <h1>{workOrder.workOrdersResults[0].name}</h1>
       <ul>
-        {workOrder.traffic.map(wo => (
+        {workOrder.workItems.map(workItem => (
+          <li>
+            <h2>{workItem.destinationname}</h2>
+            <AddTask
+              destinationId={workItem.destinationid}
+              handleUpdate={() => {
+                fetchData();
+              }}
+              railcars={workOrder.railcars}
+              trafficGenerators={workOrder.trafficGenerators}
+              workOrderId={workOrder.workOrdersResults[0].id}
+            />
+            <p>Scheduled work at {workItem.destinationname}</p>
+            <ul>
+              {workItem.tasks.map(task => (
+                <li>
+                  [ ] {task.taskstype} up {task.road} {task.car_number}{' '}
+                  {task.type} {task.length}&#39; {task.color} from {task.name}
+                  <DeleteTask
+                    taskId={task.id}
+                    handleDelete={() => {
+                      fetchData();
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+        {/* {workOrder.traffic.map(wo => (
           <li key={wo.destination.id}>
             <h2>{wo.destination.name}</h2>
             <AddTask
@@ -70,7 +100,7 @@ const WorkOrdersView = ({ history, match }) => {
               ))}
             </ul>
           </li>
-        ))}
+        ))} */}
       </ul>
     </SingleColumn>
   );

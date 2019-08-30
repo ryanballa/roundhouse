@@ -35,20 +35,49 @@ workOrders.get(
   authHelpers.loginRequired,
   (request, response) => {
     const workOrder = request.params.workOrderId;
-    const destinationsQuery = `SELECT * FROM destinations LEFT JOIN work_orders_destinations ON work_orders_destinations.destination_id = destinations.id WHERE work_order_id = ${workOrder}`;
+    // const destinationsQuery = `SELECT * FROM destinations LEFT JOIN work_orders_destinations ON work_orders_destinations.destination_id = destinations.id WHERE work_order_id = ${workOrder}`;
     // const tasksQuery = `SELECT tasks.work_orders_destination_id, tasks.id, tasks.type AS tasksType, tasks.traffic_generator_id, railcars.road, railcars.type, railcars.car_number, railcars.length, railcars.color FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_order_id = ${workOrder}`;
-    const tasksQuery = `SELECT work_orders_destinations.destination_id, work_orders_destinations.order, tasks.railcar_id, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM work_orders_destinations INNER JOIN tasks ON (tasks.id = work_orders_destinations.task_id) INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_order_id = ${workOrder}`;
+    const workItemsQuery = `SELECT work_items.id, work_items.order, destinations.name AS destinationname, destinations.id AS destinationid from work_items INNER JOIN destinations ON (work_items.destination_id = destinations.id) WHERE work_order_id = ${workOrder}`;
+    const tasksQuery = `SELECT work_items.work_order_id as workitemid, traffic_generators.name, tasks.railcar_id, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM tasks INNER JOIN work_items ON (tasks.work_item_id = work_items.id) INNER JOIN railcars ON (tasks.railcar_id = railcars.id) INNER JOIN traffic_generators ON (tasks.traffic_generator_id = traffic_generators.id) WHERE work_items.work_order_id = ${workOrder}`;
 
     const fetchDestinations = () => {
-      return db.manyOrNone(destinationsQuery);
-    };
-
-    const fetchWorkItems = () => {
-      return database('work_items').where('work_order_id', workOrder);
+      return database('destinations').where('user_id', request.user.id);
     };
 
     const fetchTasks = () => {
       return db.manyOrNone(tasksQuery);
+    };
+
+    const fetchWorkItems = () => {
+      return db.manyOrNone(workItemsQuery);
+      // db.task(t => {
+      //   return t.manyOrNone(workItemsQuery).then(workItem => {
+      //     if (workItem) {
+      //       return t.any(
+      //         `SELECT tasks.railcar_id, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_item_id = ${workItem.id}`,
+      //       );
+      //     }
+      //     return []; // workItem not found, so no events
+      //   });
+      // })
+      //   .then(events => {
+      //     console.log(events);
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //     // error
+      //   });
+      // return db.manyOrNone(workItemsQuery).then(res => {
+      //   return res.map(workItem => {
+      //     let workItemRes = {};
+      //     const tasksQuery = `SELECT tasks.railcar_id, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_item_id = ${workItem.id}`;
+      //     return db.manyOrNone(tasksQuery).then(tasks => {
+      //       workItemRes = tasks;
+      //       return { workItem };
+      //     });
+      //   });
+      // });
+      return database('work_items').where('work_order_id', workOrder);
     };
 
     const fetchTrafficGenerators = () => {
@@ -56,101 +85,56 @@ workOrders.get(
     };
 
     const fetchWorkOrders = () => {
-      return database('work_orders').where('id', workOrder);
+      return database('work_orders')
+        .where('id', workOrder)
+        .then(res => {
+          return res;
+        });
     };
 
     const fetchRailcars = () => {
       return database('railcars').where('user_id', request.user.id);
     };
 
-    // const groupByWorkOrdersDestinations = (list, keyGetter) => {
-    //   const map = new Map();
-    //   list.forEach(item => {
-    //     const key = keyGetter(item);
-    //     const collection = map.get(key);
-    //     if (!collection) {
-    //       map.set(key, [item]);
-    //     } else {
-    //       collection.push(item);
-    //     }
-    //   });
-    //   return map;
-    // };
-
-    // const tasksForDestination = (tasks, destination) => {
-    //   const filteredTasks = tasks.filter(
-    //     task => task.destination_id === destination.id,
-    //   );
-
-    //   // const grouped = groupByWorkOrdersDestinations(filteredTasks, task => task.order);
-    //   // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-    //   // console.log(grouped.get(1));
-    //   return groupByWorkOrdersDestinations(filteredTasks, task => task.order);
-    // };
-
-    // const taskTrafficGeneratorName = (tasks, filteredTrafficGenerators) => {
-    //   if (tasks.length) {
-    //     return tasks.map(task => {
-    //       const trafficGenerator = filteredTrafficGenerators.filter(
-    //         tg => tg.id === task.traffic_generator_id,
-    //       );
-    //       return {
-    //         ...task,
-    //         destinationName: trafficGenerator[0]
-    //           ? trafficGenerator[0].name
-    //           : '',
-    //       };
-    //     });
-    //   }
-    //   return [];
-    // };
-
-    // const trafficGeneratorsPerDestination = (
-    //   trafficGenerators,
-    //   destinations,
-    //   tasks,
-    // ) => {
-    //   return destinations.map(destination => {
-    //     const filteredTrafficGenerators = trafficGenerators.filter(
-    //       tg => tg.destination_id === destination.id,
-    //     );
-    //     const filterdTasks = tasksForDestination(tasks, destination);
-    //     const tasksWithDestinationNames = taskTrafficGeneratorName(
-    //       filterdTasks,
-    //       filteredTrafficGenerators,
-    //     );
-    //     return {
-    //       destination,
-    //       filteredTrafficGenerators,
-    //       tasks: tasksWithDestinationNames,
-    //     };
-    //   });
-    // };
+    const filterTasksByWorkItem = (tasks, workItems) => {
+      if (workItems.length) {
+        const adjustedWorkItems = workItems.map(workItem => {
+          const filterdTasks = tasks.filter(
+            task => task.workitemid === workItem.id,
+          );
+          return { ...workItem, tasks: filterdTasks };
+        });
+        return adjustedWorkItems;
+      }
+      return workItems;
+    };
 
     // TODO: Add error handling
     const fetchItems = async () => {
       const [
         destinations,
-        tasks,
         trafficGenerators,
         workOrdersResults,
         railcars,
         workItems,
+        tasks,
       ] = await Promise.all([
         fetchDestinations(),
-        fetchTasks(),
         fetchTrafficGenerators(),
         fetchWorkOrders(),
         fetchRailcars(),
         fetchWorkItems(),
+        fetchTasks(),
       ]);
+
       if (!response.headersSent) {
         response.status(200).json({
           destinations,
           railcars,
           tasks,
           trafficGenerators,
-          workItems,
+          workOrdersResults,
+          workItems: filterTasksByWorkItem(tasks, workItems),
           workOrdersResults,
         });
       }
