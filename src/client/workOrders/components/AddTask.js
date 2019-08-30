@@ -1,14 +1,18 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import axios from 'axios';
-import { Button, toaster } from 'evergreen-ui';
+import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
 import { colors } from '../../config/styles';
 import { styledComponent } from '../../utils/styledComponent';
+import Button from '../../components/atoms/Button';
 
 const StyledDiv = styledComponent('div', {
+  '& button': {
+    marginTop: '38px',
+  },
   '& input': {
     border: '1px solid #fffcfc',
     borderRadius: '2px',
@@ -34,20 +38,19 @@ const AddTask = ({
   handleUpdate,
   railcars,
   trafficGenerators,
-  workOrderId,
+  workItemId,
 }) => {
   return (
     <StyledDiv>
       <Formik
         initialValues={{}}
         onSubmit={(values, { setSubmitting }) => {
-          console.log({ ...values, destinationId, workOrderId });
+          console.log({ ...values, workItemId });
           setSubmitting(false);
           axios
             .post('/api/v1/tasks/', {
               ...values,
-              destination_id: destinationId,
-              work_order_id: workOrderId,
+              work_item_id: workItemId,
             })
             .then(
               /* istanbul ignore next */ () => {
@@ -112,11 +115,11 @@ const AddTask = ({
               </li>
               <li>
                 <Button
-                  type="submit"
                   data-testid="taskAdd-submit"
                   disabled={isSubmitting}
+                  icon="add"
                 >
-                  Submit
+                  Add
                 </Button>
               </li>
             </ul>

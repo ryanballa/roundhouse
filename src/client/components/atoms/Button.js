@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { styledComponent } from '../../utils/styledComponent';
@@ -7,6 +8,10 @@ const StyledButton = styledComponent('button', {
   '& svg': {
     marginRight: '10px',
   },
+  '&.danger': {
+    backgroundColor: colors.error,
+    color: colors.buttons.secondary.textColor,
+  },
   '&.primary': {
     backgroundColor: colors.form.buttonPrimaryBacgkround,
     color: colors.form.buttonPrimary,
@@ -14,6 +19,10 @@ const StyledButton = styledComponent('button', {
   '&.secondary': {
     backgroundColor: colors.buttons.secondary.background,
     color: colors.buttons.secondary.textColor,
+  },
+  '&.small': {
+    fontSize: '12px',
+    padding: '11px',
   },
   '&:hover': {
     cursor: 'pointer',
@@ -27,12 +36,12 @@ const StyledButton = styledComponent('button', {
   padding: '15px',
 });
 
-const Button = ({ children, icon, variant, ...otherProps }) => (
-  <StyledButton className={variant} type="submit" {...otherProps}>
+const Button = ({ children, icon, size, variant, ...otherProps }) => (
+  <StyledButton className={`${variant} ${size}`} type="submit" {...otherProps}>
     {icon === 'close' && (
       <svg
-        width="24"
-        height="24"
+        width={size === 'small' ? 18 : 24}
+        height={size === 'small' ? 18 : 24}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -48,8 +57,8 @@ const Button = ({ children, icon, variant, ...otherProps }) => (
     )}
     {icon === 'delete' && (
       <svg
-        width="24"
-        height="24"
+        width={size === 'small' ? 18 : 24}
+        height={size === 'small' ? 18 : 24}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -66,8 +75,8 @@ const Button = ({ children, icon, variant, ...otherProps }) => (
     )}
     {icon === 'add' && (
       <svg
-        width="24"
-        height="24"
+        width={size === 'small' ? 18 : 24}
+        height={size === 'small' ? 18 : 24}
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -88,12 +97,14 @@ const Button = ({ children, icon, variant, ...otherProps }) => (
 Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   icon: PropTypes.oneOf(['add', 'close', 'delete']),
-  variant: PropTypes.oneOf(['primary', 'secondary']),
+  size: PropTypes.oneOf(['small', 'normal']),
+  variant: PropTypes.oneOf(['primary', 'secondary', 'danger']),
 };
 
 Button.defaultProps = {
   children: 'Submit',
   icon: null,
+  size: 'normal',
   variant: 'primary',
 };
 

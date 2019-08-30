@@ -35,10 +35,8 @@ workOrders.get(
   authHelpers.loginRequired,
   (request, response) => {
     const workOrder = request.params.workOrderId;
-    // const destinationsQuery = `SELECT * FROM destinations LEFT JOIN work_orders_destinations ON work_orders_destinations.destination_id = destinations.id WHERE work_order_id = ${workOrder}`;
-    // const tasksQuery = `SELECT tasks.work_orders_destination_id, tasks.id, tasks.type AS tasksType, tasks.traffic_generator_id, railcars.road, railcars.type, railcars.car_number, railcars.length, railcars.color FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_order_id = ${workOrder}`;
     const workItemsQuery = `SELECT work_items.id, work_items.order, destinations.name AS destinationname, destinations.id AS destinationid from work_items INNER JOIN destinations ON (work_items.destination_id = destinations.id) WHERE work_order_id = ${workOrder}`;
-    const tasksQuery = `SELECT work_items.work_order_id as workitemid, traffic_generators.name, tasks.railcar_id, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM tasks INNER JOIN work_items ON (tasks.work_item_id = work_items.id) INNER JOIN railcars ON (tasks.railcar_id = railcars.id) INNER JOIN traffic_generators ON (tasks.traffic_generator_id = traffic_generators.id) WHERE work_items.work_order_id = ${workOrder}`;
+    const tasksQuery = `SELECT work_items.id as workitemid, traffic_generators.name, tasks.railcar_id, tasks.weight, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM tasks INNER JOIN work_items ON (tasks.work_item_id = work_items.id) INNER JOIN railcars ON (tasks.railcar_id = railcars.id) INNER JOIN traffic_generators ON (tasks.traffic_generator_id = traffic_generators.id) WHERE work_items.work_order_id = ${workOrder}`;
 
     const fetchDestinations = () => {
       return database('destinations').where('user_id', request.user.id);
@@ -50,34 +48,6 @@ workOrders.get(
 
     const fetchWorkItems = () => {
       return db.manyOrNone(workItemsQuery);
-      // db.task(t => {
-      //   return t.manyOrNone(workItemsQuery).then(workItem => {
-      //     if (workItem) {
-      //       return t.any(
-      //         `SELECT tasks.railcar_id, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_item_id = ${workItem.id}`,
-      //       );
-      //     }
-      //     return []; // workItem not found, so no events
-      //   });
-      // })
-      //   .then(events => {
-      //     console.log(events);
-      //   })
-      //   .catch(error => {
-      //     console.log(error);
-      //     // error
-      //   });
-      // return db.manyOrNone(workItemsQuery).then(res => {
-      //   return res.map(workItem => {
-      //     let workItemRes = {};
-      //     const tasksQuery = `SELECT tasks.railcar_id, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.car_number, railcars.length, railcars.color, tasks.traffic_generator_id FROM tasks INNER JOIN railcars ON (tasks.railcar_id = railcars.id) WHERE work_item_id = ${workItem.id}`;
-      //     return db.manyOrNone(tasksQuery).then(tasks => {
-      //       workItemRes = tasks;
-      //       return { workItem };
-      //     });
-      //   });
-      // });
-      return database('work_items').where('work_order_id', workOrder);
     };
 
     const fetchTrafficGenerators = () => {
@@ -94,6 +64,10 @@ workOrders.get(
 
     const fetchRailcars = () => {
       return database('railcars').where('user_id', request.user.id);
+    };
+
+    const sortWorkItemsByOrder = workItems => {
+      return workItems.sort((a, b) => (a.order > b.order ? 1 : -1));
     };
 
     const filterTasksByWorkItem = (tasks, workItems) => {
@@ -128,13 +102,13 @@ workOrders.get(
       ]);
 
       if (!response.headersSent) {
+        const sorted = sortWorkItemsByOrder(workItems);
         response.status(200).json({
           destinations,
           railcars,
           tasks,
           trafficGenerators,
-          workOrdersResults,
-          workItems: filterTasksByWorkItem(tasks, workItems),
+          workItems: filterTasksByWorkItem(tasks, sorted),
           workOrdersResults,
         });
       }

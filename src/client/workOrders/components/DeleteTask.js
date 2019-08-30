@@ -1,12 +1,16 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useState } from 'react';
-import { Button, Dialog, toaster } from 'evergreen-ui';
+import { Dialog, toaster } from 'evergreen-ui';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
+import Button from '../../components/atoms/Button';
 
 const StyledDiv = styledComponent('div', {
+  '& button': {
+    marginLeft: '20px',
+  },
   '& input': {
     border: '1px solid #fffcfc',
     borderRadius: '2px',
@@ -53,11 +57,12 @@ const DeleteTask = ({ taskId, handleDelete }) => {
         Are you sure you want to delete this task?
       </Dialog>
       <Button
-        iconBefore="trash"
-        intent="danger"
+        icon="delete"
         onClick={() => {
           setIsDeleting(true);
         }}
+        size="small"
+        variant="danger"
       >
         Delete
       </Button>

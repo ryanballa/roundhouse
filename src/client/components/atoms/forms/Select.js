@@ -6,7 +6,13 @@ import { styledComponent } from '../../../utils/styledComponent';
 import { colors } from '../../../config/styles';
 
 const StyledDiv = styledComponent('div', {
-  '& input': {
+  '& label': {
+    color: colors.form.label,
+    display: 'block',
+    fontSize: '18px',
+    fontWeight: '800',
+  },
+  '& select': {
     '&:-webkit-autofill': {
       background: colors.form.background,
     },
@@ -14,14 +20,10 @@ const StyledDiv = styledComponent('div', {
     border: `1px solid ${colors.form.stroke}`,
     borderRadius: '4px',
     display: 'block',
+    fontSize: '16px',
+    height: '50px',
     marginTop: '10px',
-    padding: '15px',
-  },
-  '& label': {
-    color: colors.form.label,
-    display: 'block',
-    fontSize: '18px',
-    fontWeight: '800',
+    padding: '15px 30px',
   },
 });
 

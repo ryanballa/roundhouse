@@ -3,9 +3,17 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Breadcrumb } from '../components/atoms/Breadcrumb';
 import SingleColumn from '../components/layout/SingleColumn';
+import { styledComponent } from '../utils/styledComponent';
 import { userState } from '../UserProvider';
 import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
+
+const StyledUl = styledComponent('ul', {
+  '& .task': {
+    alignItems: 'center',
+    display: 'flex',
+  },
+});
 
 const WorkOrdersView = ({ history, match }) => {
   const [workOrder, setWorkOrder] = useState({
@@ -41,7 +49,7 @@ const WorkOrdersView = ({ history, match }) => {
         ]}
       />
       <h1>{workOrder.workOrdersResults[0].name}</h1>
-      <ul>
+      <StyledUl>
         {workOrder.workItems.map(workItem => (
           <li>
             <h2>{workItem.destinationname}</h2>
@@ -52,14 +60,16 @@ const WorkOrdersView = ({ history, match }) => {
               }}
               railcars={workOrder.railcars}
               trafficGenerators={workOrder.trafficGenerators}
-              workOrderId={workOrder.workOrdersResults[0].id}
+              workItemId={workItem.id}
             />
             <p>Scheduled work at {workItem.destinationname}</p>
             <ul>
               {workItem.tasks.map(task => (
-                <li>
-                  [ ] {task.taskstype} up {task.road} {task.car_number}{' '}
-                  {task.type} {task.length}&#39; {task.color} from {task.name}
+                <li className="task">
+                  [ ] {task.taskstype}{' '}
+                  {task.taskstype === 'pick' ? 'up' : 'off'} {task.road}{' '}
+                  {task.car_number} {task.type} {task.length}&#39; {task.color}{' '}
+                  from {task.name}
                   <DeleteTask
                     taskId={task.id}
                     handleDelete={() => {
@@ -71,37 +81,7 @@ const WorkOrdersView = ({ history, match }) => {
             </ul>
           </li>
         ))}
-        {/* {workOrder.traffic.map(wo => (
-          <li key={wo.destination.id}>
-            <h2>{wo.destination.name}</h2>
-            <AddTask
-              destinationId={wo.destination.id}
-              handleUpdate={() => {
-                fetchData();
-              }}
-              railcars={workOrder.railcars}
-              trafficGenerators={wo.filteredTrafficGenerators}
-              workOrderId={workOrder.workOrdersResults[0].id}
-            />
-            <p>Scheduled work at {wo.destination.name}</p>
-            <ul>
-              {wo.tasks.map(task => (
-                <li>
-                  [ ] {task.taskstype} up {task.road} {task.car_number}{' '}
-                  {task.type} {task.length}&#39; {task.color} from{' '}
-                  {task.destinationName}
-                  <DeleteTask
-                    taskId={task.id}
-                    handleDelete={() => {
-                      fetchData();
-                    }}
-                  />
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))} */}
-      </ul>
+      </StyledUl>
     </SingleColumn>
   );
 };
