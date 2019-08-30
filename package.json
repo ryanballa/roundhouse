@@ -78,6 +78,11 @@
     "start-server-and-test": "^1.9.1",
     "supertest": "^4.0.2",
     "tape": "^4.11.0",
+    "tslint": "^5.19.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.6.2",
     "yup": "^0.27.0"
   },
   "devDependencies": {
@@ -94,7 +99,8 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-preset-stage-0": "^6.24.1",
+    "parcel": "^2.0.0-alpha.1.1"
   },
   "engines": {
     "node": "10.x"

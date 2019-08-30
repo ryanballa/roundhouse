@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
 import FormActions from '../components/organisms/FormActions';
-import Breadcrumb from '../components/atoms/Breadcrumb';
+import { Breadcrumb } from '../components/atoms/Breadcrumb';
 import Form from './components/Form';
 
 const LocomotivesEdit = ({

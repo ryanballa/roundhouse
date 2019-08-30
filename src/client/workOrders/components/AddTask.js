@@ -1,14 +1,12 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
+import axios from 'axios';
 import { Button, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-import Error from '../../components/atoms/forms/Error';
-import { styledComponent } from '../../utils/styledComponent';
-import { colors } from '../../config/styles';
 import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
+import { colors } from '../../config/styles';
+import { styledComponent } from '../../utils/styledComponent';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -83,7 +81,9 @@ const AddTask = ({
                 <Select label="Railcar" id="railcar_id" name="railcar_id">
                   <option value="">Select Railcar</option>
                   {railcars.map(railcar => (
-                    <option value={railcar.id}>{railcar.road}</option>
+                    <option key={railcar.id} value={railcar.id}>
+                      {railcar.road}
+                    </option>
                   ))}
                 </Select>
               </li>
@@ -95,7 +95,9 @@ const AddTask = ({
                 >
                   <option value="">Select Traffic Generator</option>
                   {trafficGenerators.map(tg => (
-                    <option value={tg.id}>{tg.name}</option>
+                    <option key={tg.id} value={tg.id}>
+                      {tg.name}
+                    </option>
                   ))}
                 </Select>
               </li>

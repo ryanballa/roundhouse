@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Breadcrumb from '../components/atoms/Breadcrumb';
+import { Breadcrumb } from '../components/atoms/Breadcrumb';
 import SingleColumn from '../components/layout/SingleColumn';
 import { userState } from '../UserProvider';
 import AddTask from './components/AddTask';

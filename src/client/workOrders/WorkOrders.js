@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
-import AddButton from '../components/atoms/AddButton';
+import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
 import { colors } from '../config/styles';

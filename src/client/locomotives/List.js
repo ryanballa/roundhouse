@@ -8,7 +8,7 @@ import axios from 'axios';
 import { PieChart } from 'react-chartkick';
 import 'chart.js';
 import BaseTable, { Column } from 'react-base-table';
-import AddButton from '../components/atoms/AddButton';
+import { AddButton } from '../components/atoms/AddButton';
 import TabMenu from '../components/atoms/TabMenu';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
