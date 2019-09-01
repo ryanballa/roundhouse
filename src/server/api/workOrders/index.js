@@ -159,4 +159,37 @@ workOrders.put('/:workOrderId', (request, response) => {
     });
 });
 
+workOrders.delete(
+  '/:workOrderId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.workOrderId;
+    database('work_orders')
+      .where('id', id)
+      .then(workOrder => {
+        if (request.user.id !== workOrder.user_id) {
+          return response.status(403).json({});
+        }
+        database('work_orders')
+          .where('id', id)
+          .del()
+          .then(workOrderRes => {
+            return response.status(200).json(workOrderRes);
+          })
+          .catch(
+            /* istanbul ignore next */ error => {
+              /* istanbul ignore next */
+              return response.status(500).json({ error });
+            },
+          );
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */
+          return response.status(500).json({ error });
+        },
+      );
+  },
+);
+
 module.exports = workOrders;

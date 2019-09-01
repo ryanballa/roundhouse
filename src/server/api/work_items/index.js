@@ -72,4 +72,37 @@ work_items.put('/:workItemId', (request, response) => {
     });
 });
 
+work_items.delete(
+  '/:workItemId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.workItemId;
+    database('work_items')
+      .where('id', id)
+      .then(workItem => {
+        // if (request.user.id !== workOrder.user_id) {
+        //   return response.status(403).json({});
+        // }
+        database('work_items')
+          .where('id', id)
+          .del()
+          .then(workItemRes => {
+            return response.status(200).json(workItemRes);
+          })
+          .catch(
+            /* istanbul ignore next */ error => {
+              /* istanbul ignore next */
+              return response.status(500).json({ error });
+            },
+          );
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */
+          return response.status(500).json({ error });
+        },
+      );
+  },
+);
+
 module.exports = work_items;

@@ -45,7 +45,6 @@ const AddTask = ({
       <Formik
         initialValues={{}}
         onSubmit={(values, { setSubmitting }) => {
-          console.log({ ...values, workItemId });
           setSubmitting(false);
           axios
             .post('/api/v1/tasks/', {

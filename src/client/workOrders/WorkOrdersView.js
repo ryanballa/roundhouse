@@ -8,6 +8,7 @@ import { userState } from '../UserProvider';
 import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
 import AddWorkItem from './components/AddWorkItem';
+import DeleteWorkItem from './components/DeleteWorkItem';
 
 const StyledUl = styledComponent('ul', {
   '& .task': {
@@ -53,6 +54,14 @@ const WorkOrdersView = ({ history, match }) => {
         {workOrder.workItems.map(workItem => (
           <li key={workItem.id}>
             <h2>{workItem.destinationname}</h2>
+            {!workItem.tasks.length && (
+              <DeleteWorkItem
+                workItemId={workItem.id}
+                handleDelete={() => {
+                  fetchData();
+                }}
+              />
+            )}
             <AddTask
               destinationId={workItem.destinationid}
               handleUpdate={() => {

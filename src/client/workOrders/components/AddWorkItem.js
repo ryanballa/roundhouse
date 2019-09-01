@@ -35,7 +35,6 @@ const StyledDiv = styledComponent('div', {
 });
 
 const AddWorkItem = ({ destinations, handleUpdate, order, workOrderId }) => {
-  console.log(order);
   return (
     <StyledDiv>
       <Formik

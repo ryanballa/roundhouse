@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Dialog, toaster } from 'evergreen-ui';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import Button from '../../components/atoms/Button';
@@ -31,7 +30,7 @@ const StyledDiv = styledComponent('div', {
   paddingTop: '5px',
 });
 
-const DeleteTask = ({ taskId, handleDelete }) => {
+const DeleteWorkItem = ({ workItemId, handleDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   return (
     <StyledDiv>
@@ -42,7 +41,7 @@ const DeleteTask = ({ taskId, handleDelete }) => {
         onCloseComplete={() => setIsDeleting(false)}
         onConfirm={() => {
           axios
-            .delete(`/api/v1/tasks/${taskId}`)
+            .delete(`/api/v1/work_items/${workItemId}`)
             .then(() => {
               setIsDeleting(false);
               toaster.success('Task Deleted');
@@ -54,7 +53,7 @@ const DeleteTask = ({ taskId, handleDelete }) => {
         }}
         confirmLabel="Delete"
       >
-        Are you sure you want to delete this task?
+        Are you sure you want to delete this Destination?
       </Dialog>
       <Button
         icon="delete"
@@ -70,4 +69,4 @@ const DeleteTask = ({ taskId, handleDelete }) => {
   );
 };
 
-export default DeleteTask;
+export default DeleteWorkItem;
