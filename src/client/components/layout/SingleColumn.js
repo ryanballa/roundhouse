@@ -12,7 +12,7 @@ const StyledSection = styledComponent('section', {
   '& h1': {
     fontSize: '3em',
   },
-  '& h1, & h2': {
+  '& h1, & h2, & h3': {
     color: colors.headers,
     fontFamily: fontConfig.familyHeaders,
     fontWeight: 'normal',

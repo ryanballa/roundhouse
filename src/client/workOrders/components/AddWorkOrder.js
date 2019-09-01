@@ -1,6 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
 import axios from 'axios';
+import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import Input from '../../components/atoms/forms/Input';
 import { colors } from '../../config/styles';
@@ -14,7 +15,7 @@ const StyledFormDiv = styledComponent('div', {
     marginTop: '38px',
   },
   '& input': {
-    width: '80%',
+    width: '90%',
   },
   '& li': {
     listStyle: 'none',
@@ -28,6 +29,15 @@ const StyledFormDiv = styledComponent('div', {
   paddingTop: '5px',
 });
 
+const customStyles = {
+  content: {
+    left: '30%',
+    right: '30%',
+    maxHeight: '500px',
+    maxWidth: '40%',
+  },
+};
+
 const AddWorkOrder = ({ handleUpdate, isOpen, handleModalClose }) => {
   const { user } = userState();
   return (
@@ -36,6 +46,7 @@ const AddWorkOrder = ({ handleUpdate, isOpen, handleModalClose }) => {
       handleModalClose={() => {
         handleModalClose();
       }}
+      style={customStyles}
       title="Add Work Order"
     >
       <Formik
@@ -55,7 +66,9 @@ const AddWorkOrder = ({ handleUpdate, isOpen, handleModalClose }) => {
                 handleUpdate();
               },
             )
-            .catch(() => {});
+            .catch(err => {
+              console.log(err);
+            });
         }}
       >
         {({

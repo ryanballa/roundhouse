@@ -40,30 +40,6 @@ const StyledDiv = styledComponent('div', {
   },
 });
 
-// const StyledFormDiv = styledComponent('div', {
-//   '& button': {
-//     marginTop: '38px',
-//   },
-//   '& input': {
-//     border: '1px solid #fffcfc',
-//     borderRadius: '2px',
-//     boxShadow: '0 0 0 1px rgba(67, 90, 111, 0.14)',
-//     padding: '8px',
-//   },
-//   '& li': {
-//     display: 'inline',
-//     listStyle: 'none',
-//     marginBottom: '15px',
-//     marginRight: '15px',
-//   },
-//   '& ul': {
-//     display: 'flex',
-//     paddingLeft: 0,
-//   },
-//   color: colors.error,
-//   paddingTop: '5px',
-// });
-
 function WorkOrders({ history }) {
   const [data, setData] = useState([{ id: '1', road: 'Test' }]);
   const [isLoading, setIsLoading] = useState(false);
@@ -71,13 +47,14 @@ function WorkOrders({ history }) {
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
   const { user } = userState();
 
+  const fetchData = async () => {
+    setIsLoading(true);
+    const result = await axios('/api/v1/workOrders');
+    setData(result.data);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const result = await axios('/api/v1/workOrders');
-      setData(result.data);
-      setIsLoading(false);
-    };
     fetchData();
   }, []);
 

@@ -7,6 +7,7 @@ import { styledComponent } from '../utils/styledComponent';
 import { userState } from '../UserProvider';
 import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
+import AddWorkItem from './components/AddWorkItem';
 
 const StyledUl = styledComponent('ul', {
   '& .task': {
@@ -32,7 +33,6 @@ const WorkOrdersView = ({ history, match }) => {
       //   history.push('/404');
       // }
       setWorkOrder(workOrderRes.data);
-      console.log(workOrderRes.data);
     });
   };
 
@@ -82,6 +82,15 @@ const WorkOrdersView = ({ history, match }) => {
           </li>
         ))}
       </StyledUl>
+      <h3>Add Destination</h3>
+      <AddWorkItem
+        destinations={workOrder.destinations}
+        handleUpdate={() => {
+          fetchData();
+        }}
+        order={workOrder.workItems.length}
+        workOrderId={workOrder.workOrdersResults[0].id}
+      />
     </SingleColumn>
   );
 };

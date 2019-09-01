@@ -27,7 +27,13 @@ const BodyContent = styledComponent('div', {
   fontFamily: fontConfig.familyBody,
 });
 
-const ModalWindow = ({ children, isModalOpen, handleModalClose, title }) => {
+const ModalWindow = ({
+  children,
+  isModalOpen,
+  handleModalClose,
+  style,
+  title,
+}) => {
   return (
     <Modal
       isOpen={isModalOpen}
@@ -36,6 +42,7 @@ const ModalWindow = ({ children, isModalOpen, handleModalClose, title }) => {
         handleModalClose();
       }}
       contentLabel={title}
+      style={style}
     >
       <Toolbar>
         <h1>{title}</h1>
