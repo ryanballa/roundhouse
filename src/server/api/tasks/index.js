@@ -50,14 +50,6 @@ tasks.post('/', (request, response) => {
   const task = request.body;
 
   task.user_id = request.user.id;
-  // ['railcar_id'].forEach(requiredParameter => {
-  //   if (!task[requiredParameter]) {
-  //     return response.status(422).send({
-  //       error: `Expected format: { railcar_id: <Int> }. You're missing a "${requiredParameter}" property.`,
-  //     });
-  //   }
-  //   return null;
-  // });
 
   database('tasks')
     .insert(task, 'id')
@@ -93,9 +85,9 @@ tasks.delete('/:taskId', authHelpers.loginRequired, (request, response) => {
   database('tasks')
     .where('id', id)
     .then(task => {
-      // if (request.user.id !== task[0].user_id) {
-      //   return response.status(403).json({});
-      // }
+      if (request.user.id !== task.user_id) {
+        return response.status(403).json({});
+      }
       database('tasks')
         .where('id', id)
         .del()

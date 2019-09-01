@@ -101,8 +101,7 @@ destinations.get(
   '/:destinationId/work-order/:workOrderId',
   authHelpers.loginRequired,
   (request, response) => {
-    const destinationId = request.params.destinationId;
-    const workOrderId = request.params.workOrderId;
+    const { destinationId, workOrderId } = request.params;
 
     database('work_orders_destinations')
       .where({ destination_id: destinationId, work_order_id: workOrderId })
@@ -139,20 +138,24 @@ destinations.delete(
   },
 );
 
-destinations.put('/:destinationId', (request, response) => {
-  const id = request.params.destinationId;
-  if (request.user.id !== request.body.user_id) {
-    response.status(403).json({});
-  }
-  database('destinations')
-    .where('id', id)
-    .update(request.body)
-    .then(destinationRes => {
-      response.status(200).json(destinationRes);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
-});
+destinations.put(
+  '/:destinationId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.destinationId;
+    if (request.user.id !== request.body.user_id) {
+      response.status(403).json({});
+    }
+    database('destinations')
+      .where('id', id)
+      .update(request.body)
+      .then(destinationRes => {
+        response.status(200).json(destinationRes);
+      })
+      .catch(error => {
+        response.status(500).json({ error });
+      });
+  },
+);
 
 module.exports = destinations;
