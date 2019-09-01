@@ -1,14 +1,19 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Dialog } from 'evergreen-ui';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Formik } from 'formik';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
+import Input from '../components/atoms/forms/Input';
 import { styledComponent } from '../utils/styledComponent';
 import { colors } from '../config/styles';
+import AddWorkOrder from './components/AddWorkOrder';
+import { userState } from '../UserProvider';
 
 const StyledDiv = styledComponent('div', {
   '& .BaseTable__body': {
@@ -35,10 +40,36 @@ const StyledDiv = styledComponent('div', {
   },
 });
 
+// const StyledFormDiv = styledComponent('div', {
+//   '& button': {
+//     marginTop: '38px',
+//   },
+//   '& input': {
+//     border: '1px solid #fffcfc',
+//     borderRadius: '2px',
+//     boxShadow: '0 0 0 1px rgba(67, 90, 111, 0.14)',
+//     padding: '8px',
+//   },
+//   '& li': {
+//     display: 'inline',
+//     listStyle: 'none',
+//     marginBottom: '15px',
+//     marginRight: '15px',
+//   },
+//   '& ul': {
+//     display: 'flex',
+//     paddingLeft: 0,
+//   },
+//   color: colors.error,
+//   paddingTop: '5px',
+// });
+
 function WorkOrders({ history }) {
   const [data, setData] = useState([{ id: '1', road: 'Test' }]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAddWorkOrderOpen, setIsAddWorkOrderOpen] = useState(false);
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
+  const { user } = userState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,9 +107,19 @@ function WorkOrders({ history }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <AddButton className="addRailcar" to="/work-orders/add">
+          <AddButton onClick={() => setIsAddWorkOrderOpen(true)}>
             Add Work Order
           </AddButton>
+          <AddWorkOrder
+            isOpen={isAddWorkOrderOpen}
+            handleModalClose={() => {
+              setIsAddWorkOrderOpen(false);
+            }}
+            handleUpdate={() => {
+              fetchData();
+              setIsAddWorkOrderOpen(false);
+            }}
+          />
           <BaseTable
             onColumnSort={onColumnSort}
             data={data}
@@ -94,6 +135,13 @@ function WorkOrders({ history }) {
               dataKey="name"
               sortable
               width={300}
+            />
+            <Column
+              title="Description"
+              key="description"
+              dataKey="description"
+              sortable
+              width={500}
             />
           </BaseTable>
         </StyledDiv>

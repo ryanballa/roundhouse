@@ -175,7 +175,7 @@ function List({ history, location }) {
               key="is_operational"
               dataKey="is_operational"
               sortable
-              width={250}
+              width={200}
             />
             <Column
               cellRenderer={booleanFormatter}
@@ -183,7 +183,7 @@ function List({ history, location }) {
               key="is_dcc"
               dataKey="is_dcc"
               sortable
-              width={200}
+              width={250}
             />
             <Column
               title="Location"

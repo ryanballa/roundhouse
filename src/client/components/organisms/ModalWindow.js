@@ -3,16 +3,31 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import Button from '../atoms/Button';
 import { styledComponent } from '../../utils/styledComponent';
+import { colors, fontConfig, spacing } from '../../config/styles';
 
 Modal.setAppElement('#modalElement');
 
 const Toolbar = styledComponent('div', {
+  '& h1': {
+    color: colors.headers,
+    fontFamily: fontConfig.familyHeaders,
+    float: 'left',
+  },
   display: 'flex',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
   margin: '15px 0',
 });
 
-const ModalWindow = ({ children, isModalOpen, handleModalClose }) => {
+const Footer = styledComponent('div', {
+  display: 'flex',
+  justifyContent: 'flex-end',
+});
+
+const BodyContent = styledComponent('div', {
+  fontFamily: fontConfig.familyBody,
+});
+
+const ModalWindow = ({ children, isModalOpen, handleModalClose, title }) => {
   return (
     <Modal
       isOpen={isModalOpen}
@@ -20,33 +35,34 @@ const ModalWindow = ({ children, isModalOpen, handleModalClose }) => {
       onRequestClose={() => {
         handleModalClose();
       }}
-      contentLabel="Example Modal"
+      contentLabel={title}
     >
       <Toolbar>
+        <h1>{title}</h1>
         <Button
           icon="close"
           type="button"
           onClick={() => {
             handleModalClose();
           }}
-          variant="secondary"
+          variant="quiet"
         >
           Close
         </Button>
       </Toolbar>
-      {children}
-      <Toolbar>
+      <BodyContent>{children}</BodyContent>
+      <Footer>
         <Button
           icon="close"
           type="button"
           onClick={() => {
             handleModalClose();
           }}
-          variant="secondary"
+          variant="quiet"
         >
           Close
         </Button>
-      </Toolbar>
+      </Footer>
     </Modal>
   );
 };
