@@ -12,6 +12,10 @@ const StyledButton = styledComponent('button', {
     backgroundColor: colors.error,
     color: colors.buttons.secondary.textColor,
   },
+  '&.quiet': {
+    background: 'transparent',
+    color: colors.body,
+  },
   '&.primary': {
     backgroundColor: colors.form.buttonPrimaryBacgkround,
     color: colors.form.buttonPrimary,
@@ -98,7 +102,7 @@ Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   icon: PropTypes.oneOf(['add', 'close', 'delete']),
   size: PropTypes.oneOf(['small', 'normal']),
-  variant: PropTypes.oneOf(['primary', 'secondary', 'danger']),
+  variant: PropTypes.oneOf(['primary', 'secondary', 'danger', 'quiet']),
 };
 
 Button.defaultProps = {

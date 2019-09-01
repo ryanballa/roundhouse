@@ -14,6 +14,7 @@ const StyledDiv = styledComponent('div', {
     border: `1px solid ${colors.form.stroke}`,
     borderRadius: '4px',
     display: 'block',
+    height: '35px',
     marginTop: '10px',
     padding: '15px',
   },

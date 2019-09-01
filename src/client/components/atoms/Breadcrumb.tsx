@@ -31,8 +31,8 @@ const Breadcrumb: FunctionComponent<BreadCrumbProps> = ({
   ...otherProps
 }) => (
   <StyledUl {...otherProps}>
-    {items.map(item => (
-      <li key={item.text}>
+    {items.map((item, i) => (
+      <li key={i}>
         {item.link && <Link to={item.link}>{item.text} &gt;</Link>}
         {!item.link && <span>{item.text}</span>}
       </li>

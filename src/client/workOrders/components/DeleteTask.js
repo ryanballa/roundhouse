@@ -62,7 +62,7 @@ const DeleteTask = ({ taskId, handleDelete }) => {
           setIsDeleting(true);
         }}
         size="small"
-        variant="danger"
+        variant="quiet"
       >
         Delete
       </Button>

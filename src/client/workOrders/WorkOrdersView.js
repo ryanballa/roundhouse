@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Breadcrumb } from '../components/atoms/Breadcrumb';
+import Breadcrumb from '../components/atoms/Breadcrumb';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
 import { userState } from '../UserProvider';
@@ -51,7 +51,7 @@ const WorkOrdersView = ({ history, match }) => {
       <h1>{workOrder.workOrdersResults[0].name}</h1>
       <StyledUl>
         {workOrder.workItems.map(workItem => (
-          <li>
+          <li key={workItem.id}>
             <h2>{workItem.destinationname}</h2>
             <AddTask
               destinationId={workItem.destinationid}
@@ -65,7 +65,7 @@ const WorkOrdersView = ({ history, match }) => {
             <p>Scheduled work at {workItem.destinationname}</p>
             <ul>
               {workItem.tasks.map(task => (
-                <li className="task">
+                <li key={task.id} className="task">
                   [ ] {task.taskstype}{' '}
                   {task.taskstype === 'pick' ? 'up' : 'off'} {task.road}{' '}
                   {task.car_number} {task.type} {task.length}&#39; {task.color}{' '}
