@@ -1,6 +1,5 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
-import { Button, FormField, Select, Switch } from 'evergreen-ui';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Error from '../../components/atoms/forms/Error';
@@ -9,6 +8,9 @@ import { colors } from '../../config/styles';
 import Gallery from '../../components/organisms/Gallery';
 import Input from '../../components/atoms/forms/Input';
 import Toggle from '../../components/atoms/forms/Toggle';
+import Select from '../../components/atoms/forms/Select';
+import DatePickerField from '../../components/atoms/forms/DatePickerField';
+import Button from '../../components/atoms/Button';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -38,87 +40,6 @@ const Form = ({
   touched,
   values,
 }) => {
-  const SwitchField = ({
-    id,
-    field: { name, value, onChange, onBlur },
-    ...props
-  }) => (
-    <div>
-      <Switch
-        id={id}
-        name={name}
-        value={value ? value.toString() : 'false'}
-        onBlur={onBlur}
-        checked={value}
-        onChange={onChange}
-        {...props}
-      />
-    </div>
-  );
-
-  SwitchField.propTypes = {
-    field: PropTypes.shape({
-      name: PropTypes.string,
-      onBlur: PropTypes.func,
-      onChange: PropTypes.func,
-      value: PropTypes.bool,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-  };
-
-  const SelectField = ({
-    id,
-    field: { name, value, onChange, onBlur },
-    ...props
-  }) => (
-    <div data-testid={name}>
-      <Select
-        id={id}
-        name={name}
-        onChange={onChange}
-        value={value}
-        onBlur={onBlur}
-        {...props}
-      >
-        <option value="club">Club</option>
-        <option value="home">Home</option>
-        <option value="studio">Studio</option>
-      </Select>
-    </div>
-  );
-
-  const SelectFieldType = ({
-    id,
-    field: { name, value, onChange, onBlur },
-    ...props
-  }) => (
-    <div data-testid={name}>
-      <Select
-        id={id}
-        name={name}
-        onChange={onChange}
-        value={value}
-        onBlur={onBlur}
-        {...props}
-      >
-        <option value="steam">Steam Engine</option>
-        <option value="diesel">Diesel Engine</option>
-        <option value="trolley">Trolley</option>
-        <option value="other">Other</option>
-      </Select>
-    </div>
-  );
-
-  SelectField.propTypes = {
-    field: PropTypes.shape({
-      name: PropTypes.string,
-      onBlur: PropTypes.func,
-      onChange: PropTypes.func,
-      value: PropTypes.string,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-  };
-
   return (
     <StyledDiv>
       <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
@@ -132,9 +53,6 @@ const Form = ({
             <Field type="hidden" name="user_id" />
           </li>
           <li data-testid="road">
-            {/* <FormField label="Road">
-              <Field id="road" type="text" name="road" placeholder="" />
-            </FormField> */}
             <Input
               label="Road"
               id="road"
@@ -149,14 +67,6 @@ const Form = ({
             </Error>
           </li>
           <li data-testid="engine_number">
-            {/* <FormField label="Engine Number">
-              <Field
-                id="engine_number"
-                type="text"
-                name="engine_number"
-                placeholder=""
-              />
-            </FormField> */}
             <Input
               label="Engine Number"
               id="engine_number"
@@ -171,14 +81,12 @@ const Form = ({
             </Error>
           </li>
           <li data-testid="purchased_on">
-            <FormField label="purchased_on">
-              <Field
-                id="purchased_on"
-                type="date"
-                name="purchased_on"
-                placeholder=""
-              />
-            </FormField>
+            <DatePickerField
+              label="Purchased On"
+              name="purchased_on"
+              setFieldValue={setFieldValue}
+              values={values || []}
+            />
           </li>
           <li data-testid="is_operational">
             <Field
@@ -188,13 +96,6 @@ const Form = ({
               component={Toggle}
               setFieldValue={setFieldValue}
             />
-            {/* <FormField label="Is Operational">
-              <Field
-                id="is_operational"
-                name="is_operational"
-                component={SwitchField}
-              />
-            </FormField> */}
           </li>
           <li data-testid="is_dcc">
             <Field
@@ -204,19 +105,21 @@ const Form = ({
               component={Toggle}
               setFieldValue={setFieldValue}
             />
-            {/* <FormField label="Is DCC">
-              <Field id="is_dcc" name="is_dcc" component={SwitchField} />
-            </FormField> */}
           </li>
           <li>
-            <FormField label="Location">
-              <Field id="location" name="location" component={SelectField} />
-            </FormField>
+            <Select label="Location" id="location" name="location">
+              <option value="club">Club</option>
+              <option value="home">Home</option>
+              <option value="studio">Studio</option>
+            </Select>
           </li>
           <li>
-            <FormField label="Type">
-              <Field id="type" name="type" component={SelectFieldType} />
-            </FormField>
+            <Select label="Type" id="type" name="type">
+              <option value="steam">Steam Engine</option>
+              <option value="diesel">Diesel Engine</option>
+              <option value="trolley">Trolley</option>
+              <option value="other">Other</option>
+            </Select>
           </li>
           <li>
             <Input
@@ -226,9 +129,6 @@ const Form = ({
               name="value"
               placeholder="0"
             />
-            {/* <FormField label="Value">
-              <Field id="value" type="text" name="value" placeholder="0" />
-            </FormField> */}
           </li>
           <li>
             <Input
@@ -238,19 +138,8 @@ const Form = ({
               name="purchase_price"
               placeholder="0"
             />
-            {/* <FormField label="Purchase Price">
-              <Field
-                id="purchase_price"
-                type="text"
-                name="purchase_price"
-                placeholder="0"
-              />
-            </FormField> */}
           </li>
           <li>
-            {/* <FormField label="Notes">
-              <Field id="notes" type="text" name="notes" placeholder="" />
-            </FormField> */}
             <Input
               label="Notes"
               id="notes"
@@ -270,11 +159,7 @@ const Form = ({
             />
           </li>
           <li>
-            <Button
-              type="submit"
-              data-testid="locomotiveAdd-submit"
-              disabled={isSubmitting}
-            >
+            <Button data-testid="locomotiveAdd-submit" disabled={isSubmitting}>
               Submit
             </Button>
           </li>

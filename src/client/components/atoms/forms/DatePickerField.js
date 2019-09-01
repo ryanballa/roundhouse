@@ -19,6 +19,7 @@ const StyledDiv = styledComponent('div', {
     display: 'block',
     marginTop: '10px',
     padding: '15px',
+    width: '100%',
   },
   '& label': {
     color: colors.form.label,
@@ -38,7 +39,7 @@ const DatePickerField = ({ label, name, setFieldValue, values }) => (
       onChange={e => {
         setFieldValue('purchased_on', moment(e).format('YYYY-MM-DD'));
       }}
-      value={values ? values.purchased_on : ''}
+      value={values && values.purchased_on ? values.purchased_on : ''}
     />
   </StyledDiv>
 );
@@ -48,7 +49,7 @@ DatePickerField.propTypes = {
   name: PropTypes.string.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   values: PropTypes.shape({
-    purchased_on: PropTypes.string.isRequired,
+    purchased_on: PropTypes.string,
   }).isRequired,
 };
 

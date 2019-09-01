@@ -26,7 +26,7 @@ type BreadCrumbProps = {
   }>;
 };
 
-export const Breadcrumb: FunctionComponent<BreadCrumbProps> = ({
+const Breadcrumb: FunctionComponent<BreadCrumbProps> = ({
   items,
   ...otherProps
 }) => (
@@ -39,3 +39,5 @@ export const Breadcrumb: FunctionComponent<BreadCrumbProps> = ({
     ))}
   </StyledUl>
 );
+
+export default Breadcrumb;

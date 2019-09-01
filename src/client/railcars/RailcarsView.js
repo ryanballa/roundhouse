@@ -2,19 +2,20 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Button, Dialog, Pane, toaster } from 'evergreen-ui';
+import { Dialog, Pane, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
 import FormActions from '../components/organisms/FormActions';
 import Form from './components/Form';
+import Button from '../components/atoms/Button';
 import { userState } from '../UserProvider';
 
 const RailcarsEdit = ({ history, match }) => {
   const [data, setData] = useState([{ car_number: '123', road: 'Test' }]);
   const [photos, setPhotos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const { user } = userState();
 
@@ -48,8 +49,8 @@ const RailcarsEdit = ({ history, match }) => {
       <FormActions>
         <h1>Edit Railcar</h1>
         <Button
-          iconBefore="trash"
-          intent="danger"
+          icon="delete"
+          variant="danger"
           onClick={() => {
             setIsDeleting(true);
           }}
@@ -87,14 +88,14 @@ const RailcarsEdit = ({ history, match }) => {
               initialValues={{
                 car_number: data[0].car_number || '',
                 color: data[0].color || '',
-                is_operational: data[0].is_operational,
+                is_operational: data[0].is_operational || true,
                 length: data[0].length || '',
-                location: data[0].location,
+                location: data[0].location || 'home',
                 purchased_on: moment(data[0].purchased_on).isValid()
                   ? moment(data[0].purchased_on).format('YYYY-MM-DD')
-                  : undefined,
-                reporting_marks: data[0].reporting_marks,
-                road: data[0].road,
+                  : '',
+                reporting_marks: data[0].reporting_marks || '',
+                road: data[0].road || '',
                 thumbnail: data[0].thumbnail || '',
                 type: data[0].type || '',
                 user_id: user ? user.id : '',
@@ -113,14 +114,7 @@ const RailcarsEdit = ({ history, match }) => {
                   });
               }}
             >
-              {({
-                errors,
-                touched,
-                handleSubmit,
-                setFieldValue,
-                values,
-                /* and other goodies */
-              }) => (
+              {({ errors, touched, handleSubmit, setFieldValue, values }) => (
                 <Fragment>
                   <Form
                     errors={errors}

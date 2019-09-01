@@ -1,6 +1,5 @@
 /* eslint-disable react/no-multi-comp */
 import React from 'react';
-import { Button } from 'evergreen-ui';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Error from '../../components/atoms/forms/Error';
@@ -11,6 +10,7 @@ import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
 import Toggle from '../../components/atoms/forms/Toggle';
 import DatePickerField from '../../components/atoms/forms/DatePickerField';
+import Button from '../../components/atoms/Button';
 
 const StyledDiv = styledComponent('div', {
   '& input': {
@@ -173,11 +173,7 @@ const Form = ({
             />
           </li>
           <li>
-            <Button
-              type="submit"
-              data-testid="locomotiveAdd-submit"
-              disabled={isSubmitting}
-            >
+            <Button data-testid="locomotiveAdd-submit" disabled={isSubmitting}>
               Submit
             </Button>
           </li>
@@ -200,7 +196,9 @@ Form.propTypes = {
     car_number: PropTypes.bool,
     road: PropTypes.bool,
   }).isRequired,
-  values: PropTypes.shape(PropTypes.object),
+  values: PropTypes.shape({
+    required: PropTypes.bool,
+  }),
 };
 
 Form.defaultProps = {

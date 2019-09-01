@@ -1,13 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Button, Dialog, Pane } from 'evergreen-ui';
+import { Dialog, Pane } from 'evergreen-ui';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
 import FormActions from '../components/organisms/FormActions';
-import { Breadcrumb } from '../components/atoms/Breadcrumb';
+import Breadcrumb from '../components/atoms/Breadcrumb';
 import Form from './components/Form';
+import Button from '../components/atoms/Button';
+import { userState } from '../UserProvider';
 
 const LocomotivesEdit = ({
   data,
@@ -16,9 +18,10 @@ const LocomotivesEdit = ({
   history,
   isLoading,
   photos,
-  user,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
+  const { user } = userState();
+
   const EditSchema = Yup.object().shape({
     engine_number: Yup.number()
       .min(3, 'Numbers need to be at least 3 numbers')
@@ -39,8 +42,8 @@ const LocomotivesEdit = ({
         <h1 data-testid="locomotiveEdit-form">Edit Locomotive</h1>
         <Button
           data-testid="locomotiveEdit-delete"
-          iconBefore="trash"
-          intent="danger"
+          icon="delete"
+          variant="danger"
           onClick={() => {
             setIsDeleting(true);
           }}
@@ -68,19 +71,19 @@ const LocomotivesEdit = ({
             <Formik
               initialValues={{
                 engine_number: data[0].engine_number || '',
-                is_dcc: data[0].is_dcc,
-                is_operational: data[0].is_operational,
-                location: data[0].location,
-                notes: data[0].notes,
-                purchase_price: data[0].purchase_price,
+                is_dcc: data[0].is_dcc || false,
+                is_operational: data[0].is_operational || true,
+                location: data[0].location || 'home',
+                notes: data[0].notes || '',
+                purchase_price: data[0].purchase_price || 0,
                 purchased_on: moment(data[0].purchased_on).isValid()
                   ? moment(data[0].purchased_on).format('YYYY-MM-DD')
-                  : undefined,
-                road: data[0].road,
+                  : '',
+                road: data[0].road || '',
                 thumbnail: data[0].thumbnail || '',
-                type: data[0].type,
-                user_id: user ? user.id : null,
-                value: data[0].value,
+                type: data[0].type || 'diesel',
+                user_id: user ? user.id : '',
+                value: data[0].value || '',
               }}
               validationSchema={EditSchema}
               onSubmit={values => {
@@ -125,7 +128,7 @@ LocomotivesEdit.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   user: PropTypes.shape({
     id: PropTypes.number,
-  }).isRequired,
+  }),
 };
 
 LocomotivesEdit.defaultProps = {

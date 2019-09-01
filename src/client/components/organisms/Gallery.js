@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { toaster } from 'evergreen-ui';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import ModalWindow from './ModalWindow';
@@ -72,9 +73,12 @@ const Gallery = ({ canDelete, canSelect, handleSelection, photos, title }) => {
           {canSelect && (
             <Button
               onClick={() => {
+                toaster.success('Photo Selected');
                 handleSelection({ id: photo.id, path: photo.path });
               }}
               icon="add"
+              size="small"
+              type="Button"
               variant="secondary"
             >
               Use

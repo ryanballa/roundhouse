@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Pane, toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
 import SingleColumn from '../components/layout/SingleColumn';
-import Breadcrumb from '../components/atoms/Breadcrumb';
 import Form from './components/Form';
 import { userState } from '../UserProvider';
+import Breadcrumb from '../components/atoms/Breadcrumb';
 
 function Add({ history }) {
   const [photos, setPhotos] = useState([]);
@@ -34,6 +35,7 @@ function Add({ history }) {
       engine_number: '',
       is_operational: true,
       location: 'home',
+      purchased_on: '',
       notes: '',
       purchase_price: '0',
       road: '',
@@ -63,15 +65,22 @@ function Add({ history }) {
           <Formik
             initialValues={{
               engine_number: data[0].engine_number || '',
-              is_dcc: data[0].is_dcc,
-              is_operational: data[0].is_operational,
-              location: data[0].location,
-              road: data[0].road,
-              type: data[0].type,
-              user_id: user ? user.id : null,
+              is_dcc: data[0].is_dcc || false,
+              is_operational: data[0].is_operational || true,
+              location: data[0].location || 'home',
+              notes: data[0].notes || '',
+              purchase_price: data[0].purchase_price || 0,
+              purchased_on: moment(data[0].purchased_on).isValid()
+                ? moment(data[0].purchased_on).format('YYYY-MM-DD')
+                : '',
+              road: data[0].road || '',
+              thumbnail: data[0].thumbnail || '',
+              type: data[0].type || 'diesel',
+              user_id: user.id,
             }}
             validationSchema={EditSchema}
             onSubmit={(values, { setSubmitting }) => {
+              console.log(errors);
               axios
                 .post('/api/v1/locomotives/', values)
                 .then(
