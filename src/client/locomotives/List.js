@@ -15,6 +15,7 @@ import { styledComponent } from '../utils/styledComponent';
 import { errorHandler } from '../utils/errorHandler';
 import 'react-base-table/styles.css';
 import { colors } from '../config/styles';
+import { filter } from 'rxjs/operators';
 
 const StyledDiv = styledComponent('div', {
   '& .BaseTable__body': {
@@ -45,8 +46,13 @@ const StyledDiv = styledComponent('div', {
 });
 
 function List({ history, location }) {
-  const [data, setData] = useState({ data: [{ id: '1', road: 'Test' }] });
+  const [data, setData] = useState({
+    data: [{ id: '1', road: 'Test' }],
+    displayedData: [],
+    roads: [],
+  });
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
+  const [filters, setFilters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const qsValues = queryString.parse(location.search);
 
@@ -68,6 +74,15 @@ function List({ history, location }) {
     ];
   };
 
+  const getListOfRoads = data => {
+    const roads = [];
+    data.forEach(locomotive => {
+      roads.push(locomotive.road);
+    });
+    const uniqueSet = new Set(roads);
+    return [...uniqueSet];
+  };
+
   useEffect(() => {
     const fetchData = () => {
       setIsLoading(true);
@@ -82,6 +97,8 @@ function List({ history, location }) {
           const totalValues = values.reduce(reducer);
           setData({
             data: response.data,
+            displayedData: response.data,
+            roads: getListOfRoads(response.data),
             totalValues,
             typeGraphData: generateGraphData(response.data),
           });
@@ -122,9 +139,33 @@ function List({ history, location }) {
     );
     setSortBy(sortByVal);
     setData({
-      data: sortedData,
+      data: data.data,
+      displayedData: sortedData,
+      roads: data.roads,
       totalValues: data.totalValues,
       typeGraphData: generateGraphData(sortedData),
+    });
+  };
+
+  const onFilter = filterVals => {
+    const filteredData = [];
+
+    filterVals.forEach(val => {
+      console.log(val);
+      const items = data.data.filter(
+        dataItem => dataItem.road === data.roads[val],
+      );
+      items.forEach(item => {
+        filteredData.push(item);
+      });
+    });
+
+    setData({
+      data: data.data,
+      displayedData: filteredData.length ? filteredData : data.data,
+      roads: data.roads,
+      totalValues: data.totalValues,
+      typeGraphData: generateGraphData(filteredData),
     });
   };
 
@@ -146,9 +187,35 @@ function List({ history, location }) {
               <Link to="/locomotives?running=false">Needs Work</Link>
             </li>
           </TabMenu>
+          <div className="filters">
+            <h2>Filter</h2>
+            <ul>
+              {data.roads.map((road, i) => (
+                <li key={i}>
+                  <input
+                    onChange={e => {
+                      const options = filters;
+                      let index;
+                      if (e.target.checked) {
+                        options.push(+e.target.value);
+                      } else {
+                        index = options.indexOf(+e.target.value);
+                        options.splice(index, 1);
+                      }
+                      setFilters(options);
+                      onFilter(options);
+                    }}
+                    type="checkbox"
+                    value={i}
+                  />
+                  {road}
+                </li>
+              ))}
+            </ul>
+          </div>
           <BaseTable
             onColumnSort={onColumnSort}
-            data={data.data}
+            data={data.displayedData}
             sortBy={sortBy}
             width={1200}
             height={400}

@@ -76,11 +76,10 @@ function Add({ history }) {
               road: data[0].road || '',
               thumbnail: data[0].thumbnail || '',
               type: data[0].type || 'diesel',
-              user_id: user.id,
+              user_id: user ? user.id : '',
             }}
             validationSchema={EditSchema}
             onSubmit={(values, { setSubmitting }) => {
-              console.log(errors);
               axios
                 .post('/api/v1/locomotives/', values)
                 .then(

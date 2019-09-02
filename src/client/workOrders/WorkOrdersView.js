@@ -15,6 +15,10 @@ const StyledUl = styledComponent('ul', {
     alignItems: 'center',
     display: 'flex',
   },
+  '& .destinationWrapper': {
+    alignItems: 'center',
+    display: 'flex',
+  },
 });
 
 const WorkOrdersView = ({ history, match }) => {
@@ -53,15 +57,17 @@ const WorkOrdersView = ({ history, match }) => {
       <StyledUl>
         {workOrder.workItems.map(workItem => (
           <li key={workItem.id}>
-            <h2>{workItem.destinationname}</h2>
-            {!workItem.tasks.length && (
-              <DeleteWorkItem
-                workItemId={workItem.id}
-                handleDelete={() => {
-                  fetchData();
-                }}
-              />
-            )}
+            <div className="destinationWrapper">
+              <h2>{workItem.destinationname}</h2>
+              {!workItem.tasks.length && (
+                <DeleteWorkItem
+                  workItemId={workItem.id}
+                  handleDelete={() => {
+                    fetchData();
+                  }}
+                />
+              )}
+            </div>
             <AddTask
               destinationId={workItem.destinationid}
               handleUpdate={() => {
