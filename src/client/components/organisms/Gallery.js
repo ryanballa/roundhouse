@@ -8,7 +8,7 @@ import Button from '../atoms/Button';
 
 const StyledGallery = styledComponent('div', {
   '& div': {
-    display: 'inline',
+    display: 'flex',
     margin: '20px',
     marginLeft: 0,
   },
@@ -58,18 +58,19 @@ const Gallery = ({ canDelete, canSelect, handleSelection, photos, title }) => {
             >
               <img src={photo.path} alt="" />
             </ModalWindow>
+            {canDelete && (
+              <Button
+                onClick={() => {
+                  handleSelection({ id: photo.id, path: photo.path });
+                }}
+                icon="delete"
+                variant="quiet"
+              >
+                Delete
+              </Button>
+            )}
           </StyledGalleryImg>
-          {canDelete && (
-            <Button
-              onClick={() => {
-                handleSelection({ id: photo.id, path: photo.path });
-              }}
-              icon="delete"
-              variant="secondary"
-            >
-              Delete
-            </Button>
-          )}
+
           {canSelect && (
             <Button
               onClick={() => {

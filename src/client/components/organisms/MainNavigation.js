@@ -22,7 +22,7 @@ const StyledUL = styledComponent('ul', {
   '& li': {
     display: 'inline',
     listStyleType: 'none',
-    margin: '0 25px',
+    margin: '0 10px',
   },
   '& svg': {
     fill: colors.links,

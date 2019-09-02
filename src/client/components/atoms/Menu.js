@@ -14,7 +14,7 @@ const StyledDiv = styledComponent('div', {
       cursor: 'pointer',
     },
     border: 'none',
-    fontSize: '26px',
+    fontSize: '22px',
     outline: 'none',
   },
   '& svg.arrow': {
@@ -36,7 +36,7 @@ const StyledDiv = styledComponent('div', {
     '& a': {
       color: '#61A3C5',
       display: 'block',
-      fontSize: '24px',
+      fontSize: '22px',
       padding: '20px',
       textDecoration: 'none',
       width: '100%',
@@ -60,7 +60,7 @@ const StyledDiv = styledComponent('div', {
     width: '100%',
   },
   position: 'relative',
-  width: '300px',
+  width: '250px',
 });
 
 const Menu = ({ children, icon, title }) => {
