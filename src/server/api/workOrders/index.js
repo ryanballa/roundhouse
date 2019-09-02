@@ -99,7 +99,9 @@ workOrders.get(
         fetchRailcars(),
         fetchWorkItems(),
         fetchTasks(),
-      ]);
+      ]).catch(error => {
+        response.status(500).json({ error });
+      });
 
       if (!response.headersSent) {
         const sorted = sortWorkItemsByOrder(workItems);
