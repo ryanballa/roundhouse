@@ -41,7 +41,7 @@ const WorkOrdersView = ({ history, match }) => {
         setWorkOrder(workOrderRes.data);
       })
       .catch(e => {
-        consol.log(e);
+        console.log(e);
       });
   };
 
