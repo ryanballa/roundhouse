@@ -36,12 +36,27 @@ const StyledDiv = styledComponent('div', {
   '& .addLocomotive': {
     float: 'right',
   },
+  '& .filters': {
+    '& input': {
+      marginRight: '10px',
+    },
+    '& li': {
+      listStyle: 'none',
+    },
+    '& ul': {
+      margin: '0 15px 0 0',
+      padding: 0,
+    },
+  },
   '& .itemCallout': {
     width: '50%',
   },
   '& .items': {
     display: 'flex',
     marginTop: '20px',
+  },
+  '& .tableWrapper': {
+    display: 'flex',
   },
 });
 
@@ -151,7 +166,6 @@ function List({ history, location }) {
     const filteredData = [];
 
     filterVals.forEach(val => {
-      console.log(val);
       const items = data.data.filter(
         dataItem => dataItem.road === data.roads[val],
       );
@@ -165,7 +179,9 @@ function List({ history, location }) {
       displayedData: filteredData.length ? filteredData : data.data,
       roads: data.roads,
       totalValues: data.totalValues,
-      typeGraphData: generateGraphData(filteredData),
+      typeGraphData: generateGraphData(
+        filteredData.length ? filteredData : data.data,
+      ),
     });
   };
 
@@ -187,87 +203,81 @@ function List({ history, location }) {
               <Link to="/locomotives?running=false">Needs Work</Link>
             </li>
           </TabMenu>
-          <div className="filters">
-            <h2>Filter</h2>
-            <ul>
-              {data.roads.map((road, i) => (
-                <li key={i}>
-                  <input
-                    onChange={e => {
-                      const options = filters;
-                      let index;
-                      if (e.target.checked) {
-                        options.push(+e.target.value);
-                      } else {
-                        index = options.indexOf(+e.target.value);
-                        options.splice(index, 1);
-                      }
-                      setFilters(options);
-                      onFilter(options);
-                    }}
-                    type="checkbox"
-                    value={i}
-                  />
-                  {road}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <BaseTable
-            onColumnSort={onColumnSort}
-            data={data.displayedData}
-            sortBy={sortBy}
-            width={1200}
-            height={400}
-          >
-            <Column sortable title="Id" key="id" dataKey="id" width={100} />
-            <Column
-              cellRenderer={linkFormatter}
-              title="Road"
-              key="road"
-              dataKey="road"
-              sortable
-              width={300}
-            />
-            <Column
-              title="Engine Number"
-              key="engine_number"
-              dataKey="engine_number"
-              sortable
-              width={250}
-            />
-            <Column
-              cellRenderer={booleanFormatter}
-              title="Operational"
-              key="is_operational"
-              dataKey="is_operational"
-              sortable
-              width={200}
-            />
-            <Column
-              cellRenderer={booleanFormatter}
-              title="DCC Equipped"
-              key="is_dcc"
-              dataKey="is_dcc"
-              sortable
-              width={250}
-            />
-            <Column
-              title="Location"
-              key="location"
-              dataKey="location"
-              sortable
-              width={200}
-            />
-            <Column
-              cellRenderer={dateFormatter}
-              title="Purchase Date"
-              key="purchased_on"
-              dataKey="purchased_on"
-              sortable
-              width={220}
-            />
-          </BaseTable>
+          <section className="tableWrapper">
+            <div className="filters">
+              <h2>Filter</h2>
+              <ul>
+                {data.roads.map((road, i) => (
+                  <li key={i}>
+                    <input
+                      onChange={e => {
+                        const options = filters;
+                        let index;
+                        if (e.target.checked) {
+                          options.push(+e.target.value);
+                        } else {
+                          index = options.indexOf(+e.target.value);
+                          options.splice(index, 1);
+                        }
+                        setFilters(options);
+                        onFilter(options);
+                      }}
+                      type="checkbox"
+                      value={i}
+                    />
+                    {road}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <BaseTable
+              onColumnSort={onColumnSort}
+              data={data.displayedData}
+              sortBy={sortBy}
+              width={1000}
+              height={400}
+            >
+              <Column sortable title="Id" key="id" dataKey="id" width={100} />
+              <Column
+                cellRenderer={linkFormatter}
+                title="Road"
+                key="road"
+                dataKey="road"
+                sortable
+                width={300}
+              />
+              <Column
+                title="Engine Number"
+                key="engine_number"
+                dataKey="engine_number"
+                sortable
+                width={200}
+              />
+              <Column
+                cellRenderer={booleanFormatter}
+                title="DCC Equipped"
+                key="is_dcc"
+                dataKey="is_dcc"
+                sortable
+                width={200}
+              />
+              <Column
+                title="Location"
+                key="location"
+                dataKey="location"
+                sortable
+                width={120}
+              />
+              <Column
+                cellRenderer={dateFormatter}
+                title="Purchase Date"
+                key="purchased_on"
+                dataKey="purchased_on"
+                sortable
+                width={200}
+              />
+            </BaseTable>
+          </section>
           <div className="items">
             <div className="itemCallout">
               <h2>Collection</h2>
