@@ -1,7 +1,7 @@
 describe('Locomotives', function() {
   before(function() {
     // reset and seed the database prior to every test
-    // cy.exec('yarn seed:test')
+    cy.exec('yarn seed:test');
   });
 
   beforeEach(function() {
