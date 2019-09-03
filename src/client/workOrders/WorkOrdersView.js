@@ -69,7 +69,14 @@ const WorkOrdersView = ({ history, match }) => {
       />
       <HeaderToolBar>
         <h1>{workOrder.workOrdersResults[0].name}</h1>
-        <Button icon="print">Print</Button>
+        <Button
+          icon="print"
+          onClick={() => {
+            window.print();
+          }}
+        >
+          Print
+        </Button>
       </HeaderToolBar>
       <StyledUl>
         {workOrder.workItems.map(workItem => (
