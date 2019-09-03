@@ -12,6 +12,9 @@ const StyledHeader = styledComponent('header', {
     margin: 0,
     ...fontConfig.h1,
   },
+  '@media print': {
+    display: 'none',
+  },
   alignItems: 'baseline',
   color: colors.links,
   display: 'flex',

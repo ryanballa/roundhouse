@@ -13,6 +13,9 @@ const StyledUl = styledComponent('ul', {
     display: 'inline',
     paddingRight: '5px',
   },
+  '@media print': {
+    display: 'none',
+  },
   fontSize: '18px',
   listStyle: 'none',
   margin: 0,

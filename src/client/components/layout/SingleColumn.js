@@ -17,6 +17,9 @@ const StyledSection = styledComponent('section', {
     fontFamily: fontConfig.familyHeaders,
     fontWeight: 'normal',
   },
+  '& p': {
+    fontSize: '20px',
+  },
   fontFamily: fontConfig.familyStylized,
   margin: '30px auto',
   width: '1200px',

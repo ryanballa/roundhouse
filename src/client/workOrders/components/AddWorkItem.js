@@ -29,6 +29,9 @@ const StyledDiv = styledComponent('div', {
     display: 'flex',
     paddingLeft: 0,
   },
+  '@media print': {
+    display: 'none',
+  },
   color: colors.error,
   paddingTop: '5px',
   marginLeft: '25px',

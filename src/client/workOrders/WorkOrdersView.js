@@ -9,6 +9,16 @@ import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
 import AddWorkItem from './components/AddWorkItem';
 import DeleteWorkItem from './components/DeleteWorkItem';
+import Button from '../components/atoms/Button';
+
+const HeaderToolBar = styledComponent('div', {
+  '& h1': {
+    margin: 0,
+  },
+  display: 'flex',
+  justifyContent: 'space-between',
+  margin: '25px 0',
+});
 
 const StyledUl = styledComponent('ul', {
   '& .task': {
@@ -57,7 +67,10 @@ const WorkOrdersView = ({ history, match }) => {
           { text: workOrder.workOrdersResults[0].name },
         ]}
       />
-      <h1>{workOrder.workOrdersResults[0].name}</h1>
+      <HeaderToolBar>
+        <h1>{workOrder.workOrdersResults[0].name}</h1>
+        <Button icon="print">Print</Button>
+      </HeaderToolBar>
       <StyledUl>
         {workOrder.workItems.map(workItem => (
           <li key={workItem.id}>
