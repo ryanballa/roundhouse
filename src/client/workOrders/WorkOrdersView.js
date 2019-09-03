@@ -93,7 +93,6 @@ const WorkOrdersView = ({ history, match }) => {
               )}
             </div>
             <AddTask
-              destinationId={workItem.destinationid}
               handleUpdate={() => {
                 fetchData();
               }}

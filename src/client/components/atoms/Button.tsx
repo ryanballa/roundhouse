@@ -40,14 +40,16 @@ const StyledButton = styledComponent('button', {
 });
 
 type ButtonProps = {
-  children: ReactNode;
-  icon: 'add' | 'close' | 'delete' | 'print';
-  size: 'small' | 'normal';
-  variant: 'primary' | 'secondary' | 'danger' | 'quiet';
+  children: ReactNode | string;
+  disabled?: boolean;
+  icon?: 'add' | 'close' | 'delete' | 'print';
+  size?: 'small' | 'normal';
+  variant?: 'primary' | 'secondary' | 'danger' | 'quiet';
 };
 
 const Button: FunctionComponent<ButtonProps> = ({
   children = 'Submit',
+  disabled = false,
   icon,
   size = 'normal',
   variant = 'primary',

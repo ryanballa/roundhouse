@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
@@ -36,8 +36,24 @@ const StyledDiv = styledComponent('div', {
   paddingTop: '5px',
 });
 
-const AddTask = ({
-  destinationId,
+type RailCarType = {
+  id: number;
+  road: number;
+};
+
+type TrafficGeneratorType = {
+  id: number;
+  name: string;
+};
+
+type AddTaskProps = {
+  handleUpdate: () => void;
+  railcars: RailCarType[];
+  trafficGenerators: TrafficGeneratorType[];
+  workItemId: number;
+};
+
+const AddTask: FunctionComponent<AddTaskProps> = ({
   handleUpdate,
   railcars,
   trafficGenerators,
@@ -131,29 +147,5 @@ const AddTask = ({
     </StyledDiv>
   );
 };
-
-// AddTask.propTypes = {
-//   errors: PropTypes.shape({
-//     car_number: PropTypes.node,
-//     road: PropTypes.node,
-//   }),
-//   handleSubmit: PropTypes.func.isRequired,
-//   isSubmitting: PropTypes.bool,
-//   photos: PropTypes.arrayOf(PropTypes.object),
-//   setFieldValue: PropTypes.func,
-//   touched: PropTypes.shape({
-//     car_number: PropTypes.bool,
-//     road: PropTypes.bool,
-//   }).isRequired,
-//   values: PropTypes.shape(PropTypes.object),
-// };
-
-// AddTask.defaultProps = {
-//   errors: {},
-//   isSubmitting: false,
-//   photos: [],
-//   setFieldValue: () => {},
-//   values: {},
-// };
 
 export default AddTask;
