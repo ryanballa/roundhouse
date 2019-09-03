@@ -1,8 +1,7 @@
 /* eslint-disable complexity */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { styledComponent } from '../../utils/styledComponent';
-import { colors } from '../../config/styles';
+import { colors, fontConfig } from '../../config/styles';
 
 const StyledButton = styledComponent('button', {
   '& svg': {
@@ -25,7 +24,7 @@ const StyledButton = styledComponent('button', {
     color: colors.buttons.secondary.textColor,
   },
   '&.small': {
-    fontSize: '12px',
+    fontSize: fontConfig.buttons.small.fontSize,
     padding: '11px',
   },
   '&:hover': {
@@ -35,12 +34,25 @@ const StyledButton = styledComponent('button', {
   border: 'none',
   borderRadius: '4px',
   display: 'flex',
-  fontSize: '18px',
-  fontWeight: '800',
+  fontSize: fontConfig.buttons.regular.fontSize,
+  fontWeight: fontConfig.buttons.regular.fontWeight,
   padding: '15px',
 });
 
-const Button = ({ children, icon, size, variant, ...otherProps }) => (
+type ButtonProps = {
+  children: ReactNode;
+  icon: 'add' | 'close' | 'delete' | 'print';
+  size: 'small' | 'normal';
+  variant: 'primary' | 'secondary' | 'danger' | 'quiet';
+};
+
+const Button: FunctionComponent<ButtonProps> = ({
+  children = 'Submit',
+  icon,
+  size = 'normal',
+  variant = 'primary',
+  ...otherProps
+}) => (
   <StyledButton className={`${variant} ${size}`} type="submit" {...otherProps}>
     {icon === 'close' && (
       <svg
@@ -114,19 +126,5 @@ const Button = ({ children, icon, size, variant, ...otherProps }) => (
     {children}
   </StyledButton>
 );
-
-Button.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  icon: PropTypes.oneOf(['add', 'close', 'delete', 'print']),
-  size: PropTypes.oneOf(['small', 'normal']),
-  variant: PropTypes.oneOf(['primary', 'secondary', 'danger', 'quiet']),
-};
-
-Button.defaultProps = {
-  children: 'Submit',
-  icon: null,
-  size: 'normal',
-  variant: 'primary',
-};
 
 export default Button;

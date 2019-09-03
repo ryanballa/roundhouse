@@ -34,6 +34,15 @@ export const fontConfig = {
     fontSize: '1.2em',
     letterSpacing: '0.1em',
   },
+  buttons: {
+    regular: {
+      fontSize: '18px',
+      fontWeight: '800',
+    },
+    small: {
+      fontSize: '12px',
+    },
+  },
 };
 
 export const spacing = {
