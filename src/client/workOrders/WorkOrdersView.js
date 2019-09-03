@@ -45,9 +45,9 @@ const WorkOrdersView = ({ history, match }) => {
     setIsLoading(true);
     await axios(`/api/v1/workOrders/${match.params.id}`)
       .then(workOrderRes => {
-        // if (!workOrder.data.length) {
-        //   history.push('/404');
-        // }
+        if (!workOrderRes.data) {
+          history.push('/404');
+        }
         setWorkOrder(workOrderRes.data);
       })
       .catch(e => {

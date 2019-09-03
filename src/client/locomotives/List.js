@@ -98,23 +98,25 @@ function List({ history, location }) {
     return [...uniqueSet];
   };
 
+  const getTotalValue = data => {
+    const values = data.map(value => value.value);
+
+    const reducer = (accumulator, currentValue) =>
+      Math.round(accumulator) + Math.round(currentValue);
+
+    return values.reduce(reducer);
+  };
+
   useEffect(() => {
     const fetchData = () => {
       setIsLoading(true);
       axios(`/api/v1/locomotives?running=${qsValues.running}`)
         .then(response => {
-          const values = response.data.map(value => {
-            return value.value;
-          });
-          const reducer = (accumulator, currentValue) =>
-            Math.round(accumulator) + Math.round(currentValue);
-
-          const totalValues = values.reduce(reducer);
           setData({
             data: response.data,
             displayedData: response.data,
             roads: getListOfRoads(response.data),
-            totalValues,
+            totalValues: getTotalValue(response.data),
             typeGraphData: generateGraphData(response.data),
           });
         })
@@ -178,7 +180,9 @@ function List({ history, location }) {
       data: data.data,
       displayedData: filteredData.length ? filteredData : data.data,
       roads: data.roads,
-      totalValues: data.totalValues,
+      totalValues: getTotalValue(
+        filteredData.length ? filteredData : data.data,
+      ),
       typeGraphData: generateGraphData(
         filteredData.length ? filteredData : data.data,
       ),
@@ -210,6 +214,7 @@ function List({ history, location }) {
                 {data.roads.map((road, i) => (
                   <li key={i}>
                     <input
+                      data-testid={road}
                       onChange={e => {
                         const options = filters;
                         let index;
