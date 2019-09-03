@@ -10,8 +10,12 @@ import DeleteTask from './components/DeleteTask';
 import AddWorkItem from './components/AddWorkItem';
 import DeleteWorkItem from './components/DeleteWorkItem';
 import Button from '../components/atoms/Button';
+import DeleteWorkOrder from './components/DeleteWorkOrder';
 
 const HeaderToolBar = styledComponent('div', {
+  '& .butonWrapper': {
+    display: 'flex',
+  },
   '& h1': {
     margin: 0,
   },
@@ -69,14 +73,24 @@ const WorkOrdersView = ({ history, match }) => {
       />
       <HeaderToolBar>
         <h1>{workOrder.workOrdersResults[0].name}</h1>
-        <Button
-          icon="print"
-          onClick={() => {
-            window.print();
-          }}
-        >
-          Print
-        </Button>
+        <div className="butonWrapper">
+          {!workOrder.workItems.length && (
+            <DeleteWorkOrder
+              workOrderId={workOrder.workOrdersResults[0].id}
+              handleDelete={() => {
+                history.push('/work-orders');
+              }}
+            />
+          )}
+          <Button
+            icon="print"
+            onClick={() => {
+              window.print();
+            }}
+          >
+            Print
+          </Button>
+        </div>
       </HeaderToolBar>
       <StyledUl>
         {workOrder.workItems.map(workItem => (

@@ -43,6 +43,7 @@ type ButtonProps = {
   children: ReactNode | string;
   disabled?: boolean;
   icon?: 'add' | 'close' | 'delete' | 'print';
+  onClick?: () => void;
   size?: 'small' | 'normal';
   variant?: 'primary' | 'secondary' | 'danger' | 'quiet';
 };

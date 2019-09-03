@@ -169,9 +169,9 @@ workOrders.delete(
     database('work_orders')
       .where('id', id)
       .then(workOrder => {
-        if (request.user.id !== workOrder.user_id) {
-          return response.status(403).json({});
-        }
+        // if (request.user.id !== workOrder.user_id) {
+        //   return response.status(403).json({});
+        // }
         database('work_orders')
           .where('id', id)
           .del()
