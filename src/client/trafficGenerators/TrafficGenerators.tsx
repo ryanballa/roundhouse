@@ -79,13 +79,13 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
 
   return (
     <SingleColumn history={history}>
-      <h1>Work Orders</h1>
+      <h1>Traffic Generators</h1>
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
           <AddButton onClick={() => setIsAddTrafficGeneratorOpen(true)}>
-            Add Work Order
+            Add Traffic Generator
           </AddButton>
           <AddTrafficGenerator
             isOpen={isAddTrafficGeneratorOpen}
