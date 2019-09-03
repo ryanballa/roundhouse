@@ -25,12 +25,13 @@ const StyledLink = styledComponent('div', {
 
 type AddButtonProps = {
   children: ReactNode;
-  to: string;
+  onClick: () => {};
+  to?: string;
 };
 
 export const AddButton: FunctionComponent<AddButtonProps> = ({
   children,
-  to,
+  to = '#',
   ...otherProps
 }) => (
   <StyledLink {...otherProps}>

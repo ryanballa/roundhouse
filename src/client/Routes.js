@@ -18,6 +18,7 @@ import Photos from './photos/Photos';
 import { userDispatch } from './UserProvider';
 import WorkOrders from './workOrders/WorkOrders';
 import WorkOrdersView from './workOrders/WorkOrdersView';
+import TrafficGenerators from './trafficGenerators/TrafficGenerators';
 
 const Routes = ({ history }) => {
   const dispatch = userDispatch();
@@ -52,6 +53,7 @@ const Routes = ({ history }) => {
         <Route exact path="/railcars" component={Railcars} />
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
+        <Route exact path="/trafficGenerators" component={TrafficGenerators} />
         <Route exact path="/error" component={Error} />
         <Route exact path="/work-orders" component={WorkOrders} />
         <Route exact path="/work-orders/:id" component={WorkOrdersView} />

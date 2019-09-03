@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
@@ -40,6 +40,7 @@ const customStyles = {
 
 const AddWorkOrder = ({ handleUpdate, isOpen, handleModalClose }) => {
   const { user } = userState();
+
   return (
     <ModalWindow
       isModalOpen={isOpen}
