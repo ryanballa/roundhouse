@@ -85,7 +85,7 @@ tasks.delete('/:taskId', authHelpers.loginRequired, (request, response) => {
   database('tasks')
     .where('id', id)
     .then(task => {
-      if (request.user.id !== task.user_id) {
+      if (request.user.id !== task[0].user_id) {
         return response.status(403).json({});
       }
       database('tasks')

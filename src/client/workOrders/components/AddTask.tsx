@@ -41,6 +41,19 @@ type RailCarType = {
   road: number;
 };
 
+type RailCarsType = Array<{
+  id: number;
+  road: number;
+}>;
+
+type TaskType = {
+  railcar_id: number;
+};
+
+type TasksType = Array<{
+  railcar_id: number;
+}>;
+
 type TrafficGeneratorType = {
   id: number;
   name: string;
@@ -49,6 +62,7 @@ type TrafficGeneratorType = {
 type AddTaskProps = {
   handleUpdate: () => void;
   railcars: RailCarType[];
+  tasks: TasksType[];
   trafficGenerators: TrafficGeneratorType[];
   workItemId: number;
 };
@@ -57,8 +71,31 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
   handleUpdate,
   railcars,
   trafficGenerators,
+  tasks,
   workItemId,
 }) => {
+  const filteredRailcars = (
+    tasksVals: TasksType,
+    railcarsVals: RailCarsType,
+  ) => {
+    // Count railcar use
+    const railcarsUse = [];
+    tasksVals.map(task => {
+      if (
+        railcarsUse.reduce((res, rc) => res + (rc === task.railcar_id), 0) <= 1
+      ) {
+        railcarsUse.push(task.railcar_id);
+      }
+    });
+    // Find only railcars not used or used once
+    return railcarsVals.reduce((result, railcar) => {
+      if (railcarsUse.reduce((res, rc) => res + (rc === railcar.id), 0) <= 1) {
+        result.push(railcar);
+      }
+      return result;
+    }, []);
+  };
+
   return (
     <StyledDiv>
       <Formik
@@ -78,7 +115,9 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
                 setSubmitting(false);
               },
             )
-            .catch(() => {});
+            .catch(e => {
+              console.log(e);
+            });
         }}
       >
         {({
@@ -101,7 +140,7 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
               <li>
                 <Select label="Railcar" id="railcar_id" name="railcar_id">
                   <option value="">Select Railcar</option>
-                  {railcars.map(railcar => (
+                  {filteredRailcars(tasks, railcars).map(railcar => (
                     <option key={railcar.id} value={railcar.id}>
                       {railcar.road}
                     </option>

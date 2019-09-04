@@ -114,6 +114,7 @@ const WorkOrdersView = ({ history, match }) => {
               trafficGenerators={workOrder.trafficGenerators.filter(
                 tg => tg.destination_id === workItem.destinationid,
               )}
+              tasks={workOrder.tasks}
               workItemId={workItem.id}
             />
             <p>Scheduled work at {workItem.destinationname}</p>
