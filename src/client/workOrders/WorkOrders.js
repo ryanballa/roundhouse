@@ -1,17 +1,15 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Dialog } from 'evergreen-ui';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Formik } from 'formik';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
-import Input from '../components/atoms/forms/Input';
 import { styledComponent } from '../utils/styledComponent';
 import { colors } from '../config/styles';
+import TabMenu from '../components/atoms/TabMenu';
 import AddWorkOrder from './components/AddWorkOrder';
 import { userState } from '../UserProvider';
 
@@ -87,6 +85,14 @@ function WorkOrders({ history }) {
           <AddButton onClick={() => setIsAddWorkOrderOpen(true)}>
             Add Work Order
           </AddButton>
+          <TabMenu>
+            <li className="active">
+              <Link to="/work-orders">Work Orders</Link>
+            </li>
+            <li>
+              <Link to="/traffic-generators">Traffic Generators</Link>
+            </li>
+          </TabMenu>
           <AddWorkOrder
             isOpen={isAddWorkOrderOpen}
             handleModalClose={() => {

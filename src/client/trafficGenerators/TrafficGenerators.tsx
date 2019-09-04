@@ -6,9 +6,9 @@ import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
+import TabMenu from '../components/atoms/TabMenu';
 import { colors } from '../config/styles';
 import AddTrafficGenerator from './components/AddTrafficGenerator';
-import { userState } from '../UserProvider';
 
 const StyledDiv = styledComponent('div', {
   '& .BaseTable__body': {
@@ -90,6 +90,14 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
           <AddButton onClick={() => setIsAddTrafficGeneratorOpen(true)}>
             Add Traffic Generator
           </AddButton>
+          <TabMenu>
+            <li>
+              <Link to="/work-orders">Work Orders</Link>
+            </li>
+            <li className="active">
+              <Link to="/traffic-generators">Traffic Generators</Link>
+            </li>
+          </TabMenu>
           <AddTrafficGenerator
             isOpen={isAddTrafficGeneratorOpen}
             handleModalClose={() => {

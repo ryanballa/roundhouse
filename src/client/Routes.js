@@ -53,7 +53,7 @@ const Routes = ({ history }) => {
         <Route exact path="/railcars" component={Railcars} />
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
-        <Route exact path="/trafficGenerators" component={TrafficGenerators} />
+        <Route exact path="/traffic-generators" component={TrafficGenerators} />
         <Route exact path="/error" component={Error} />
         <Route exact path="/work-orders" component={WorkOrders} />
         <Route exact path="/work-orders/:id" component={WorkOrdersView} />

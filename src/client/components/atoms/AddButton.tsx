@@ -25,7 +25,7 @@ const StyledLink = styledComponent('div', {
 
 type AddButtonProps = {
   children: ReactNode;
-  onClick: () => {};
+  onClick: () => void;
   to?: string;
 };
 

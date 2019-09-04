@@ -111,10 +111,13 @@ const WorkOrdersView = ({ history, match }) => {
                 fetchData();
               }}
               railcars={workOrder.railcars}
-              trafficGenerators={workOrder.trafficGenerators}
+              trafficGenerators={workOrder.trafficGenerators.filter(
+                tg => tg.destination_id === workItem.destinationid,
+              )}
               workItemId={workItem.id}
             />
             <p>Scheduled work at {workItem.destinationname}</p>
+            {!workItem.tasks.length && <small>No Scheduled Work</small>}
             <ul>
               {workItem.tasks.map(task => (
                 <li key={task.id} className="task">

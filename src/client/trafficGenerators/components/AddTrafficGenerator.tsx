@@ -51,8 +51,8 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
   handleModalClose,
 }) => {
   const { user } = userState();
-  const [data, setData] = useState([{}]);
-  const [isLoading, setIsLoading] = useState([]);
+  const [data, setData] = useState([{ id: '', name: '' }]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -105,50 +105,59 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
           values,
         }) => (
           <StyledFormDiv>
-            {!isLoading && <form data-testid="taskAdd-form" onSubmit={handleSubmit}>
-              <ul>
-                <li data-testid="name">
-                  <Input
-                    label="Name"
-                    id="name"
-                    type="text"
-                    name="name"
-                    placeholder=""
-                  />
-                </li>
-                <li data-testid="type">
-                  <Input
-                    label="Type"
-                    id="type"
-                    type="text"
-                    name="type"
-                    placeholder=""
-                  />
-                </li>
-                <li>
-                  <Select
-                    label="Destination"
-                    id="destination_id"
-                    name="destination_id"
-                  >
-                    {data.map(destination => (
-                      <option key={destination.id} value={destination.id}>
-                        {destination.name}
-                      </option>;
-                    ))}
-                  </Select>
-                </li>
-                <li>
-                  <Button
-                    data-testid="trafficGeneratorAdd-submit"
-                    disabled={isSubmitting}
-                    icon="add"
-                  >
-                    Add
-                  </Button>
-                </li>
-              </ul>
-            </form>}
+            {!isLoading && (
+              <form data-testid="taskAdd-form" onSubmit={handleSubmit}>
+                <ul>
+                  <li data-testid="name">
+                    <Input
+                      label="Name"
+                      id="name"
+                      type="text"
+                      name="name"
+                      placeholder=""
+                    />
+                  </li>
+                  <li data-testid="type">
+                    <Select label="Type" id="type" name="type">
+                      <option key="industry" value="industry">
+                        Industry
+                      </option>
+                      <option key="railroad" value="railroad">
+                        Railroad
+                      </option>
+                      <option key="foreign" value="foreign road">
+                        Foreign Road
+                      </option>
+                      <option key="other" value="other">
+                        Other
+                      </option>
+                    </Select>
+                  </li>
+                  <li>
+                    <Select
+                      label="Destination"
+                      id="destination_id"
+                      name="destination_id"
+                    >
+                      {data.map(destination => (
+                        <option key={destination.id} value={destination.id}>
+                          {destination.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </li>
+                  <li>
+                    <Button
+                      data-testid="trafficGeneratorAdd-submit"
+                      disabled={isSubmitting}
+                      icon="add"
+                    >
+                      Add
+                    </Button>
+                  </li>
+                </ul>
+              </form>
+            )}
           </StyledFormDiv>
         )}
       </Formik>
