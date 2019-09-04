@@ -80,6 +80,9 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
   return (
     <SingleColumn history={history}>
       <h1>Traffic Generators</h1>
+      <p>
+        Industries and places that output or require railcars on your railroad.
+      </p>
       {isLoading ? (
         <div>Loading ...</div>
       ) : (

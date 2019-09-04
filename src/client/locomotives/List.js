@@ -58,6 +58,7 @@ const StyledDiv = styledComponent('div', {
   '& .tableWrapper': {
     display: 'flex',
   },
+  marginTop: '20px',
 });
 
 function List({ history, location }) {

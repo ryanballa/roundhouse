@@ -11,6 +11,10 @@ const StyledSection = styledComponent('section', {
   },
   '& h1': {
     fontSize: '3em',
+    marginBottom: 0,
+  },
+  '& h1 + p': {
+    marginTop: 0,
   },
   '& h1, & h2, & h3': {
     color: colors.headers,
