@@ -4,7 +4,21 @@ import { Dialog, toaster } from 'evergreen-ui';
 import axios from 'axios';
 import Button from '../components/atoms/Button';
 import SingleColumn from '../components/layout/SingleColumn';
+import { styledComponent } from '../utils/styledComponent';
 import Gallery from '../components/organisms/Gallery';
+
+const StyledDiv = styledComponent('div', {
+  '& .photoWrapper': {
+    display: 'inline-block',
+  },
+  '& .photoWrapper > div': {
+    display: 'inline-block',
+  },
+  '& > div': {
+    width: '100%',
+  },
+  display: 'flex',
+});
 
 function Photos({ history }) {
   const [photos, setPhotos] = useState([]);
@@ -55,14 +69,16 @@ function Photos({ history }) {
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
-        <Gallery
-          canDelete
-          handleSelection={value => {
-            setPhotoToDelete(value.id);
-            setIsDeleting(true);
-          }}
-          photos={photos}
-        />
+        <StyledDiv>
+          <Gallery
+            canDelete
+            handleSelection={value => {
+              setPhotoToDelete(value.id);
+              setIsDeleting(true);
+            }}
+            photos={photos}
+          />
+        </StyledDiv>
       )}
       <Button
         icon="add"

@@ -37,10 +37,10 @@ const StyledGalleryImg = styledComponent('div', {
 const Gallery = ({ canDelete, canSelect, handleSelection, photos, title }) => {
   const [openModal, setOpenModal] = useState(null);
   return (
-    <StyledGallery>
+    <StyledGallery className="gallery">
       {title && <h2>{title}</h2>}
       {photos.map((photo, i) => (
-        <div key={photo.id}>
+        <div className="photoWrapper" key={photo.id}>
           <StyledGalleryImg
             className={canDelete ? 'deleteable' : ''}
             onClick={() => {

@@ -19,9 +19,19 @@ const HeaderToolBar = styledComponent('div', {
   '& h1': {
     margin: 0,
   },
+  '@media print': {
+    '.printButton': {
+      display: 'none',
+    },
+  },
   display: 'flex',
   justifyContent: 'space-between',
   margin: '25px 0',
+});
+const StyledDestWrapper = styledComponent('div', {
+  '@media print': {
+    display: 'none',
+  },
 });
 
 const StyledUl = styledComponent('ul', {
@@ -83,6 +93,7 @@ const WorkOrdersView = ({ history, match }) => {
             />
           )}
           <Button
+            additionalClasses="printButton"
             icon="print"
             onClick={() => {
               window.print();
@@ -138,7 +149,9 @@ const WorkOrdersView = ({ history, match }) => {
           </li>
         ))}
       </StyledUl>
-      <h3>Add Destination</h3>
+      <StyledDestWrapper>
+        <h3>Add Destination</h3>
+      </StyledDestWrapper>
       <AddWorkItem
         destinations={workOrder.destinations}
         handleUpdate={() => {

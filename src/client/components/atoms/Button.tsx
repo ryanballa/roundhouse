@@ -40,6 +40,7 @@ const StyledButton = styledComponent('button', {
 });
 
 type ButtonProps = {
+  additionalClasses: string;
   children: ReactNode | string;
   disabled?: boolean;
   icon?: 'add' | 'close' | 'delete' | 'print';
@@ -49,6 +50,7 @@ type ButtonProps = {
 };
 
 const Button: FunctionComponent<ButtonProps> = ({
+  additionalClasses,
   children = 'Submit',
   disabled = false,
   icon,
@@ -56,7 +58,11 @@ const Button: FunctionComponent<ButtonProps> = ({
   variant = 'primary',
   ...otherProps
 }) => (
-  <StyledButton className={`${variant} ${size}`} type="submit" {...otherProps}>
+  <StyledButton
+    className={`${variant} ${size} ${additionalClasses}`}
+    type="submit"
+    {...otherProps}
+  >
     {icon === 'close' && (
       <svg
         width={size === 'small' ? 18 : 24}
