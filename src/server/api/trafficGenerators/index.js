@@ -109,4 +109,37 @@ trafficGenerators.get(
   },
 );
 
+trafficGenerators.delete(
+  '/:trafficGeneratorId',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.trafficGeneratorId;
+    database('traffic_generators')
+      .where('id', id)
+      .then(trafficGenerator => {
+        if (request.user.id !== trafficGenerator[0].user_id) {
+          return response.status(403).json({});
+        }
+        database('traffic_generators')
+          .where('id', id)
+          .del()
+          .then(trafficGeneratorRes => {
+            return response.status(200).json(trafficGeneratorRes);
+          })
+          .catch(
+            /* istanbul ignore next */ error => {
+              /* istanbul ignore next */
+              return response.status(500).json({ error });
+            },
+          );
+      })
+      .catch(
+        /* istanbul ignore next */ error => {
+          /* istanbul ignore next */
+          return response.status(500).json({ error });
+        },
+      );
+  },
+);
+
 module.exports = trafficGenerators;

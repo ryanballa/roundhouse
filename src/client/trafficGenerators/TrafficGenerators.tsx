@@ -8,6 +8,7 @@ import { styledComponent } from '../utils/styledComponent';
 import TabMenu from '../components/atoms/TabMenu';
 import { colors } from '../config/styles';
 import AddTrafficGenerator from './components/AddTrafficGenerator';
+import DeleteTrafficGenerator from './components/DeleteTrafficGenerator';
 import useTrafficGenerators from './trafficGenerators.hook';
 
 const StyledDiv = styledComponent('div', {
@@ -63,6 +64,17 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
     const sortedData = sortArrayOfObjects(data, sortByVal.key, sortByVal.order);
     setSortBy(sortByVal);
     setData(sortedData);
+  };
+
+  const deleteFormatter = ({ cellData }) => {
+    return (
+      <DeleteTrafficGenerator
+        trafficGeneratorId={cellData}
+        handleDelete={res => {
+          setData(res.filter(tg => tg.id !== cellData));
+        }}
+      />
+    );
   };
 
   return (
@@ -123,6 +135,13 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
               dataKey="type"
               sortable={true}
               width={500}
+            />
+            <Column
+              cellRenderer={deleteFormatter}
+              title="Delete"
+              key="delete"
+              dataKey="id"
+              width={300}
             />
           </BaseTable>
         </StyledDiv>

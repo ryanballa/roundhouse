@@ -40,7 +40,7 @@ const StyledButton = styledComponent('button', {
 });
 
 type ButtonProps = {
-  additionalClasses: string;
+  additionalClasses?: string;
   children: ReactNode | string;
   disabled?: boolean;
   icon?: 'add' | 'close' | 'delete' | 'print';
