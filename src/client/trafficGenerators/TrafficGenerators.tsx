@@ -1,7 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
@@ -9,6 +8,7 @@ import { styledComponent } from '../utils/styledComponent';
 import TabMenu from '../components/atoms/TabMenu';
 import { colors } from '../config/styles';
 import AddTrafficGenerator from './components/AddTrafficGenerator';
+import useTrafficGenerators from './trafficGenerators.hook';
 
 const StyledDiv = styledComponent('div', {
   '& .BaseTable__body': {
@@ -47,20 +47,8 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
   const [isAddTrafficGeneratorOpen, setIsAddTrafficGeneratorOpen] = useState(
     false,
   );
-  const [data, setData] = useState([{ id: '1', road: 'Test' }]);
-  const [isLoading, setIsLoading] = useState(false);
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
-
-  const fetchData = async () => {
-    setIsLoading(true);
-    const result = await axios('/api/v1/trafficGenerators');
-    setData(result.data);
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [data, errors, isLoading, setData] = useTrafficGenerators();
 
   const sortArrayOfObjects = (arr, key, order) => {
     return arr.sort((a, b) => {
@@ -103,8 +91,8 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
             handleModalClose={() => {
               setIsAddTrafficGeneratorOpen(false);
             }}
-            handleUpdate={() => {
-              fetchData();
+            handleUpdate={res => {
+              setData([...data, { ...res.data, ...res.values }]);
               setIsAddTrafficGeneratorOpen(false);
             }}
           />

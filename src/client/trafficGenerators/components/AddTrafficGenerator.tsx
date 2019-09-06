@@ -39,10 +39,15 @@ const customStyles = {
   },
 };
 
+type trafficGenerator = {
+  id: number;
+  type: string;
+};
+
 type AddTrafficGeneratorProps = {
   isOpen: boolean;
   handleModalClose: () => void;
-  handleUpdate: () => void;
+  handleUpdate: (trafficGenerator) => void;
 };
 
 const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
@@ -84,11 +89,11 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
               user_id: user.id,
             })
             .then(
-              /* istanbul ignore next */ () => {
+              /* istanbul ignore next */ res => {
                 /* istanbul ignore next */
                 toaster.success('Work Order Added');
                 setSubmitting(false);
-                handleUpdate();
+                handleUpdate({ ...res, values });
               },
             )
             .catch(err => {

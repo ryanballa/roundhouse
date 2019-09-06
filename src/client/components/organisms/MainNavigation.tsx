@@ -6,7 +6,7 @@ import { colors } from '../../config/styles';
 const StyledUL = styledComponent('ul', {
   '& a': {
     color: colors.links,
-    fontSize: '26px',
+    fontSize: '24px',
     padding: '10px',
     textDecoration: 'none',
   },
