@@ -1,11 +1,11 @@
 /* eslint-disable react/no-multi-comp */
 import React, { FunctionComponent, useState } from 'react';
 import { Dialog, toaster } from 'evergreen-ui';
-import axios from 'axios';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import Button from '../../components/atoms/Button';
 import useTrafficGenerators from '../trafficGenerators.hook';
+import api from '../../api';
 
 const StyledDiv = styledComponent('div', {
   '& button': {
@@ -59,16 +59,11 @@ const DeleteTrafficGenerator: FunctionComponent<
         title="Delete Traffic Generator"
         onCloseComplete={() => setIsDeleting(false)}
         onConfirm={() => {
-          axios
-            .delete(`/api/v1/trafficGenerators/${trafficGeneratorId}`)
-            .then(() => {
-              setIsDeleting(false);
-              toaster.success('Traffic Generator Deleted');
-              handleDelete(data);
-            })
-            .catch(error => {
-              console.log(error);
-            });
+          api.trafficGenerators.delete(trafficGeneratorId, () => {
+            setIsDeleting(false);
+            toaster.success('Traffic Generator Deleted');
+            handleDelete(data);
+          });
         }}
         confirmLabel="Delete"
       >

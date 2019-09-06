@@ -1,6 +1,5 @@
 /* eslint-disable react/no-multi-comp */
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import Input from '../../components/atoms/forms/Input';
@@ -10,6 +9,7 @@ import Button from '../../components/atoms/Button';
 import Select from '../../components/atoms/forms/Select';
 import ModalWindow from '../../components/organisms/ModalWindow';
 import { userState } from '../../UserProvider';
+import api from '../../api';
 
 const StyledFormDiv = styledComponent('div', {
   '& button': {
@@ -61,9 +61,10 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
 
   const fetchData = async () => {
     setIsLoading(true);
-    const result = await axios('/api/v1/destinations');
-    setData(result.data);
-    setIsLoading(false);
+    api.destinations.get(result => {
+      setData(result.data);
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
@@ -83,22 +84,11 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
         initialValues={{}}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
-          axios
-            .post('/api/v1/trafficGenerators/', {
-              ...values,
-              user_id: user.id,
-            })
-            .then(
-              /* istanbul ignore next */ res => {
-                /* istanbul ignore next */
-                toaster.success('Work Order Added');
-                setSubmitting(false);
-                handleUpdate({ ...res, values });
-              },
-            )
-            .catch(err => {
-              console.log(err);
-            });
+          api.trafficGenerators.add(user, res => {
+            toaster.success('Work Order Added');
+            setSubmitting(false);
+            handleUpdate({ ...res, values });
+          });
         }}
       >
         {({
