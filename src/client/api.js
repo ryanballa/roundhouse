@@ -13,7 +13,7 @@ const api = {
     },
   },
   trafficGenerators: {
-    add: (user, success, error) => {
+    add: (user, values, success, error) => {
       axios
         .post('/api/v1/trafficGenerators/', {
           ...values,

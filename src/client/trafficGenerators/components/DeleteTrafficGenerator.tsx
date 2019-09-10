@@ -5,7 +5,7 @@ import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import Button from '../../components/atoms/Button';
 import useTrafficGenerators from '../trafficGenerators.hook';
-import api from '../../api';
+import trafficGeneratorsService from '../../services/trafficGenerators.service';
 
 const StyledDiv = styledComponent('div', {
   '& button': {
@@ -59,10 +59,10 @@ const DeleteTrafficGenerator: FunctionComponent<
         title="Delete Traffic Generator"
         onCloseComplete={() => setIsDeleting(false)}
         onConfirm={() => {
-          api.trafficGenerators.delete(trafficGeneratorId, () => {
+          trafficGeneratorsService.delete(trafficGeneratorId).then(res => {
             setIsDeleting(false);
             toaster.success('Traffic Generator Deleted');
-            handleDelete(data);
+            handleDelete(res);
           });
         }}
         confirmLabel="Delete"

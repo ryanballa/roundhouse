@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import api from '../api';
+import trafficGeneratorsService from '../services/trafficGenerators.service';
 
 function useTrafficGenerators() {
   const [data, setData] = useState([]);
@@ -8,16 +8,15 @@ function useTrafficGenerators() {
   useEffect(() => {
     (() => {
       setIsLoading(true);
-      api.trafficGenerators.get(
-        res => {
+      trafficGeneratorsService
+        .get()
+        .then(res => {
           setIsLoading(false);
-          setData(res.data);
-        },
-        () => {
-          setIsLoading(false);
-          setError(true);
-        },
-      );
+          setData(res);
+        })
+        .catch(e => {
+          setError(e);
+        });
     })();
   }, []);
   return [data, error, isLoading, setData];

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
@@ -9,7 +9,8 @@ import TabMenu from '../components/atoms/TabMenu';
 import { colors } from '../config/styles';
 import AddTrafficGenerator from './components/AddTrafficGenerator';
 import DeleteTrafficGenerator from './components/DeleteTrafficGenerator';
-import useTrafficGenerators from './trafficGenerators.hook';
+import { usePromise } from '../utils/promise.hook';
+import trafficGeneratorsService from '../services/trafficGenerators.service';
 
 const StyledDiv = styledComponent('div', {
   '& .BaseTable__body': {
@@ -49,7 +50,12 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
     false,
   );
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
-  const [data, errors, isLoading, setData] = useTrafficGenerators();
+  // const [data, errors, isLoading, setData] = useTrafficGenerators();
+  const [data, error, isLoading, setData] = usePromise(
+    trafficGeneratorsService.get(),
+    [],
+    [],
+  );
 
   const sortArrayOfObjects = (arr, key, order) => {
     return arr.sort((a, b) => {
@@ -71,7 +77,11 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
       <DeleteTrafficGenerator
         trafficGeneratorId={cellData}
         handleDelete={res => {
-          setData(res.filter(tg => tg.id !== cellData));
+          // TODO: Delete an item after it's deleted
+          // trafficGeneratorsService.get(res => {
+          //   console.log(res);
+          //   setData(res);
+          // });
         }}
       />
     );

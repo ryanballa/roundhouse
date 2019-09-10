@@ -10,6 +10,7 @@ import Select from '../../components/atoms/forms/Select';
 import ModalWindow from '../../components/organisms/ModalWindow';
 import { userState } from '../../UserProvider';
 import api from '../../api';
+import trafficGeneratorsService from '../../services/trafficGenerators.service';
 
 const StyledFormDiv = styledComponent('div', {
   '& button': {
@@ -84,10 +85,10 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
         initialValues={{}}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
-          api.trafficGenerators.add(user, res => {
-            toaster.success('Work Order Added');
-            setSubmitting(false);
-            handleUpdate({ ...res, values });
+          trafficGeneratorsService.add(user, values).then(res => {
+            toaster.success('Traffic Generator Added');
+            Object.assign(values, res);
+            handleUpdate({ values });
           });
         }}
       >

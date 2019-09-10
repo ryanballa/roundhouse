@@ -11,6 +11,7 @@ import AddWorkItem from './components/AddWorkItem';
 import DeleteWorkItem from './components/DeleteWorkItem';
 import Button from '../components/atoms/Button';
 import DeleteWorkOrder from './components/DeleteWorkOrder';
+import shortid from 'shortid';
 
 const HeaderToolBar = styledComponent('div', {
   '& .butonWrapper': {
@@ -50,10 +51,12 @@ const WorkOrdersView = ({ history, match }) => {
     workItems: [],
     destinations: [],
     traffic: [],
+    trafficGenerators: [],
     workOrdersResults: [{}],
   });
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = userState();
+  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
+  const [addingWorkItem, setAddingWorkItem] = useState(false);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -103,9 +106,27 @@ const WorkOrdersView = ({ history, match }) => {
           </Button>
         </div>
       </HeaderToolBar>
+      <AddTask
+        isOpen={isAddTaskOpen}
+        handleUpdate={() => {
+          setIsAddTaskOpen(false);
+        }}
+        handleModalClose={() => {
+          setIsAddTaskOpen(false);
+        }}
+        handleUpdate={() => {
+          fetchData();
+        }}
+        railcars={workOrder.railcars}
+        trafficGenerators={workOrder.trafficGenerators.filter(
+          tg => tg.destination_id === addingWorkItem.destinationid,
+        )}
+        tasks={workOrder.tasks}
+        workItemId={addingWorkItem.id}
+      />
       <StyledUl>
         {workOrder.workItems.map(workItem => (
-          <li key={workItem.id}>
+          <li key={shortid.generate()}>
             <div className="destinationWrapper">
               <h2>{workItem.destinationname}</h2>
               {!workItem.tasks.length && (
@@ -117,24 +138,23 @@ const WorkOrdersView = ({ history, match }) => {
                 />
               )}
             </div>
-            <AddTask
-              handleUpdate={() => {
-                fetchData();
+            <Button
+              icon="add"
+              onClick={() => {
+                setAddingWorkItem(workItem);
+                setIsAddTaskOpen(true);
               }}
-              railcars={workOrder.railcars}
-              trafficGenerators={workOrder.trafficGenerators.filter(
-                tg => tg.destination_id === workItem.destinationid,
-              )}
-              tasks={workOrder.tasks}
-              workItemId={workItem.id}
-            />
+            >
+              Add Task
+            </Button>
             <p>Scheduled work at {workItem.destinationname}</p>
             {!workItem.tasks.length && <small>No Scheduled Work</small>}
             <ul>
               {workItem.tasks.map(task => (
-                <li key={task.id} className="task">
+                <li key={shortid.generate()} className="task">
                   [ ] {task.taskstype}{' '}
-                  {task.taskstype === 'pick' ? 'up' : 'off'} {task.road}{' '}
+                  {task.taskstype === 'pick' ? 'up' : 'off'}{' '}
+                  {task.is_passenger_stop ? 'passengers' : ''} {task.road}{' '}
                   {task.car_number} {task.type} {task.length}&#39; {task.color}{' '}
                   from {task.name}
                   <DeleteTask

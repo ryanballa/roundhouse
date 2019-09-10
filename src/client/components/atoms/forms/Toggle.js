@@ -10,7 +10,7 @@ const StyledDiv = styledComponent('div', {
     fontSize: '18px',
     fontWeight: '800',
     marginBottom: '10px',
-    width: '300px',
+    width: 'auto',
   },
   '& .tray': {
     background: colors.form.stroke,
@@ -51,6 +51,7 @@ const StyledDiv = styledComponent('div', {
 });
 
 const Toggle = ({ field: { name, value, onChange, onBlur }, id, label }) => {
+  console.log(value);
   return (
     <StyledDiv>
       <div className="psudeoLabel">{label}</div>

@@ -1,13 +1,16 @@
 /* eslint-disable react/no-multi-comp */
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
-import { Formik } from 'formik';
+import { Field, Formik } from 'formik';
+import Checkbox from '../../components/atoms/forms/Checkbox';
 import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
+import Toggle from '../../components/atoms/forms/Toggle';
 import { colors } from '../../config/styles';
 import { styledComponent } from '../../utils/styledComponent';
 import Button from '../../components/atoms/Button';
+import ModalWindow from '../../components/organisms/ModalWindow';
 
 const StyledDiv = styledComponent('div', {
   '& button': {
@@ -61,6 +64,8 @@ type TrafficGeneratorType = {
 
 type AddTaskProps = {
   handleUpdate: () => void;
+  handleModalClose: () => void;
+  isOpen: boolean;
   railcars: RailCarType[];
   tasks: TasksType[];
   trafficGenerators: TrafficGeneratorType[];
@@ -73,6 +78,8 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
   trafficGenerators,
   tasks,
   workItemId,
+  isOpen,
+  handleModalClose,
 }) => {
   const filteredRailcars = (
     tasksVals: TasksType,
@@ -97,93 +104,125 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
   };
 
   return (
-    <StyledDiv>
-      <Formik
-        initialValues={{}}
-        onSubmit={(values, { setSubmitting }) => {
-          setSubmitting(false);
-          axios
-            .post('/api/v1/tasks/', {
-              ...values,
-              work_item_id: workItemId,
-            })
-            .then(
-              /* istanbul ignore next */ () => {
-                /* istanbul ignore next */
-                handleUpdate();
-                toaster.success('Task Added');
-                setSubmitting(false);
-              },
-            )
-            .catch(e => {
-              console.log(e);
-            });
-        }}
-      >
-        {({
-          errors,
-          touched,
-          handleSubmit,
-          isSubmitting,
-          setFieldValue,
-          values,
-        }) => (
-          <form data-testid="taskAdd-form" onSubmit={handleSubmit}>
-            <ul>
-              <li>
-                <Select label="Type" id="type" name="type">
-                  <option value="">Select One</option>
-                  <option value="drop">Drop</option>
-                  <option value="pick">Pick</option>
-                </Select>
-              </li>
-              <li>
-                <Select label="Railcar" id="railcar_id" name="railcar_id">
-                  <option value="">Select Railcar</option>
-                  {filteredRailcars(tasks, railcars).map(railcar => (
-                    <option key={railcar.id} value={railcar.id}>
-                      {railcar.road}
-                    </option>
-                  ))}
-                </Select>
-              </li>
-              <li>
-                <Select
-                  label="Traffic Generator"
-                  id="traffic_generator_id"
-                  name="traffic_generator_id"
-                >
-                  <option value="">Select Traffic Generator</option>
-                  {trafficGenerators.map(tg => (
-                    <option key={tg.id} value={tg.id}>
-                      {tg.name}
-                    </option>
-                  ))}
-                </Select>
-              </li>
-              <li data-testid="weight">
-                <Input
-                  label="Weight"
-                  id="weight"
-                  type="text"
-                  name="weight"
-                  placeholder=""
-                />
-              </li>
-              <li>
-                <Button
-                  data-testid="taskAdd-submit"
-                  disabled={isSubmitting}
-                  icon="add"
-                >
-                  Add
-                </Button>
-              </li>
-            </ul>
-          </form>
-        )}
-      </Formik>
-    </StyledDiv>
+    <ModalWindow
+      isModalOpen={isOpen}
+      handleModalClose={() => {
+        handleModalClose();
+      }}
+      title="Add Task"
+    >
+      <StyledDiv>
+        <Formik
+          initialValues={{
+            is_passenger_stop: false,
+            traffic_generator_id: '',
+            type: 'drop',
+            weight: 100,
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            setSubmitting(false);
+            axios
+              .post('/api/v1/tasks/', {
+                ...values,
+                work_item_id: workItemId,
+              })
+              .then(
+                /* istanbul ignore next */ () => {
+                  /* istanbul ignore next */
+                  handleUpdate();
+                  toaster.success('Task Added');
+                  setSubmitting(false);
+                },
+              )
+              .catch(e => {
+                console.log(e);
+              });
+          }}
+        >
+          {({
+            errors,
+            touched,
+            handleSubmit,
+            isSubmitting,
+            setFieldValue,
+            values,
+          }) => {
+            return (
+              <form data-testid="taskAdd-form" onSubmit={handleSubmit}>
+                <ul>
+                  <li data-testid="is_passenger_stop">
+                    <Field
+                      component={Checkbox}
+                      name="is_passenger_stop"
+                      id="is_passenger_stop"
+                      label="Passenger Stop"
+                    />
+                    {/* <Field
+                      label="Passenger Stop"
+                      id="is_passenger_stop"
+                      name="is_passenger_stop"
+                      component={Toggle}
+                      setFieldValue={setFieldValue}
+                    /> */}
+                  </li>
+                  <li>
+                    <Select label="Type" id="type" name="type">
+                      <option value="">Select One</option>
+                      <option value="drop">Drop</option>
+                      <option value="pick">Pick</option>
+                    </Select>
+                  </li>
+                  <li>
+                    {!values.is_passenger_stop && (
+                      <Select label="Railcar" id="railcar_id" name="railcar_id">
+                        <option value="">Select Railcar</option>
+                        {filteredRailcars(tasks, railcars).map(railcar => (
+                          <option key={railcar.id} value={railcar.id}>
+                            {railcar.road}
+                          </option>
+                        ))}
+                      </Select>
+                    )}
+                  </li>
+                  <li>
+                    <Select
+                      label="Traffic Generator"
+                      id="traffic_generator_id"
+                      name="traffic_generator_id"
+                    >
+                      <option value="">Select Traffic Generator</option>
+                      {trafficGenerators.map(tg => (
+                        <option key={tg.id} value={tg.id}>
+                          {tg.name}
+                        </option>
+                      ))}
+                    </Select>
+                  </li>
+                  <li data-testid="weight">
+                    <Input
+                      label="Weight"
+                      id="weight"
+                      type="text"
+                      name="weight"
+                      placeholder=""
+                    />
+                  </li>
+                  <li>
+                    <Button
+                      data-testid="taskAdd-submit"
+                      disabled={isSubmitting}
+                      icon="add"
+                    >
+                      Add
+                    </Button>
+                  </li>
+                </ul>
+              </form>
+            );
+          }}
+        </Formik>
+      </StyledDiv>
+    </ModalWindow>
   );
 };
 
