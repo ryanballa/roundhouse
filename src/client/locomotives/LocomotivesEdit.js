@@ -128,7 +128,7 @@ LocomotivesEdit.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   user: PropTypes.shape({
     id: PropTypes.number,
-  }),
+  }).isRequired,
 };
 
 LocomotivesEdit.defaultProps = {

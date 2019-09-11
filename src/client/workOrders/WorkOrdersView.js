@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import shortid from 'shortid';
 import { AddButton } from '../components/atoms/AddButton';
 import Breadcrumb from '../components/atoms/Breadcrumb';
 import SingleColumn from '../components/layout/SingleColumn';
@@ -11,7 +12,6 @@ import AddWorkItem from './components/AddWorkItem';
 import DeleteWorkItem from './components/DeleteWorkItem';
 import Button from '../components/atoms/Button';
 import DeleteWorkOrder from './components/DeleteWorkOrder';
-import shortid from 'shortid';
 
 const HeaderToolBar = styledComponent('div', {
   '& .butonWrapper': {
@@ -70,6 +70,7 @@ const WorkOrdersView = ({ history, match }) => {
           history.push('/404');
         }
         setWorkOrder(workOrderRes.data);
+        setIsLoading(false);
       })
       .catch(e => {
         console.log(e);
@@ -82,118 +83,112 @@ const WorkOrdersView = ({ history, match }) => {
 
   return (
     <SingleColumn history={history}>
-      <Breadcrumb
-        items={[
-          { link: '/work-orders', text: 'Work Orders' },
-          { text: workOrder.workOrdersResults[0].name },
-        ]}
-      />
-      <HeaderToolBar>
-        <h1>{workOrder.workOrdersResults[0].name}</h1>
-        <div className="butonWrapper">
-          {!workOrder.workItems.length && (
-            <DeleteWorkOrder
-              workOrderId={workOrder.workOrdersResults[0].id}
-              handleDelete={() => {
-                history.push('/work-orders');
-              }}
-            />
-          )}
-          <Button
-            additionalClasses="printButton"
-            icon="print"
-            onClick={() => {
-              window.print();
-            }}
-          >
-            Print
-          </Button>
-        </div>
-      </HeaderToolBar>
-      <AddTask
-        isOpen={isAddTaskOpen}
-        handleUpdate={() => {
-          setIsAddTaskOpen(false);
-        }}
-        handleModalClose={() => {
-          setIsAddTaskOpen(false);
-        }}
-        handleUpdate={() => {
-          fetchData();
-        }}
-        railcars={workOrder.railcars}
-        trafficGenerators={workOrder.trafficGenerators.filter(
-          tg => tg.destination_id === addingWorkItem.destinationid,
-        )}
-        tasks={workOrder.tasks}
-        workItemId={addingWorkItem.id}
-      />
-      <StyledUl>
-        {workOrder.workItems.map(workItem => (
-          <li key={shortid.generate()}>
-            <div className="destinationWrapper">
-              <h2>{workItem.destinationname}</h2>
-              {!workItem.tasks.length && (
-                <DeleteWorkItem
-                  workItemId={workItem.id}
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && (
+        <div>
+          <Breadcrumb
+            items={[
+              { link: '/work-orders', text: 'Work Orders' },
+              { text: workOrder.workOrdersResults[0].name },
+            ]}
+          />
+          <HeaderToolBar>
+            <h1>{workOrder.workOrdersResults[0].name}</h1>
+            <div className="butonWrapper">
+              {!workOrder.workItems.length && (
+                <DeleteWorkOrder
+                  workOrderId={workOrder.workOrdersResults[0].id}
                   handleDelete={() => {
-                    fetchData();
+                    history.push('/work-orders');
                   }}
                 />
               )}
-            </div>
-            <div className="addButtonWrapper">
-              <AddButton
+              <Button
+                additionalClasses="printButton"
+                icon="print"
                 onClick={() => {
-                  setAddingWorkItem(workItem);
-                  setIsAddTaskOpen(true);
+                  window.print();
                 }}
               >
-                Add Task
-              </AddButton>
+                Print
+              </Button>
             </div>
-            {/* <Button
-              icon="add"
-              onClick={() => {
-                setAddingWorkItem(workItem);
-                setIsAddTaskOpen(true);
-              }}
-            >
-              Add Task
-            </Button> */}
-            <p>Scheduled work at {workItem.destinationname}</p>
-            {!workItem.tasks.length && <small>No Scheduled Work</small>}
-            <ul>
-              {workItem.tasks.map(task => (
-                <li key={shortid.generate()} className="task">
-                  [ ] {task.taskstype}{' '}
-                  {task.taskstype === 'pick' ? 'up' : 'off'}{' '}
-                  {task.is_passenger_stop ? 'passengers' : ''} {task.road}{' '}
-                  {task.car_number} {task.type} {task.length}&#39; {task.color}{' '}
-                  from {task.name}
-                  <DeleteTask
-                    taskId={task.id}
-                    handleDelete={() => {
-                      fetchData();
+          </HeaderToolBar>
+          <AddTask
+            isOpen={isAddTaskOpen}
+            handleUpdate={() => {
+              fetchData();
+              setIsAddTaskOpen(false);
+            }}
+            handleModalClose={() => {
+              setIsAddTaskOpen(false);
+            }}
+            railcars={workOrder.railcars}
+            trafficGenerators={workOrder.trafficGenerators.filter(
+              tg => tg.destination_id === addingWorkItem.destinationid,
+            )}
+            tasks={workOrder.tasks}
+            workItemId={addingWorkItem.id}
+          />
+          <StyledUl>
+            {workOrder.workItems.map(workItem => (
+              <li key={shortid.generate()}>
+                <div className="destinationWrapper">
+                  <h2>{workItem.destinationname}</h2>
+                  {!workItem.tasks.length && (
+                    <DeleteWorkItem
+                      workItemId={workItem.id}
+                      handleDelete={() => {
+                        fetchData();
+                      }}
+                    />
+                  )}
+                </div>
+                <div className="addButtonWrapper">
+                  <AddButton
+                    onClick={() => {
+                      setAddingWorkItem(workItem);
+                      setIsAddTaskOpen(true);
                     }}
-                  />
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </StyledUl>
-      <StyledDestWrapper>
-        <h3>Add Destination</h3>
-      </StyledDestWrapper>
-      <AddWorkItem
-        destinations={workOrder.destinations}
-        handleUpdate={() => {
-          fetchData();
-        }}
-        order={workOrder.workItems.length}
-        workOrderId={workOrder.workOrdersResults[0].id}
-      />
+                  >
+                    Add Task
+                  </AddButton>
+                </div>
+                <p>Scheduled work at {workItem.destinationname}</p>
+                {!workItem.tasks.length && <small>No Scheduled Work</small>}
+                <ul>
+                  {workItem.tasks.map(task => (
+                    <li key={shortid.generate()} className="task">
+                      [ ] {task.taskstype}{' '}
+                      {task.taskstype === 'pick' ? 'up' : 'off'}{' '}
+                      {task.is_passenger_stop ? 'passengers' : ''} {task.road}{' '}
+                      {task.car_number} {task.type} {task.length}&#39;{' '}
+                      {task.color} from {task.name}
+                      <DeleteTask
+                        taskId={task.id}
+                        handleDelete={() => {
+                          fetchData();
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </StyledUl>
+          <StyledDestWrapper>
+            <h3>Add Destination</h3>
+          </StyledDestWrapper>
+          <AddWorkItem
+            destinations={workOrder.destinations}
+            handleUpdate={() => {
+              fetchData();
+            }}
+            order={workOrder.workItems.length}
+            workOrderId={workOrder.workOrdersResults[0].id}
+          />
+        </div>
+      )}
     </SingleColumn>
   );
 };

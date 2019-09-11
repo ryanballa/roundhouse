@@ -51,7 +51,6 @@ const StyledDiv = styledComponent('div', {
 });
 
 const Toggle = ({ field: { name, value, onChange, onBlur }, id, label }) => {
-  console.log(value);
   return (
     <StyledDiv>
       <div className="psudeoLabel">{label}</div>
@@ -82,11 +81,6 @@ Toggle.propTypes = {
   }).isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  setFieldValue: PropTypes.func,
-};
-
-Toggle.defaultProps = {
-  setFieldValue: () => {},
 };
 
 export default Toggle;

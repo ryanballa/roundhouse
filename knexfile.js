@@ -18,16 +18,16 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      user:     'username',
-      password: 'password'
+      user: 'username',
+      password: 'password',
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
-      tableName: 'knex_migrations'
-    }
+      tableName: 'knex_migrations',
+    },
   },
 
   production: {
@@ -36,29 +36,28 @@ module.exports = {
       port: process.env.POSTGRES_PORT,
       host: process.env.POSTGRES_HOST,
       database: process.env.POSTGRES_DB,
-      user:     process.env.POSTGRES_USER,
+      user: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
       directory: './db/migrations',
-      tableName: 'knex_migrations'
-    }
+      tableName: 'knex_migrations',
+    },
   },
 
   test: {
     client: 'pg',
     connection: 'postgres://localhost/testroundhouse',
     migrations: {
-      directory: './db/migrations'
+      directory: './db/migrations',
     },
     seeds: {
-      directory: './db/seeds'
+      directory: './db/seeds',
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
   },
-
 };

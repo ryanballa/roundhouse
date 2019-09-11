@@ -61,6 +61,19 @@ function Railcars({ history }) {
     <Link to={`railcars/${rowData.id}`}>{rowData.road}</Link>
   );
 
+  linkFormatter.propTypes = {
+    rowData: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        road: PropTypes.string,
+      }),
+    ),
+  };
+
+  linkFormatter.defaultProps = {
+    rowData: [],
+  };
+
   const sortArrayOfObjects = (arr, key, order) => {
     return arr.sort((a, b) => {
       if (order === 'asc') {

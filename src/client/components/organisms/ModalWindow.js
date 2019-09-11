@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import Button from '../atoms/Button';
 import { styledComponent } from '../../utils/styledComponent';
-import { colors, fontConfig, spacing } from '../../config/styles';
+import { colors, fontConfig } from '../../config/styles';
 
 Modal.setAppElement('#modalElement');
 
@@ -82,12 +82,16 @@ ModalWindow.propTypes = {
   handleModalClose: PropTypes.func,
   isModalOpen: PropTypes.bool,
   showBottomClose: PropTypes.bool,
+  style: PropTypes.shape({}),
+  title: PropTypes.string,
 };
 
 ModalWindow.defaultProps = {
   handleModalClose: () => {},
   isModalOpen: false,
   showBottomClose: false,
+  style: {},
+  title: '',
 };
 
 export default ModalWindow;

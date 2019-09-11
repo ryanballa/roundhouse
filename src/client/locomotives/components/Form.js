@@ -184,6 +184,7 @@ Form.propTypes = {
   }).isRequired,
   values: PropTypes.shape({
     required: PropTypes.bool,
+    thumbnail: PropTypes.string,
   }),
 };
 

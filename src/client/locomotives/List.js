@@ -5,17 +5,16 @@ import moment from 'moment';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import shortid from 'shortid';
 import { PieChart } from 'react-chartkick';
 import 'chart.js';
 import BaseTable, { Column } from 'react-base-table';
+import { colors } from '../config/styles';
 import { AddButton } from '../components/atoms/AddButton';
 import TabMenu from '../components/atoms/TabMenu';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
-import { errorHandler } from '../utils/errorHandler';
 import 'react-base-table/styles.css';
-import { colors } from '../config/styles';
-import { filter } from 'rxjs/operators';
 
 const StyledDiv = styledComponent('div', {
   '& .BaseTable__body': {
@@ -90,17 +89,17 @@ function List({ history, location }) {
     ];
   };
 
-  const getListOfRoads = data => {
+  const getListOfRoads = roadData => {
     const roads = [];
-    data.forEach(locomotive => {
+    roadData.forEach(locomotive => {
       roads.push(locomotive.road);
     });
     const uniqueSet = new Set(roads);
     return [...uniqueSet];
   };
 
-  const getTotalValue = data => {
-    const values = data.map(value => value.value);
+  const getTotalValue = totalValues => {
+    const values = totalValues.map(value => value.value);
 
     const reducer = (accumulator, currentValue) =>
       Math.round(accumulator) + Math.round(currentValue);
@@ -139,6 +138,17 @@ function List({ history, location }) {
   const linkFormatter = ({ rowData }) => (
     <Link to={`locomotives/${rowData.id}`}>{rowData.road}</Link>
   );
+
+  linkFormatter.propTypes = {
+    rowData: PropTypes.shape({
+      id: PropTypes.string,
+      road: PropTypes.string,
+    }),
+  };
+
+  linkFormatter.defaultProps = {
+    rowData: {},
+  };
 
   const sortArrayOfObjects = (arr, key, order) => {
     return arr.sort((a, b) => {
@@ -213,7 +223,7 @@ function List({ history, location }) {
               <h2>Filter</h2>
               <ul>
                 {data.roads.map((road, i) => (
-                  <li key={i}>
+                  <li key={shortid.generate()}>
                     <input
                       data-testid={road}
                       onChange={e => {

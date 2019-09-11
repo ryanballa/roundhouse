@@ -62,8 +62,8 @@ function Add({ history }) {
       />
       <h1>Add Locomotive</h1>
       <Fragment>
-        {!user && <Loader />}
-        {user && (
+        {!user && isLoading && <Loader />}
+        {user && !isLoading && (
           <Pane>
             <Formik
               initialValues={{

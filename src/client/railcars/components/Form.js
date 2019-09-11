@@ -138,14 +138,6 @@ const Form = ({
               setFieldValue={setFieldValue}
               values={values || []}
             />
-            {/* <FormField label="purchased_on">
-              <Field
-                id="purchased_on"
-                type="date"
-                name="purchased_on"
-                placeholder=""
-              />
-            </FormField> */}
           </li>
           <li data-testid="is_operational">
             <Field
@@ -198,6 +190,7 @@ Form.propTypes = {
   }).isRequired,
   values: PropTypes.shape({
     required: PropTypes.bool,
+    thumbnail: PropTypes.string,
   }),
 };
 

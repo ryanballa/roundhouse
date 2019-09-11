@@ -105,6 +105,7 @@
     "babel-preset-es2017": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "eslint-plugin-jest": "^22.17.0",
     "parcel": "^2.0.0-alpha.1.1"
   },
   "engines": {

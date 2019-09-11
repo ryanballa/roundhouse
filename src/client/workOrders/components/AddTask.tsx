@@ -3,7 +3,6 @@ import React, { FunctionComponent, useState } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Field, Formik } from 'formik';
-import Checkbox from '../../components/atoms/forms/Checkbox';
 import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
 import Toggle from '../../components/atoms/forms/Toggle';
@@ -153,12 +152,6 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
                       component={Toggle}
                       setFieldValue={setFieldValue}
                     />
-                    {/* <Field
-                      component={Checkbox}
-                      name="is_passenger_stop"
-                      id="is_passenger_stop"
-                      label="Passenger Stop"
-                    /> */}
                   </li>
                   <li>
                     <Select label="Type" id="type" name="type">
