@@ -97,6 +97,7 @@ railcars.put('/:railcarId', authHelpers.loginRequired, (request, response) => {
         response.status(500).json({ error });
       },
     );
+  return response.status(500);
 });
 
 railcars.delete(
@@ -122,6 +123,7 @@ railcars.delete(
               return response.status(500).json({ error });
             },
           );
+        return response.status(500);
       })
       .catch(
         /* istanbul ignore next */ error => {

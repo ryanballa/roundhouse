@@ -1,4 +1,4 @@
-export function errorHandler(history, message, status) {
+export default function errorHandler(history, message, status) {
   if (status === 401) {
     history.push('/login');
   } else {

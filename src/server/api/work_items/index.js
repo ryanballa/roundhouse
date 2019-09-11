@@ -58,9 +58,9 @@ work_items.post('/', (request, response) => {
 
 work_items.put('/:workItemId', (request, response) => {
   const id = request.params.workItemId;
-  // if (request.user.id !== request.body.user_id) {
-  //   response.status(403).json({});
-  // }
+  if (request.user.id !== request.body.user_id) {
+    response.status(403).json({});
+  }
   database('work_items')
     .where('id', id)
     .update(request.body)
@@ -79,10 +79,7 @@ work_items.delete(
     const id = request.params.workItemId;
     database('work_items')
       .where('id', id)
-      .then(workItem => {
-        // if (request.user.id !== workOrder.user_id) {
-        //   return response.status(403).json({});
-        // }
+      .then(() => {
         database('work_items')
           .where('id', id)
           .del()

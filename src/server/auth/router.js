@@ -14,7 +14,7 @@ router.get('/', authHelpers.loginRequired, (req, res) => {
 });
 
 router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('local', (err, user) => {
     if (err) {
       handleResponse(res, 500, 'error');
     }
@@ -22,8 +22,8 @@ router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
       handleResponse(res, 404, 'User not found');
     }
     if (user) {
-      req.logIn(user, err => {
-        if (err) {
+      req.logIn(user, loginErr => {
+        if (loginErr) {
           handleResponse(res, 500, 'error');
         }
         handleResponse(res, 200, user);
@@ -35,19 +35,19 @@ router.post('/login', authHelpers.loginRedirect, (req, res, next) => {
 router.post('/register', authHelpers.loginRedirect, (req, res, next) => {
   return authHelpers
     .createUser(req, res)
-    .then(response => {
-      passport.authenticate('local', (err, user, info) => {
+    .then(() => {
+      passport.authenticate('local', (err, user) => {
         if (user) {
           handleResponse(res, 200, 'success');
         }
       })(req, res, next);
     })
-    .catch(err => {
+    .catch(() => {
       handleResponse(res, 500, 'error');
     });
 });
 
-router.get('/logout', authHelpers.loginRequired, (req, res, next) => {
+router.get('/logout', authHelpers.loginRequired, (req, res) => {
   req.logout();
   handleResponse(res, 200, 'success');
 });

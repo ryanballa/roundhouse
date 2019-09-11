@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
 
 export function usePromise(promiseOrFunction, defaultValue) {
@@ -22,10 +23,11 @@ export function usePromise(promiseOrFunction, defaultValue) {
       )
       .catch(error =>
         isSubscribed
-          ? setState({ value: defaultValue, error: error, isPending: false })
+          ? setState({ value: defaultValue, error, isPending: false })
           : null,
       );
 
+    // eslint-disable-next-line no-return-assign
     return () => (isSubscribed = false);
   }, [promiseOrFunction, defaultValue]);
 

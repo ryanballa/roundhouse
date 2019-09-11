@@ -32,6 +32,15 @@ const StyledDiv = styledComponent('div', {
   paddingTop: '5px',
 });
 
+const customStyles = {
+  content: {
+    left: '10%',
+    right: '10%',
+    maxHeight: '300px',
+    maxWidth: '80%',
+  },
+};
+
 type RailCarType = {
   id: number;
   road: number;
@@ -103,6 +112,7 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
       handleModalClose={() => {
         handleModalClose();
       }}
+      style={customStyles}
       title="Add Task"
     >
       <StyledDiv>

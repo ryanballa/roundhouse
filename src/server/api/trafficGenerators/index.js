@@ -116,6 +116,7 @@ trafficGenerators.delete(
     const id = request.params.trafficGeneratorId;
     database('traffic_generators')
       .where('id', id)
+      // eslint-disable-next-line consistent-return
       .then(trafficGenerator => {
         if (request.user.id !== trafficGenerator[0].user_id) {
           return response.status(403).json({});

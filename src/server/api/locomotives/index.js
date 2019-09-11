@@ -102,7 +102,7 @@ locomotives.get(
             if (request.user.id !== locomotive[0].user_id) {
               return response.status(403).json({});
             }
-            response.status(200).json(result);
+            return response.status(200).json(result);
           })
           .catch(error => {
             response.status(500).json({ error });
@@ -210,6 +210,7 @@ locomotives.delete(
               return response.status(500).json({ errorRes });
             },
           );
+        return response.status(500);
       });
   },
 );

@@ -5,6 +5,7 @@ const init = require('./passport');
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../../../knexfile')[environment];
+// eslint-disable-next-line import/order
 const database = require('knex')(configuration);
 
 const options = {};
@@ -21,9 +22,8 @@ passport.use(
         if (!user) return done(null, false);
         if (!authHelpers.comparePass(password, user.password)) {
           return done(null, false);
-        } else {
-          return done(null, user);
         }
+        return done(null, user);
       })
       .catch(err => {
         return done(err);

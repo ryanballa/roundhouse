@@ -86,6 +86,7 @@ tasks.delete('/:taskId', authHelpers.loginRequired, (request, response) => {
   const id = request.params.taskId;
   database('tasks')
     .where('id', id)
+    // eslint-disable-next-line consistent-return
     .then(task => {
       if (request.user.id !== task[0].user_id) {
         return response.status(403).json({});

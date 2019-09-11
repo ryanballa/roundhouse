@@ -41,41 +41,44 @@ function RailcarsAdd({ history }) {
       <Fragment>
         <Pane>
           <h1>Add Railcar</h1>
-          <Formik
-            initialValues={{
-              car_number: data[0].car_number || '',
-              is_dcc: data[0].is_dcc,
-              is_operational: data[0].is_operational,
-              location: data[0].location,
-              road: data[0].road,
-              user_id: user ? user.id : '',
-            }}
-            validationSchema={EditSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              axios
-                .post('/api/v1/railcars/', values)
-                .then(
-                  /* istanbul ignore next */ () => {
-                    /* istanbul ignore next */
-                    toaster.success('Railcar Added');
-                    setSubmitting(false);
-                    history.push('/railcars');
-                  },
-                )
-                .catch(() => {});
-            }}
-          >
-            {({ errors, touched, handleSubmit, setFieldValue, values }) => (
-              <Form
-                errors={errors}
-                touched={touched}
-                handleSubmit={handleSubmit}
-                setFieldValue={setFieldValue}
-                photos={photos}
-                values={values}
-              />
-            )}
-          </Formik>
+          {isLoading && <p>Loading....</p>}
+          {!isLoading && (
+            <Formik
+              initialValues={{
+                car_number: data[0].car_number || '',
+                is_dcc: data[0].is_dcc,
+                is_operational: data[0].is_operational,
+                location: data[0].location,
+                road: data[0].road,
+                user_id: user ? user.id : '',
+              }}
+              validationSchema={EditSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                axios
+                  .post('/api/v1/railcars/', values)
+                  .then(
+                    /* istanbul ignore next */ () => {
+                      /* istanbul ignore next */
+                      toaster.success('Railcar Added');
+                      setSubmitting(false);
+                      history.push('/railcars');
+                    },
+                  )
+                  .catch(() => {});
+              }}
+            >
+              {({ errors, touched, handleSubmit, setFieldValue, values }) => (
+                <Form
+                  errors={errors}
+                  touched={touched}
+                  handleSubmit={handleSubmit}
+                  setFieldValue={setFieldValue}
+                  photos={photos}
+                  values={values}
+                />
+              )}
+            </Formik>
+          )}
         </Pane>
       </Fragment>
     </SingleColumn>

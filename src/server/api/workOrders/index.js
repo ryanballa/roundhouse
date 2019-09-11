@@ -179,9 +179,9 @@ workOrders.delete(
     database('work_orders')
       .where('id', id)
       .then(workOrder => {
-        // if (request.user.id !== workOrder.user_id) {
-        //   return response.status(403).json({});
-        // }
+        if (request.user.id !== workOrder[0].user_id) {
+          return response.status(403).json({});
+        }
         database('work_orders')
           .where('id', id)
           .del()
@@ -194,6 +194,7 @@ workOrders.delete(
               return response.status(500).json({ error });
             },
           );
+        return response.status(500);
       })
       .catch(
         /* istanbul ignore next */ error => {
