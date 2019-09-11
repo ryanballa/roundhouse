@@ -31,6 +31,7 @@ const ModalWindow = ({
   children,
   isModalOpen,
   handleModalClose,
+  showBottomClose,
   style,
   title,
 }) => {
@@ -58,18 +59,20 @@ const ModalWindow = ({
         </Button>
       </Toolbar>
       <BodyContent>{children}</BodyContent>
-      <Footer>
-        <Button
-          icon="close"
-          type="button"
-          onClick={() => {
-            handleModalClose();
-          }}
-          variant="quiet"
-        >
-          Close
-        </Button>
-      </Footer>
+      {showBottomClose && (
+        <Footer>
+          <Button
+            icon="close"
+            type="button"
+            onClick={() => {
+              handleModalClose();
+            }}
+            variant="quiet"
+          >
+            Close
+          </Button>
+        </Footer>
+      )}
     </Modal>
   );
 };
@@ -78,11 +81,13 @@ ModalWindow.propTypes = {
   children: PropTypes.node.isRequired,
   handleModalClose: PropTypes.func,
   isModalOpen: PropTypes.bool,
+  showBottomClose: PropTypes.bool,
 };
 
 ModalWindow.defaultProps = {
   handleModalClose: () => {},
   isModalOpen: false,
+  showBottomClose: false,
 };
 
 export default ModalWindow;

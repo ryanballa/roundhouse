@@ -4,8 +4,9 @@ import { Dialog, toaster } from 'evergreen-ui';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
 import Button from '../../components/atoms/Button';
-import useTrafficGenerators from '../trafficGenerators.hook';
+import { usePromise } from '../../utils/promise.hook';
 import trafficGeneratorsService from '../../services/trafficGenerators.service';
+import { read } from 'fs';
 
 const StyledDiv = styledComponent('div', {
   '& button': {
@@ -49,7 +50,7 @@ const DeleteTrafficGenerator: FunctionComponent<
   DeleteTrafficGeneratorProps
 > = ({ trafficGeneratorId, handleDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
-  const [data] = useTrafficGenerators();
+  const [data] = usePromise(trafficGeneratorsService.get(), [], []);
 
   return (
     <StyledDiv>
@@ -62,7 +63,9 @@ const DeleteTrafficGenerator: FunctionComponent<
           trafficGeneratorsService.delete(trafficGeneratorId).then(res => {
             setIsDeleting(false);
             toaster.success('Traffic Generator Deleted');
-            handleDelete(res);
+            // TODO: Figure out why !== breaks
+            const filteredOutDeleted = data.filter(item => item.id != res.id);
+            handleDelete(filteredOutDeleted);
           });
         }}
         confirmLabel="Delete"

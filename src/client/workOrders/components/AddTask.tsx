@@ -14,13 +14,7 @@ import ModalWindow from '../../components/organisms/ModalWindow';
 
 const StyledDiv = styledComponent('div', {
   '& button': {
-    marginTop: '38px',
-  },
-  '& input': {
-    border: '1px solid #fffcfc',
-    borderRadius: '2px',
-    boxShadow: '0 0 0 1px rgba(67, 90, 111, 0.14)',
-    padding: '8px',
+    marginTop: '28px',
   },
   '& li': {
     display: 'inline',
@@ -54,6 +48,7 @@ type TaskType = {
 };
 
 type TasksType = Array<{
+  id: number;
   railcar_id: number;
 }>;
 
@@ -152,17 +147,17 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
                 <ul>
                   <li data-testid="is_passenger_stop">
                     <Field
-                      component={Checkbox}
-                      name="is_passenger_stop"
-                      id="is_passenger_stop"
-                      label="Passenger Stop"
-                    />
-                    {/* <Field
                       label="Passenger Stop"
                       id="is_passenger_stop"
                       name="is_passenger_stop"
                       component={Toggle}
                       setFieldValue={setFieldValue}
+                    />
+                    {/* <Field
+                      component={Checkbox}
+                      name="is_passenger_stop"
+                      id="is_passenger_stop"
+                      label="Passenger Stop"
                     /> */}
                   </li>
                   <li>

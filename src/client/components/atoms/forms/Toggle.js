@@ -17,6 +17,7 @@ const StyledDiv = styledComponent('div', {
     borderRadius: '22px',
     display: 'block',
     height: '14px',
+    position: 'relative',
     width: '55px',
   },
   '& input': {
@@ -28,7 +29,7 @@ const StyledDiv = styledComponent('div', {
       left: 0,
       marginBottom: '10px',
       position: 'absolute',
-      top: '34px',
+      top: '-5px',
       transition: '.3s',
     },
     '&:checked + label': {
@@ -47,7 +48,6 @@ const StyledDiv = styledComponent('div', {
     top: '34px',
     width: '25px',
   },
-  position: 'relative',
 });
 
 const Toggle = ({ field: { name, value, onChange, onBlur }, id, label }) => {

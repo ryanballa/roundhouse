@@ -17,7 +17,7 @@ class TrafficGeneratorsService {
       const response = await axios.delete(
         `/api/v1/trafficGenerators/${trafficGeneratorId}`,
       );
-      return response.data;
+      return { id: trafficGeneratorId };
     } catch (e) {
       return e;
     }

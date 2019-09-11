@@ -50,7 +50,6 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
     false,
   );
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
-  // const [data, errors, isLoading, setData] = useTrafficGenerators();
   const [data, error, isLoading, setData] = usePromise(
     trafficGeneratorsService.get(),
     [],
@@ -77,11 +76,7 @@ const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
       <DeleteTrafficGenerator
         trafficGeneratorId={cellData}
         handleDelete={res => {
-          // TODO: Delete an item after it's deleted
-          // trafficGeneratorsService.get(res => {
-          //   console.log(res);
-          //   setData(res);
-          // });
+          setData(res);
         }}
       />
     );

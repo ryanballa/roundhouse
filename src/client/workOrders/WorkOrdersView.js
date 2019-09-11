@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { AddButton } from '../components/atoms/AddButton';
 import Breadcrumb from '../components/atoms/Breadcrumb';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
-import { userState } from '../UserProvider';
 import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
 import AddWorkItem from './components/AddWorkItem';
@@ -43,6 +43,10 @@ const StyledUl = styledComponent('ul', {
   '& .destinationWrapper': {
     alignItems: 'center',
     display: 'flex',
+  },
+  '& .addButtonWrapper > div': {
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
 });
 
@@ -138,7 +142,17 @@ const WorkOrdersView = ({ history, match }) => {
                 />
               )}
             </div>
-            <Button
+            <div className="addButtonWrapper">
+              <AddButton
+                onClick={() => {
+                  setAddingWorkItem(workItem);
+                  setIsAddTaskOpen(true);
+                }}
+              >
+                Add Task
+              </AddButton>
+            </div>
+            {/* <Button
               icon="add"
               onClick={() => {
                 setAddingWorkItem(workItem);
@@ -146,7 +160,7 @@ const WorkOrdersView = ({ history, match }) => {
               }}
             >
               Add Task
-            </Button>
+            </Button> */}
             <p>Scheduled work at {workItem.destinationname}</p>
             {!workItem.tasks.length && <small>No Scheduled Work</small>}
             <ul>
