@@ -44,6 +44,11 @@ const StyledUl = styledComponent('ul', {
     alignItems: 'center',
     display: 'flex',
   },
+  '& .addButtonWrapper': {
+    '@media print': {
+      display: 'none',
+    },
+  },
   '& .addButtonWrapper > div': {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',

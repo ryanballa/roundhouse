@@ -16,13 +16,11 @@ const StyledDiv = styledComponent('div', {
     marginTop: '28px',
   },
   '& li': {
-    display: 'inline',
     listStyle: 'none',
     marginBottom: '15px',
     marginRight: '15px',
   },
   '& ul': {
-    display: 'flex',
     paddingLeft: 0,
   },
   '@media print': {
@@ -36,7 +34,7 @@ const customStyles = {
   content: {
     left: '10%',
     right: '10%',
-    maxHeight: '300px',
+    maxHeight: '600px',
     maxWidth: '80%',
   },
 };
@@ -70,7 +68,7 @@ type AddTaskProps = {
   handleModalClose: () => void;
   isOpen: boolean;
   railcars: RailCarType[];
-  tasks: TasksType[];
+  tasks: TasksType;
   trafficGenerators: TrafficGeneratorType[];
   workItemId: number;
 };
@@ -143,14 +141,7 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
               });
           }}
         >
-          {({
-            errors,
-            touched,
-            handleSubmit,
-            isSubmitting,
-            setFieldValue,
-            values,
-          }) => {
+          {({ handleSubmit, isSubmitting, setFieldValue, values }) => {
             return (
               <form data-testid="taskAdd-form" onSubmit={handleSubmit}>
                 <ul>

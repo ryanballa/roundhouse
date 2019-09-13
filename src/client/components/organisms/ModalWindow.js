@@ -5,7 +5,9 @@ import Button from '../atoms/Button';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors, fontConfig } from '../../config/styles';
 
-Modal.setAppElement('#modalElement');
+if (process.env.NODE_ENV !== 'test') {
+  Modal.setAppElement('#modalElement');
+}
 
 const Toolbar = styledComponent('div', {
   '& h1': {

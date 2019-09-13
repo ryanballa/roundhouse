@@ -35,6 +35,7 @@ module.exports = {
   transform: {
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.tsx?$': 'ts-jest',
   },
   transformIgnorePatterns: [
     '[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$',

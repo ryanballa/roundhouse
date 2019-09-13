@@ -106,17 +106,17 @@ describe('Locomotive Edit Test', () => {
 
     expect(mockSubmit).toHaveBeenCalledWith({
       engine_number: '1234',
-      is_dcc: undefined,
+      is_dcc: false,
       is_operational: true,
-      location: undefined,
-      notes: undefined,
-      purchase_price: undefined,
-      purchased_on: '2019-08-06',
+      location: 'home',
+      notes: '',
+      purchase_price: 0,
+      purchased_on: '2019-09-13',
       road: 'Rocky Island',
       thumbnail: '',
-      type: undefined,
-      user_id: 1,
-      value: undefined,
+      type: 'diesel',
+      user_id: '',
+      value: '',
     });
   });
 });
