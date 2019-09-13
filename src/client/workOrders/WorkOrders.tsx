@@ -78,7 +78,10 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <AddButton onClick={() => setIsAddWorkOrderOpen(true)}>
+          <AddButton
+            data-testid="addWorkOrder"
+            onClick={() => setIsAddWorkOrderOpen(true)}
+          >
             Add Work Order
           </AddButton>
           <TabMenu>
@@ -94,8 +97,10 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
             handleModalClose={() => {
               setIsAddWorkOrderOpen(false);
             }}
-            handleUpdate={() => {
-              // fetchData();
+            handleUpdate={res => {
+              const updated = data;
+              updated.push(res);
+              setData({ value: data });
               setIsAddWorkOrderOpen(false);
             }}
           />

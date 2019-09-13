@@ -66,7 +66,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
   const onColumnSort = sortByVal => {
     const sortedData = sortArrayOfObjects(data, sortByVal.key, sortByVal.order);
     setSortBy(sortByVal);
-    setData(sortedData);
+    setData({ value: sortedData });
   };
 
   const deleteFormatter = ({ cellData }) => {
@@ -74,7 +74,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
       <DeleteTrafficGenerator
         trafficGeneratorId={cellData}
         handleDelete={res => {
-          setData(res);
+          setData({ value: res });
         }}
       />
     );
@@ -107,7 +107,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
               setIsAddTrafficGeneratorOpen(false);
             }}
             handleUpdate={res => {
-              setData([...data, { ...res.data, ...res.values }]);
+              setData({ value: [...data, { ...res.data, ...res.values }] });
               setIsAddTrafficGeneratorOpen(false);
             }}
           />

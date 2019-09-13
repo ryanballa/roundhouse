@@ -9,6 +9,7 @@ import { styledComponent } from '../../utils/styledComponent';
 import Button from '../../components/atoms/Button';
 import ModalWindow from '../../components/organisms/ModalWindow';
 import { userState } from '../../UserProvider';
+import { number } from 'prop-types';
 
 const StyledFormDiv = styledComponent('div', {
   '& button': {
@@ -38,9 +39,14 @@ const customStyles = {
   },
 };
 
+type WorkOrderProps = {
+  user_id: number;
+  id: number;
+};
+
 type AddWorkOrderProps = {
   handleModalClose: () => void;
-  handleUpdate: () => void;
+  handleUpdate: (arg0: WorkOrderProps) => void;
   isOpen: boolean;
 };
 
@@ -70,11 +76,16 @@ const AddWorkOrder: React.FC<AddWorkOrderProps> = ({
               user_id: user.id,
             })
             .then(
-              /* istanbul ignore next */ () => {
+              /* istanbul ignore next */ res => {
                 /* istanbul ignore next */
                 toaster.success('Work Order Added');
                 setSubmitting(false);
-                handleUpdate();
+                console.log(res);
+                handleUpdate({
+                  ...values,
+                  user_id: user.id,
+                  id: res.data.id,
+                });
               },
             )
             .catch(err => {
@@ -106,7 +117,7 @@ const AddWorkOrder: React.FC<AddWorkOrderProps> = ({
                 </li>
                 <li>
                   <Button
-                    data-testid="taskAdd-submit"
+                    data-testid="workOrderAdd-submit"
                     disabled={isSubmitting}
                     icon="add"
                   >

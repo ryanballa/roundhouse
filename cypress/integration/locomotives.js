@@ -40,7 +40,7 @@ describe('Locomotives', function() {
     cy.contains('a', 'Rock Island');
     cy.get('.BaseTable__row-cell').should('have.length', 6);
     cy.get('[data-testid="Rock Island"]').click();
-    cy.get('.BaseTable__row-cell').should('have.length', 18);
+    cy.get('.BaseTable__row-cell').should('have.length', 12);
   });
 
   it('Edits a Locomotive', function() {
