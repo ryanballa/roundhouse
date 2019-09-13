@@ -118,7 +118,7 @@
     "cypress:open": "concurrently --kill-others \"yarn run start:test\" \"cypress open\"",
     "cypress:run": "$(npm bin)/cypress run",
     "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-watch\"",
-    "lint": "eslint .",
+    "lint": "eslint . && tslint 'src/**/*.ts?(x)'",
     "migrate:test": "knex migrate:latest --env test",
     "start-watch": "nodemon -r esm ./src/server/index.js",
     "seed:test": "knex seed:run --env test",

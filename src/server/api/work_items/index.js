@@ -9,7 +9,6 @@ work_items.use(bodyParser.urlencoded({ extended: false }));
 work_items.use(bodyParser.json());
 
 work_items.get('/', authHelpers.loginRequired, (request, response) => {
-  // const user = request.user.id;
   const query = `SELECT * FROM work_items`;
 
   return db

@@ -64,6 +64,7 @@ const DeleteTrafficGenerator: FunctionComponent<
             setIsDeleting(false);
             toaster.success('Traffic Generator Deleted');
             // TODO: Figure out why !== breaks
+            // tslint:disable-next-line: triple-equals
             const filteredOutDeleted = data.filter(item => item.id != res.id);
             handleDelete(filteredOutDeleted);
           });

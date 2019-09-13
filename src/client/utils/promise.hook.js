@@ -9,12 +9,12 @@ export function usePromise(promiseOrFunction, defaultValue) {
   });
 
   React.useEffect(() => {
+    let isSubscribed = true;
     const promise =
-      typeof promiseOrFunction === 'function'
+      typeof promiseOrFunction === 'function' && isSubscribed
         ? promiseOrFunction()
         : promiseOrFunction;
 
-    let isSubscribed = true;
     promise
       .then(value =>
         isSubscribed
@@ -29,7 +29,7 @@ export function usePromise(promiseOrFunction, defaultValue) {
 
     // eslint-disable-next-line no-return-assign
     return () => (isSubscribed = false);
-  }, [promiseOrFunction, defaultValue]);
+  }, []);
 
   const { value, error, isPending } = state;
   return [value, error, isPending, setState];

@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
@@ -43,15 +43,13 @@ type TrafficGenratorsProps = {
   };
 };
 
-const TrafficGenrators: FunctionComponent<TrafficGenratorsProps> = ({
-  history,
-}) => {
+const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
   const [isAddTrafficGeneratorOpen, setIsAddTrafficGeneratorOpen] = useState(
     false,
   );
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
   const [data, error, isLoading, setData] = usePromise(
-    trafficGeneratorsService.get(),
+    trafficGeneratorsService.get,
     [],
     [],
   );
