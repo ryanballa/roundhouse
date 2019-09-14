@@ -12,6 +12,9 @@ import AddWorkItem from './components/AddWorkItem';
 import DeleteWorkItem from './components/DeleteWorkItem';
 import Button from '../components/atoms/Button';
 import DeleteWorkOrder from './components/DeleteWorkOrder';
+import { usePromise } from '../utils/promise.hook';
+import railcarsService from '../services/railcars.service';
+import tasksService from '../services/tasks.service';
 
 const HeaderToolBar = styledComponent('div', {
   '& .butonWrapper': {
@@ -66,6 +69,8 @@ const WorkOrdersView = ({ history, match }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
   const [addingWorkItem, setAddingWorkItem] = useState(false);
+  const [railcars, isRailcarsLoading] = usePromise(railcarsService.get, [], []);
+  const [tasks, isTasksLoading] = usePromise(tasksService.get, [], []);
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -119,22 +124,24 @@ const WorkOrdersView = ({ history, match }) => {
               </Button>
             </div>
           </HeaderToolBar>
-          <AddTask
-            isOpen={isAddTaskOpen}
-            handleUpdate={() => {
-              fetchData();
-              setIsAddTaskOpen(false);
-            }}
-            handleModalClose={() => {
-              setIsAddTaskOpen(false);
-            }}
-            railcars={workOrder.railcars}
-            trafficGenerators={workOrder.trafficGenerators.filter(
-              tg => tg.destination_id === addingWorkItem.destinationid,
-            )}
-            tasks={workOrder.tasks}
-            workItemId={addingWorkItem.id}
-          />
+          {!isRailcarsLoading && !isTasksLoading && (
+            <AddTask
+              isOpen={isAddTaskOpen}
+              handleUpdate={() => {
+                fetchData();
+                setIsAddTaskOpen(false);
+              }}
+              handleModalClose={() => {
+                setIsAddTaskOpen(false);
+              }}
+              railcars={railcars}
+              trafficGenerators={workOrder.trafficGenerators.filter(
+                tg => tg.destination_id === addingWorkItem.destinationid,
+              )}
+              tasks={tasks}
+              workItemId={addingWorkItem.id}
+            />
+          )}
           <StyledUl>
             {workOrder.workItems.map(workItem => (
               <li key={shortid.generate()}>

@@ -226,11 +226,14 @@ function List({ history, location }) {
                   <li key={shortid.generate()}>
                     <input
                       data-testid={road}
+                      checked={filters.indexOf(i) > -1}
                       onChange={e => {
                         const options = filters;
                         let index;
                         if (e.target.checked) {
-                          options.push(+e.target.value);
+                          if (options.indexOf(e.target.value) === -1) {
+                            options.push(+e.target.value);
+                          }
                         } else {
                           index = options.indexOf(+e.target.value);
                           options.splice(index, 1);
