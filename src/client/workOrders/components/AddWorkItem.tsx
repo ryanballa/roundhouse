@@ -94,7 +94,7 @@ const AddWorkItem: React.FC<AddWorkItemProps> = ({
               </li>
               <li>
                 <Button
-                  data-testid="taskAdd-submit"
+                  data-testid="workItemAdd-submit"
                   disabled={isSubmitting}
                   icon="add"
                 >

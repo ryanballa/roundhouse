@@ -88,7 +88,10 @@ const Destinations: React.FC<TrafficGenratorsProps> = ({ history }) => {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <AddButton onClick={() => setIsAddTrafficGeneratorOpen(true)}>
+          <AddButton
+            data-testid="addDestination"
+            onClick={() => setIsAddTrafficGeneratorOpen(true)}
+          >
             Add Destination
           </AddButton>
           <TabMenu>

@@ -90,7 +90,10 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <AddButton onClick={() => setIsAddTrafficGeneratorOpen(true)}>
+          <AddButton
+            data-testid="addTrafficGenerator"
+            onClick={() => setIsAddTrafficGeneratorOpen(true)}
+          >
             Add Traffic Generator
           </AddButton>
           <TabMenu>

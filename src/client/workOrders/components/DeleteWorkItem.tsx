@@ -48,7 +48,7 @@ const DeleteWorkItem: React.FC<DeleteWorkItemProps> = ({
       <Dialog
         intent="danger"
         isShown={isDeleting}
-        title="Delete Task"
+        title="Delete Destination"
         onCloseComplete={() => setIsDeleting(false)}
         onConfirm={() => {
           axios
@@ -62,11 +62,12 @@ const DeleteWorkItem: React.FC<DeleteWorkItemProps> = ({
               console.log(error);
             });
         }}
-        confirmLabel="Delete"
+        confirmLabel="Delete Destination"
       >
         Are you sure you want to delete this Destination?
       </Dialog>
       <Button
+        data-testid="workItemDelete"
         icon="delete"
         onClick={() => {
           setIsDeleting(true);

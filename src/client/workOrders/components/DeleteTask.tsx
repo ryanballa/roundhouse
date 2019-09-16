@@ -59,11 +59,12 @@ const DeleteTask: React.FC<DeleteTaskProps> = ({ taskId, handleDelete }) => {
               console.log(error);
             });
         }}
-        confirmLabel="Delete"
+        confirmLabel="Delete Task"
       >
         Are you sure you want to delete this task?
       </Dialog>
       <Button
+        data-testid="taskDelete"
         icon="delete"
         onClick={() => {
           setIsDeleting(true);
