@@ -91,6 +91,9 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
             <li>
               <Link to="/traffic-generators">Traffic Generators</Link>
             </li>
+            <li>
+              <Link to="/destinations">Destinations</Link>
+            </li>
           </TabMenu>
           <AddWorkOrder
             isOpen={isAddWorkOrderOpen}

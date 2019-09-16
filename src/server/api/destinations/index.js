@@ -118,13 +118,13 @@ destinations.get(
 );
 
 destinations.delete(
-  '/:destinationId/work-order/:workOrderId/:destinationWorkOrderId',
+  '/:destinationId',
   authHelpers.loginRequired,
   (request, response) => {
-    const { destinationWorkOrderId } = request.params;
+    const { destinationId } = request.params;
 
-    database('work_orders_destinations')
-      .where('id', destinationWorkOrderId)
+    database('destinations')
+      .where('id', destinationId)
       .del()
       .then(res => {
         return response.status(200).json(res);

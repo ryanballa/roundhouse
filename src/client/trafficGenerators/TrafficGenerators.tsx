@@ -100,6 +100,9 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
             <li className="active">
               <Link to="/traffic-generators">Traffic Generators</Link>
             </li>
+            <li>
+              <Link to="/destinations">Destinations</Link>
+            </li>
           </TabMenu>
           <AddTrafficGenerator
             isOpen={isAddTrafficGeneratorOpen}

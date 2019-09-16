@@ -19,6 +19,7 @@ import { userDispatch } from './UserProvider';
 import WorkOrders from './workOrders/WorkOrders';
 import WorkOrdersView from './workOrders/WorkOrdersView';
 import TrafficGenerators from './trafficGenerators/TrafficGenerators';
+import Destinations from './destinations/Destinations';
 
 const Routes = ({ history }) => {
   const dispatch = userDispatch();
@@ -43,6 +44,7 @@ const Routes = ({ history }) => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/404" component={NotFound} />
+        <Route exact path="/destinations" component={Destinations} />
         <Route exact path="/locomotives" component={List} />
         <Route exact path="/photos/upload" component={Upload} />
         <Route exact path="/login" component={Login} />
