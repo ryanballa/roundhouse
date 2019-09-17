@@ -11,7 +11,7 @@ if (dotEnvExists) {
 }
 
 // On Google Could Platform authentication is handled for us
-const gcs = require('@google-cloud/storage');
+const gcs = require('@google-cloud/storage')();
 
 const bucketName = 'roundhouseenvvars';
 console.log(`Downloading .env from bucket ${bucketName}`);
