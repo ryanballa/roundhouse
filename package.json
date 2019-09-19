@@ -110,7 +110,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "eslint-plugin-jest": "^22.17.0",
-    "parcel": "^2.0.0-alpha.1.1"
+    "parcel": "^2.0.0-alpha.1.1",
+    "pgtools": "^0.3.0"
   },
   "engines": {
     "node": "10.x"
@@ -124,6 +125,7 @@
     "docker:build": "docker build -t rballa/roundhouseapp .",
     "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-watch\"",
     "lint": "eslint . && tslint 'src/**/*.ts?(x)'",
+    "migreate:dbcreate:test": "createdbjs testroundhouse --user=postgres --password=postgres",
     "migrate:test": "knex migrate:latest --env test",
     "start-watch": "nodemon -r esm ./src/server/index.js",
     "seed:test": "knex seed:run --env test",
