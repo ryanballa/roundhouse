@@ -20,6 +20,7 @@ import WorkOrders from './workOrders/WorkOrders';
 import WorkOrdersView from './workOrders/WorkOrdersView';
 import TrafficGenerators from './trafficGenerators/TrafficGenerators';
 import Destinations from './destinations/Destinations';
+import DashboardView from './dashboard/DashboardView';
 
 const Routes = ({ history }) => {
   const dispatch = userDispatch();
@@ -59,6 +60,7 @@ const Routes = ({ history }) => {
         <Route exact path="/error" component={Error} />
         <Route exact path="/work-orders" component={WorkOrders} />
         <Route exact path="/work-orders/:id" component={WorkOrdersView} />
+        <Route exact path="/dashboard" component={DashboardView} />
         <Route component={NotFound} />
       </Switch>
     </div>
