@@ -76,39 +76,85 @@ const DashboardView: React.FC<DashbordViewProps> = ({ history }) => {
     return results;
   };
 
+  const constructSpendData = (dataToFormat = []) => {
+    const results = {};
+    const dateObj = {};
+    let date;
+    for (var prop in dataToFormat) {
+      let totalSpend = 0;
+      dataToFormat[prop].forEach(val => {
+        totalSpend += Math.round(val.purchase_price);
+      });
+      date = moment(prop).format('MM/DD/YYYY');
+      dateObj[date] = totalSpend;
+      Object.assign(results, dateObj);
+    }
+    return results;
+  };
+
   return (
     <SingleColumn history={history}>
       <h1>Dashboard</h1>
-      {isLoading && <div>Loading....</div>}
-      {!isLoading && (
-        <StyledGraph>
-          <h2>Purcahses by Month</h2>
-          <LineChart
-            colors={['#8CC3F5', '#21517d']}
-            data={[
-              {
-                name: 'Locomotives',
-                data: constructData(groupDataByMonth(locomotiveData)),
-              },
-              {
-                name: 'Railcars',
-                data: constructData(groupDataByMonth(railcarData)),
-              },
-            ]}
-            legend={false}
-          />
-          <div className="key">
-            <h3>Key</h3>
-            <ul>
-              <li id="keyLocomotive">
-                <b>Locomotives</b>
-              </li>
-              <li id="keyRailcar">
-                <b>Railcars</b>
-              </li>
-            </ul>
-          </div>
-        </StyledGraph>
+      {isLoading && isRailcarsLoading && <div>Loading....</div>}
+      {!isLoading && !isRailcarsLoading && (
+        <div>
+          <StyledGraph>
+            <h2>Purcahses by Month</h2>
+            <LineChart
+              colors={['#8CC3F5', '#21517d']}
+              data={[
+                {
+                  name: 'Locomotives',
+                  data: constructData(groupDataByMonth(locomotiveData)),
+                },
+                {
+                  name: 'Railcars',
+                  data: constructData(groupDataByMonth(railcarData)),
+                },
+              ]}
+              legend={false}
+            />
+            <div className="key">
+              <h3>Key</h3>
+              <ul>
+                <li id="keyLocomotive">
+                  <b>Locomotives</b>
+                </li>
+                <li id="keyRailcar">
+                  <b>Railcars</b>
+                </li>
+              </ul>
+            </div>
+          </StyledGraph>
+          <StyledGraph>
+            <h2>Total Spend per Month</h2>
+            <LineChart
+              colors={['#8CC3F5', '#21517d']}
+              data={[
+                {
+                  name: 'Locomotives',
+                  data: constructSpendData(groupDataByMonth(locomotiveData)),
+                },
+                {
+                  name: 'Railcars',
+                  data: constructSpendData(groupDataByMonth(railcarData)),
+                },
+              ]}
+              legend={false}
+            />
+            <div className="key">
+              <h3>Key</h3>
+              <ul>
+                <li id="keyLocomotive">
+                  <b>Locomotives</b>
+                </li>
+                <li id="keyRailcar">
+                  <b>Railcars</b>
+                </li>
+              </ul>
+            </div>
+          </StyledGraph>
+        </div>
       )}
     </SingleColumn>
   );
