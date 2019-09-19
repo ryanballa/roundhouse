@@ -310,7 +310,10 @@ function List({ history, location }) {
             </div>
             <div className="itemCallout">
               <h2>Equipment</h2>
-              <PieChart data={data.typeGraphData} />
+              <PieChart
+                data={data.typeGraphData}
+                colors={['#8CC3F5', '#21517d', '#1F34A3', '#8078B7']}
+              />
             </div>
           </div>
         </StyledDiv>
