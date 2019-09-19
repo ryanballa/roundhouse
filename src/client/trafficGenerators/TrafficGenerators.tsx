@@ -14,7 +14,7 @@ import trafficGeneratorsService from '../services/trafficGenerators.service';
 
 const StyledDiv = styledComponent('div', {
   '& .BaseTable__body': {
-    color: colors.body,
+    color: 'pink',
     fontSize: '16px',
   },
   '& .BaseTable__header-row': {

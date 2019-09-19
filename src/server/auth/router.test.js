@@ -46,7 +46,7 @@ describe('POST /auth/register', () => {
         res.redirects.length.should.eql(0);
         res.status.should.eql(500);
         res.type.should.eql('application/json');
-        res.body.status.should.eql('error');
+        res.body.status.name.should.eql('error');
         done();
       });
   });

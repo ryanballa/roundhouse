@@ -42,8 +42,8 @@ router.post('/register', authHelpers.loginRedirect, (req, res, next) => {
         }
       })(req, res, next);
     })
-    .catch(() => {
-      handleResponse(res, 500, res);
+    .catch(err => {
+      handleResponse(res, 500, err);
     });
 });
 
