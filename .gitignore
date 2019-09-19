@@ -6,6 +6,7 @@ docker-compose.yaml
 # built files
 **/.cache
 **/coverage
+**/dist
 cypress/screenshots
 cypress/videos
 
