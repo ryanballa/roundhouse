@@ -9,6 +9,10 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#modalElement');
 }
 
+if (process.env.NODE_ENV === 'test') {
+  Modal.setAppElement(document.createElement('div'));
+}
+
 const Toolbar = styledComponent('div', {
   '& h1': {
     color: colors.headers,

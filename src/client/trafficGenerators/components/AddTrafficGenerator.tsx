@@ -9,7 +9,7 @@ import Button from '../../components/atoms/Button';
 import Select from '../../components/atoms/forms/Select';
 import ModalWindow from '../../components/organisms/ModalWindow';
 import { userState } from '../../UserProvider';
-import api from '../../api';
+import { usePromise } from '../../utils/promise.hook';
 import trafficGeneratorsService from '../../services/trafficGenerators.service';
 
 const StyledFormDiv = styledComponent('div', {
@@ -57,20 +57,11 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
   handleModalClose,
 }) => {
   const { user } = userState();
-  const [data, setData] = useState([{ id: '', name: '' }]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const fetchData = async () => {
-    setIsLoading(true);
-    api.destinations.get(result => {
-      setData(result.data);
-      setIsLoading(false);
-    });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [data, isLoading, setData] = usePromise(
+    trafficGeneratorsService.get,
+    [],
+    [],
+  );
 
   return (
     <ModalWindow
@@ -102,10 +93,14 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
         }) => (
           <StyledFormDiv>
             {!isLoading && (
-              <form data-testid="taskAdd-form" onSubmit={handleSubmit}>
+              <form
+                data-testid="trafficGeneratorAdd-form"
+                onSubmit={handleSubmit}
+              >
                 <ul>
                   <li data-testid="name">
                     <Input
+                      data-testid="nameField"
                       label="Name"
                       id="name"
                       type="text"

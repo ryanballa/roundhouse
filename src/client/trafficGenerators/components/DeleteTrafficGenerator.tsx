@@ -6,7 +6,6 @@ import { colors } from '../../config/styles';
 import Button from '../../components/atoms/Button';
 import { usePromise } from '../../utils/promise.hook';
 import trafficGeneratorsService from '../../services/trafficGenerators.service';
-import { read } from 'fs';
 
 const StyledDiv = styledComponent('div', {
   '& button': {

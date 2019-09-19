@@ -48,7 +48,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
     false,
   );
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
-  const [data, error, isLoading, setData] = usePromise(
+  const [value, isLoading, setData] = usePromise(
     trafficGeneratorsService.get,
     [],
     [],
@@ -64,7 +64,11 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
   };
 
   const onColumnSort = sortByVal => {
-    const sortedData = sortArrayOfObjects(data, sortByVal.key, sortByVal.order);
+    const sortedData = sortArrayOfObjects(
+      value,
+      sortByVal.key,
+      sortByVal.order,
+    );
     setSortBy(sortByVal);
     setData({ value: sortedData });
   };
@@ -72,6 +76,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
   const deleteFormatter = ({ cellData }) => {
     return (
       <DeleteTrafficGenerator
+        data-testid="deleteTrafficGenerator"
         trafficGeneratorId={cellData}
         handleDelete={res => {
           setData({ value: res });
@@ -82,7 +87,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
 
   return (
     <SingleColumn history={history}>
-      <h1>Traffic Generators</h1>
+      <h1 data-testid="trafficGeneratorPage">Traffic Generators</h1>
       <p>
         Industries and places that output or require railcars on your railroad.
       </p>
@@ -98,7 +103,9 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
           </AddButton>
           <TabMenu>
             <li>
-              <Link to="/work-orders">Work Orders</Link>
+              <Link data-testid="linkWorkOrders" to="/work-orders">
+                Work Orders
+              </Link>
             </li>
             <li className="active">
               <Link to="/traffic-generators">Traffic Generators</Link>
@@ -113,13 +120,13 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
               setIsAddTrafficGeneratorOpen(false);
             }}
             handleUpdate={res => {
-              setData({ value: [...data, { ...res.data, ...res.values }] });
+              setData({ value: [...value, { ...res.data, ...res.values }] });
               setIsAddTrafficGeneratorOpen(false);
             }}
           />
           <BaseTable
             onColumnSort={onColumnSort}
-            data={data}
+            data={value}
             sortBy={sortBy}
             width={1200}
             height={400}

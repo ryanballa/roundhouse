@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import moment from 'moment';
 import { MemoryRouter } from 'react-router';
+import { act } from '../utils/act';
 import { asyncUpdates } from '../utils/testHelpers';
 import LocomotivesEdit from './LocomotivesEdit';
 import { UserProvider } from '../UserProvider';
@@ -30,7 +32,9 @@ describe('Locomotive Edit Test', () => {
   let wrapper;
 
   beforeEach(async () => {
-    wrapper = buildComponent();
+    await act(() => {
+      wrapper = buildComponent();
+    });
   });
 
   it('displays the locomotive edit form', async () => {
@@ -111,7 +115,7 @@ describe('Locomotive Edit Test', () => {
       location: 'home',
       notes: '',
       purchase_price: 0,
-      purchased_on: '2019-09-13',
+      purchased_on: moment().format('YYYY-MM-DD'),
       road: 'Rocky Island',
       thumbnail: '',
       type: 'diesel',
