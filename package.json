@@ -125,7 +125,7 @@
     "docker:build": "docker build -t rballa/roundhouseapp .",
     "dev": "concurrently --kill-others \"yarn run build-watch\" \"yarn run start-watch\"",
     "lint": "eslint . && tslint 'src/**/*.ts?(x)'",
-    "migreate:dbcreate:test": "createdbjs testroundhouse --user=postgres --password=postgres",
+    "migrate:dbcreate:test": "createdbjs testroundhouse --user=postgres --password=postgres",
     "migrate:test": "knex migrate:latest --env test",
     "start-watch": "nodemon -r esm ./src/server/index.js",
     "seed:test": "knex seed:run --env test",
