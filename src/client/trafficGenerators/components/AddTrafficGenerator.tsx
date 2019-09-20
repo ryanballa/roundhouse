@@ -11,6 +11,7 @@ import ModalWindow from '../../components/organisms/ModalWindow';
 import { userState } from '../../UserProvider';
 import { usePromise } from '../../utils/promise.hook';
 import trafficGeneratorsService from '../../services/trafficGenerators.service';
+import destinationsService from '../../services/destinations.service';
 
 const StyledFormDiv = styledComponent('div', {
   '& button': {
@@ -58,7 +59,7 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
 }) => {
   const { user } = userState();
   const [data, isLoading, setData] = usePromise(
-    trafficGeneratorsService.get,
+    destinationsService.get,
     [],
     [],
   );
