@@ -167,7 +167,7 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
                         <option value="">Select Railcar</option>
                         {filteredRailcars(tasks, railcars).map(railcar => (
                           <option key={railcar.id} value={railcar.id}>
-                            {railcar.road}
+                            {railcar.road} {railcar.car_number} {railcar.color}
                           </option>
                         ))}
                       </Select>
