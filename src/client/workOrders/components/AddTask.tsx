@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Field, Formik } from 'formik';
@@ -10,6 +10,8 @@ import { colors } from '../../config/styles';
 import { styledComponent } from '../../utils/styledComponent';
 import Button from '../../components/atoms/Button';
 import ModalWindow from '../../components/organisms/ModalWindow';
+import tasksService from '../../services/tasks.service';
+import filteredRailcarUse from '../lib/filteredRailcarUse';
 
 const StyledDiv = styledComponent('div', {
   '& button': {
@@ -77,32 +79,19 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
   handleUpdate,
   railcars,
   trafficGenerators,
-  tasks,
   workItemId,
   isOpen,
   handleModalClose,
 }) => {
-  const filteredRailcars = (
-    tasksVals: TasksType,
-    railcarsVals: RailCarsType,
-  ) => {
-    // Count railcar use
-    const railcarsUse = [];
-    tasksVals.map(task => {
-      if (
-        railcarsUse.reduce((res, rc) => res + (rc === task.railcar_id), 0) <= 1
-      ) {
-        railcarsUse.push(task.railcar_id);
-      }
+  const [filteredRailcarsData, setfilteredRailcarsData] = useState([]);
+
+  useEffect(() => {
+    tasksService.get().then(vals => {
+      const taskVals = vals.length ? vals : [];
+      const filtered = filteredRailcarUse(taskVals, railcars);
+      setfilteredRailcarsData(filtered);
     });
-    // Find only railcars not used or used once
-    return railcarsVals.reduce((result, railcar) => {
-      if (railcarsUse.reduce((res, rc) => res + (rc === railcar.id), 0) <= 1) {
-        result.push(railcar);
-      }
-      return result;
-    }, []);
-  };
+  }, [isOpen]);
 
   return (
     <ModalWindow
@@ -154,18 +143,18 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
                       setFieldValue={setFieldValue}
                     />
                   </li>
-                  <li>
+                  <li data-testid="type">
                     <Select label="Type" id="type" name="type">
                       <option value="">Select One</option>
                       <option value="drop">Drop</option>
                       <option value="pick">Pick</option>
                     </Select>
                   </li>
-                  <li>
+                  <li data-testid="railcar_id">
                     {!values.is_passenger_stop && (
                       <Select label="Railcar" id="railcar_id" name="railcar_id">
                         <option value="">Select Railcar</option>
-                        {filteredRailcars(tasks, railcars).map(railcar => (
+                        {filteredRailcarsData.map(railcar => (
                           <option key={railcar.id} value={railcar.id}>
                             {railcar.road} {railcar.car_number} {railcar.color}
                           </option>
@@ -173,7 +162,7 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
                       </Select>
                     )}
                   </li>
-                  <li>
+                  <li data-testid="traffic_generator_id">
                     <Select
                       label="Traffic Generator"
                       id="traffic_generator_id"

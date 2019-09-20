@@ -35,7 +35,6 @@ describe('Delete Traffic Generator', () => {
       component = render({ handleDelete: mockDelete });
     });
     component.update();
-    console.log(component.debug());
     const deletebutton = () => component.find('Button[children="Delete"]');
     expect(deletebutton().length).toEqual(1);
     // deletebutton().simulate('click');
