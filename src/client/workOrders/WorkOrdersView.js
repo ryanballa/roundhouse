@@ -42,6 +42,7 @@ const StyledUl = styledComponent('ul', {
   '& .task': {
     alignItems: 'center',
     display: 'flex',
+    fontSize: '190%',
   },
   '& .destinationWrapper': {
     alignItems: 'center',
