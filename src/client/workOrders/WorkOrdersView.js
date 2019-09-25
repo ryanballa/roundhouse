@@ -42,7 +42,6 @@ const StyledUl = styledComponent('ul', {
   '& .task': {
     alignItems: 'center',
     display: 'flex',
-    fontSize: '190%',
   },
   '& .destinationWrapper': {
     alignItems: 'center',
@@ -56,6 +55,12 @@ const StyledUl = styledComponent('ul', {
   '& .addButtonWrapper > div': {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+  },
+  '@media print': {
+    '& p': {
+      fontSize: '190%',
+    },
+    fontSize: '190%',
   },
 });
 
