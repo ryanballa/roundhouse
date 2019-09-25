@@ -23,10 +23,7 @@ const LocomotivesEdit = ({
   const { user } = userState();
 
   const EditSchema = Yup.object().shape({
-    engine_number: Yup.number()
-      .min(3, 'Numbers need to be at least 3 numbers')
-      .max(9999, 'Numbers cannot be more than 9999')
-      .required('Required'),
+    engine_number: Yup.number().required('Required'),
     road: Yup.string().required('Required'),
   });
 

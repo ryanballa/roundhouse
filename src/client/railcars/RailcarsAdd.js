@@ -29,10 +29,7 @@ function RailcarsAdd({ history }) {
   ]);
 
   const EditSchema = Yup.object().shape({
-    car_number: Yup.number()
-      .min(3, 'Numbers need to be at least 3 numbers')
-      .max(9999, 'Numbers cannot be more than 4')
-      .required('Required'),
+    car_number: Yup.number().required('Required'),
     road: Yup.string().required('Required'),
   });
 
