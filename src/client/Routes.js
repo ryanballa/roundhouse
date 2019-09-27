@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import axios from 'axios';
@@ -37,7 +38,9 @@ const Routes = ({ history }) => {
         .catch(() => {});
     };
 
-    fetchData();
+    if (!Cookies.get('connect.sid')) {
+      fetchData();
+    }
   }, []);
 
   return (
