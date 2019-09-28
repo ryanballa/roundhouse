@@ -58,11 +58,7 @@ const AddTrafficGenerator: FunctionComponent<AddTrafficGeneratorProps> = ({
   handleModalClose,
 }) => {
   const { user } = userState();
-  const [data, isLoading, setData] = usePromise(
-    destinationsService.get,
-    [],
-    [],
-  );
+  const [data, isLoading] = usePromise(destinationsService.get, [], []);
 
   return (
     <ModalWindow

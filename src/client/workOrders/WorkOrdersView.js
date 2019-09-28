@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import shortid from 'shortid';
 import { AddButton } from '../components/atoms/AddButton';
 import Breadcrumb from '../components/atoms/Breadcrumb';
@@ -9,6 +10,7 @@ import { styledComponent } from '../utils/styledComponent';
 import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
 import AddWorkItem from './components/AddWorkItem';
+import EditWorkOrder from './components/EditWorkOrder';
 import DeleteWorkItem from './components/DeleteWorkItem';
 import Button from '../components/atoms/Button';
 import DeleteWorkOrder from './components/DeleteWorkOrder';
@@ -19,6 +21,7 @@ import tasksService from '../services/tasks.service';
 const HeaderToolBar = styledComponent('div', {
   '& .butonWrapper': {
     display: 'flex',
+    alignItems: 'center',
   },
   '& h1': {
     margin: 0,
@@ -74,6 +77,7 @@ const WorkOrdersView = ({ history, match }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
+  const [isEditWorkOrderOpen, setIsEditWorkOrderOpen] = useState(false);
   const [addingWorkItem, setAddingWorkItem] = useState(false);
   const [railcars, isRailcarsLoading] = usePromise(railcarsService.get, [], []);
   const [tasks, isTasksLoading] = usePromise(tasksService.get, [], []);
@@ -111,6 +115,21 @@ const WorkOrdersView = ({ history, match }) => {
           <HeaderToolBar>
             <h1>{workOrder.workOrdersResults[0].name}</h1>
             <div className="butonWrapper">
+              <Link
+                onClick={() => {
+                  setIsEditWorkOrderOpen(true);
+                }}
+                to={`/work-orders/${workOrder.workOrdersResults[0].id}`}
+              >
+                Edit
+              </Link>
+              <EditWorkOrder
+                handleModalClose={() => {
+                  setIsEditWorkOrderOpen(false);
+                }}
+                workOrder={workOrder.workOrdersResults[0]}
+                isOpen={isEditWorkOrderOpen}
+              />
               {!workOrder.workItems.length && (
                 <DeleteWorkOrder
                   workOrderId={workOrder.workOrdersResults[0].id}
@@ -130,6 +149,7 @@ const WorkOrdersView = ({ history, match }) => {
               </Button>
             </div>
           </HeaderToolBar>
+          <p>{workOrder.workOrdersResults[0].notes}</p>
           {!isRailcarsLoading && !isTasksLoading && (
             <AddTask
               isOpen={isAddTaskOpen}
