@@ -203,8 +203,9 @@ const WorkOrdersView = ({ history, match }) => {
                       [ ] {task.taskstype}{' '}
                       {task.taskstype === 'pick' ? 'up' : 'off'}{' '}
                       {task.is_passenger_stop ? 'passengers' : ''} {task.road}{' '}
-                      {task.car_number} {task.type} {task.length}&#39;{' '}
-                      {task.color} from {task.name}
+                      {task.reporting_marks} {task.car_number} {task.type}{' '}
+                      {task.color} {task.taskstype === 'pick' ? 'from' : 'to'}{' '}
+                      {task.name}
                       <DeleteTask
                         taskId={task.id}
                         handleDelete={() => {
