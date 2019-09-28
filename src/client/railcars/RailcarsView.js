@@ -96,6 +96,9 @@ const RailcarsEdit = ({ history, match }) => {
                 thumbnail: data[0].thumbnail || '',
                 type: data[0].type || '',
                 user_id: user ? user.id : '',
+                notes: data[0].notes || '',
+                purchase_price: data[0].purchase_price || '0',
+                value: data[0].value || '0',
               }}
               validationSchema={EditSchema}
               onSubmit={(values, { setSubmitting }) => {

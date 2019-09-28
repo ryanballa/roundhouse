@@ -26,6 +26,9 @@ const HeaderToolBar = styledComponent('div', {
   '& h1': {
     margin: 0,
   },
+  '.printButton': {
+    marginLeft: '10px',
+  },
   '@media print': {
     '.printButton': {
       display: 'none',

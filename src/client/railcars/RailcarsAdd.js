@@ -48,6 +48,9 @@ function RailcarsAdd({ history }) {
                 location: data[0].location,
                 road: data[0].road,
                 user_id: user ? user.id : '',
+                notes: data[0].notes,
+                purchase_price: data[0].purchase_price,
+                value: data[0].value,
               }}
               validationSchema={EditSchema}
               onSubmit={(values, { setSubmitting }) => {

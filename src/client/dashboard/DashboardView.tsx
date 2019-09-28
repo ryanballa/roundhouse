@@ -59,7 +59,7 @@ const DashboardView: React.FC<DashbordViewProps> = ({ history }) => {
 
   const groupDataByMonth = purchaseData => {
     return groupBy(purchaseData, result => {
-      return moment(result['purchased_on'], 'YYYY-MM-DD').startOf('month');
+      return moment(result.purchased_on, 'YYYY-MM-DD').startOf('month');
     });
   };
 

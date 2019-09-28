@@ -156,6 +156,33 @@ const Form = ({
             </Select>
           </li>
           <li>
+            <Input
+              label="Value"
+              id="value"
+              type="text"
+              name="value"
+              placeholder="0"
+            />
+          </li>
+          <li>
+            <Input
+              label="Purchase Price"
+              id="purchase_price"
+              type="text"
+              name="purchase_price"
+              placeholder="0"
+            />
+          </li>
+          <li>
+            <Input
+              label="Notes"
+              id="notes"
+              type="text"
+              name="notes"
+              placeholder=""
+            />
+          </li>
+          <li>
             <Gallery
               handleSelection={photo => {
                 setFieldValue('thumbnail', photo.path);
