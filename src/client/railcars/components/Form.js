@@ -184,6 +184,7 @@ const Form = ({
           </li>
           <li>
             <Gallery
+              canSelect
               handleSelection={photo => {
                 setFieldValue('thumbnail', photo.path);
               }}
