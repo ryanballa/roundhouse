@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React from 'react';
+import React, { useState } from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Error from '../../components/atoms/forms/Error';
@@ -9,6 +9,7 @@ import Gallery from '../../components/organisms/Gallery';
 import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
 import Toggle from '../../components/atoms/forms/Toggle';
+import ModalWindow from '../../components/organisms/ModalWindow';
 import DatePickerField from '../../components/atoms/forms/DatePickerField';
 import Button from '../../components/atoms/Button';
 
@@ -39,6 +40,7 @@ const Form = ({
   touched,
   values,
 }) => {
+  const [addingPhoto, setAddingPhoto] = useState(false);
   return (
     <StyledDiv>
       <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
@@ -47,6 +49,30 @@ const Form = ({
             {values.thumbnail && (
               <img src={values.thumbnail} width="200" alt="" />
             )}
+            <Button
+              onClick={() => {
+                setAddingPhoto(true);
+              }}
+              type="button"
+              variant="quiet"
+            >
+              Select New Photo
+            </Button>
+            <ModalWindow
+              isModalOpen={addingPhoto}
+              handleModalClose={() => {
+                setAddingPhoto(false);
+              }}
+            >
+              <Gallery
+                canSelect
+                handleSelection={photo => {
+                  setFieldValue('thumbnail', photo.path);
+                }}
+                photos={photos}
+                title="Select a Photo"
+              />
+            </ModalWindow>
           </li>
           <li>
             <Field type="hidden" name="user_id" />
@@ -180,16 +206,6 @@ const Form = ({
               type="text"
               name="notes"
               placeholder=""
-            />
-          </li>
-          <li>
-            <Gallery
-              canSelect
-              handleSelection={photo => {
-                setFieldValue('thumbnail', photo.path);
-              }}
-              photos={photos}
-              title="Select a Photo"
             />
           </li>
           <li>

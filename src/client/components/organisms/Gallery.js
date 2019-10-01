@@ -7,7 +7,12 @@ import ModalWindow from './ModalWindow';
 import Button from '../atoms/Button';
 
 const StyledGallery = styledComponent('div', {
+  '& button': {
+    height: 'fit-content',
+    marginLeft: '15px',
+  },
   '& div': {
+    alignItems: 'center',
     display: 'flex',
     margin: '20px',
     marginLeft: 0,

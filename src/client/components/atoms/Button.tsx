@@ -12,8 +12,13 @@ const StyledButton = styledComponent('button', {
     color: colors.buttons.secondary.textColor,
   },
   '&.quiet': {
+    '&:hover': {
+      textDecoration: 'none',
+    },
     background: 'transparent',
     color: colors.body,
+    paddingLeft: '0',
+    textDecoration: 'underline',
   },
   '&.primary': {
     backgroundColor: colors.form.buttonPrimaryBacgkround,
