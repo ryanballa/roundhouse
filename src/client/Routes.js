@@ -7,13 +7,13 @@ import Add from './locomotives/Add';
 import EditContainer from './locomotives/EditContainer';
 import List from './locomotives/List';
 import Upload from './photos/Upload';
-import Home from './pages/Home';
 import Error from './pages/Error';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import NotFound from './pages/NotFound';
 import Railcars from './railcars/Railcars';
 import RailcarsAdd from './railcars/RailcarsAdd';
+import RailcarsCSV from './railcars/RailcarsCSV';
 import RailcarsView from './railcars/RailcarsView';
 import Photos from './photos/Photos';
 import { userDispatch } from './UserProvider';
@@ -57,6 +57,7 @@ const Routes = ({ history }) => {
         <Route exact path="/locomotives/:id" component={EditContainer} />
         <Route exact path="/photos" component={Photos} />
         <Route exact path="/railcars" component={Railcars} />
+        <Route exact path="/railcars/csv" component={RailcarsCSV} />
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
         <Route exact path="/traffic-generators" component={TrafficGenerators} />

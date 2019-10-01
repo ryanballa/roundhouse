@@ -43,6 +43,7 @@
     "eslint-plugin-react": "^7.14.2",
     "esm": "^3.2.25",
     "evergreen-ui": "^4.17.0",
+    "export-to-csv": "^0.2.1",
     "express": "^4.16.4",
     "express-session": "^1.16.2",
     "fetch-mock": "^7.3.3",
