@@ -332,6 +332,8 @@ function List({ history, location }) {
                   />
                 </div>
               </div>
+              <h2>More Tasks</h2>
+              <Link to="/locomotives/csv">Download CSV</Link>
             </>
           )}
         </StyledDiv>

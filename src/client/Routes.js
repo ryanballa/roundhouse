@@ -6,6 +6,7 @@ import axios from 'axios';
 import Add from './locomotives/Add';
 import EditContainer from './locomotives/EditContainer';
 import List from './locomotives/List';
+import LocomotivesCSV from './locomotives/LocomotivesCSV';
 import Upload from './photos/Upload';
 import Error from './pages/Error';
 import Login from './pages/Login';
@@ -50,6 +51,7 @@ const Routes = ({ history }) => {
         <Route exact path="/404" component={NotFound} />
         <Route exact path="/destinations" component={Destinations} />
         <Route exact path="/locomotives" component={List} />
+        <Route exact path="/locomotives/csv" component={LocomotivesCSV} />
         <Route exact path="/photos/upload" component={Upload} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
