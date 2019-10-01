@@ -7,6 +7,7 @@ import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
+import ZeroState from '../components/atoms/ZeroState';
 import { styledComponent } from '../utils/styledComponent';
 import { colors } from '../config/styles';
 
@@ -96,56 +97,67 @@ function Railcars({ history }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <AddButton className="addRailcar" to="/railcars/add">
-            Add Railcar
-          </AddButton>
-          <BaseTable
-            onColumnSort={onColumnSort}
-            data={data}
-            sortBy={sortBy}
-            width={1200}
-            height={400}
-          >
-            <Column sortable title="Id" key="id" dataKey="id" width={100} />
-            <Column
-              cellRenderer={linkFormatter}
-              title="Road"
-              key="road"
-              dataKey="road"
-              sortable
-              width={300}
-            />
-            <Column
-              title="Car Number"
-              key="car_number"
-              dataKey="car_number"
-              sortable
-              width={250}
-            />
-            <Column
-              cellRenderer={booleanFormatter}
-              title="Operational"
-              key="is_operational"
-              dataKey="is_operational"
-              sortable
-              width={250}
-            />
-            <Column
-              title="Location"
-              key="location"
-              dataKey="location"
-              sortable
-              width={200}
-            />
-            <Column
-              cellRenderer={dateFormatter}
-              title="Purchase Date"
-              key="purchased_on"
-              dataKey="purchased_on"
-              sortable
-              width={220}
-            />
-          </BaseTable>
+          {data.length === 0 && (
+            <ZeroState entity="railcar" to="/railcars/add">
+              <p>
+                Add a railcar to begin building a record of your collection.
+              </p>
+            </ZeroState>
+          )}
+          {data.length > 0 && (
+            <>
+              <AddButton className="addRailcar" to="/railcars/add">
+                Add Railcar
+              </AddButton>
+              <BaseTable
+                onColumnSort={onColumnSort}
+                data={data}
+                sortBy={sortBy}
+                width={1200}
+                height={400}
+              >
+                <Column sortable title="Id" key="id" dataKey="id" width={100} />
+                <Column
+                  cellRenderer={linkFormatter}
+                  title="Road"
+                  key="road"
+                  dataKey="road"
+                  sortable
+                  width={300}
+                />
+                <Column
+                  title="Car Number"
+                  key="car_number"
+                  dataKey="car_number"
+                  sortable
+                  width={250}
+                />
+                <Column
+                  cellRenderer={booleanFormatter}
+                  title="Operational"
+                  key="is_operational"
+                  dataKey="is_operational"
+                  sortable
+                  width={250}
+                />
+                <Column
+                  title="Location"
+                  key="location"
+                  dataKey="location"
+                  sortable
+                  width={200}
+                />
+                <Column
+                  cellRenderer={dateFormatter}
+                  title="Purchase Date"
+                  key="purchased_on"
+                  dataKey="purchased_on"
+                  sortable
+                  width={220}
+                />
+              </BaseTable>
+            </>
+          )}
         </StyledDiv>
       )}
     </SingleColumn>

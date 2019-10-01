@@ -11,6 +11,7 @@ import 'chart.js';
 import BaseTable, { Column } from 'react-base-table';
 import { colors } from '../config/styles';
 import { AddButton } from '../components/atoms/AddButton';
+import ZeroState from '../components/atoms/ZeroState';
 import TabMenu from '../components/atoms/TabMenu';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
@@ -207,115 +208,132 @@ function List({ history, location }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <AddButton className="addLocomotive" to="/locomotives/add">
-            Add Locomotive
-          </AddButton>
-          <TabMenu>
-            <li className={qsValues.running === 'true' ? 'active' : ''}>
-              <Link to="/locomotives?running=true">Running</Link>
-            </li>
-            <li className={qsValues.running === 'false' ? 'active' : ''}>
-              <Link to="/locomotives?running=false">Needs Work</Link>
-            </li>
-          </TabMenu>
-          <section className="tableWrapper">
-            <div className="filters">
-              <h2>Filter</h2>
-              <ul>
-                {data.roads.map((road, i) => (
-                  <li key={shortid.generate()}>
-                    <input
-                      data-testid={road}
-                      checked={filters.indexOf(i) > -1}
-                      onChange={e => {
-                        const options = filters;
-                        let index;
-                        if (e.target.checked) {
-                          if (options.indexOf(e.target.value) === -1) {
-                            options.push(+e.target.value);
-                          }
-                        } else {
-                          index = options.indexOf(+e.target.value);
-                          options.splice(index, 1);
-                        }
-                        setFilters(options);
-                        onFilter(options);
-                      }}
-                      type="checkbox"
-                      value={i}
-                    />
-                    {road}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <BaseTable
-              onColumnSort={onColumnSort}
-              data={data.displayedData}
-              sortBy={sortBy}
-              width={1000}
-              height={400}
-            >
-              <Column sortable title="Id" key="id" dataKey="id" width={100} />
-              <Column
-                cellRenderer={linkFormatter}
-                title="Road"
-                key="road"
-                dataKey="road"
-                sortable
-                width={300}
-              />
-              <Column
-                title="Engine Number"
-                key="engine_number"
-                dataKey="engine_number"
-                sortable
-                width={200}
-              />
-              <Column
-                cellRenderer={booleanFormatter}
-                title="DCC Equipped"
-                key="is_dcc"
-                dataKey="is_dcc"
-                sortable
-                width={200}
-              />
-              <Column
-                title="Location"
-                key="location"
-                dataKey="location"
-                sortable
-                width={120}
-              />
-              <Column
-                cellRenderer={dateFormatter}
-                title="Purchase Date"
-                key="purchased_on"
-                dataKey="purchased_on"
-                sortable
-                width={200}
-              />
-            </BaseTable>
-          </section>
-          <div className="items">
-            <div className="itemCallout">
-              <h2>Collection</h2>
-              <ul>
-                <li>
-                  <b>Locomotives:</b>
-                  {data.data.length}
+          {data.displayedData.length === 0 && (
+            <ZeroState entity="locomotive" to="/locomotives/add">
+              <p>
+                Add a locomotive to begin building a record of your collection.
+              </p>
+            </ZeroState>
+          )}
+          {data.displayedData.length > 0 && (
+            <>
+              <AddButton className="addLocomotive" to="/locomotives/add">
+                Add Locomotive
+              </AddButton>
+              <TabMenu>
+                <li className={qsValues.running === 'true' ? 'active' : ''}>
+                  <Link to="/locomotives?running=true">Running</Link>
                 </li>
-                <li>Value: ${data.totalValues}</li>
-              </ul>
-            </div>
-            <div className="itemCallout">
-              <h2>Equipment</h2>
-              <PieChart
-                data={data.typeGraphData}
-                colors={['#8CC3F5', '#21517d', '#1F34A3', '#8078B7']}
-              />
-            </div>
-          </div>
+                <li className={qsValues.running === 'false' ? 'active' : ''}>
+                  <Link to="/locomotives?running=false">Needs Work</Link>
+                </li>
+              </TabMenu>
+              <section className="tableWrapper">
+                <div className="filters">
+                  <h2>Filter</h2>
+                  <ul>
+                    {data.roads.map((road, i) => (
+                      <li key={shortid.generate()}>
+                        <input
+                          data-testid={road}
+                          checked={filters.indexOf(i) > -1}
+                          onChange={e => {
+                            const options = filters;
+                            let index;
+                            if (e.target.checked) {
+                              if (options.indexOf(e.target.value) === -1) {
+                                options.push(+e.target.value);
+                              }
+                            } else {
+                              index = options.indexOf(+e.target.value);
+                              options.splice(index, 1);
+                            }
+                            setFilters(options);
+                            onFilter(options);
+                          }}
+                          type="checkbox"
+                          value={i}
+                        />
+                        {road}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <BaseTable
+                  onColumnSort={onColumnSort}
+                  data={data.displayedData}
+                  sortBy={sortBy}
+                  width={1000}
+                  height={400}
+                >
+                  <Column
+                    sortable
+                    title="Id"
+                    key="id"
+                    dataKey="id"
+                    width={100}
+                  />
+                  <Column
+                    cellRenderer={linkFormatter}
+                    title="Road"
+                    key="road"
+                    dataKey="road"
+                    sortable
+                    width={300}
+                  />
+                  <Column
+                    title="Engine Number"
+                    key="engine_number"
+                    dataKey="engine_number"
+                    sortable
+                    width={200}
+                  />
+                  <Column
+                    cellRenderer={booleanFormatter}
+                    title="DCC Equipped"
+                    key="is_dcc"
+                    dataKey="is_dcc"
+                    sortable
+                    width={200}
+                  />
+                  <Column
+                    title="Location"
+                    key="location"
+                    dataKey="location"
+                    sortable
+                    width={120}
+                  />
+                  <Column
+                    cellRenderer={dateFormatter}
+                    title="Purchase Date"
+                    key="purchased_on"
+                    dataKey="purchased_on"
+                    sortable
+                    width={200}
+                  />
+                </BaseTable>
+              </section>
+              <div className="items">
+                <div className="itemCallout">
+                  <h2>Collection</h2>
+                  <ul>
+                    <li>
+                      <b>Locomotives:</b>
+                      {data.data.length}
+                    </li>
+                    <li>Value: ${data.totalValues}</li>
+                  </ul>
+                </div>
+                <div className="itemCallout">
+                  <h2>Equipment</h2>
+                  <PieChart
+                    data={data.typeGraphData}
+                    colors={['#8CC3F5', '#21517d', '#1F34A3', '#8078B7']}
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </StyledDiv>
       )}
     </SingleColumn>

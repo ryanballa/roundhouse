@@ -46,7 +46,7 @@ const Routes = ({ history }) => {
   return (
     <div className="routeWrapper">
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={DashboardView} />
         <Route exact path="/404" component={NotFound} />
         <Route exact path="/destinations" component={Destinations} />
         <Route exact path="/locomotives" component={List} />

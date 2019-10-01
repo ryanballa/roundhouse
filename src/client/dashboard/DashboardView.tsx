@@ -67,11 +67,15 @@ const DashboardView: React.FC<DashbordViewProps> = ({ history }) => {
     const results = {};
     const dateObj = {};
     let date;
-    for (var prop in dataToFormat) {
-      date = moment(prop).format('MM/DD/YYYY');
-      const itemCount = dataToFormat[prop].length;
-      dateObj[date] = itemCount;
-      Object.assign(results, dateObj);
+    for (const prop in dataToFormat) {
+      if (prop) {
+        date = moment(prop).format('MM/DD/YYYY');
+        const itemCount = dataToFormat[prop].length;
+        if (date !== 'Invalid date') {
+          dateObj[date] = itemCount;
+        }
+        Object.assign(results, dateObj);
+      }
     }
     return results;
   };
@@ -80,14 +84,18 @@ const DashboardView: React.FC<DashbordViewProps> = ({ history }) => {
     const results = {};
     const dateObj = {};
     let date;
-    for (var prop in dataToFormat) {
-      let totalSpend = 0;
-      dataToFormat[prop].forEach(val => {
-        totalSpend += Math.round(val.purchase_price);
-      });
-      date = moment(prop).format('MM/DD/YYYY');
-      dateObj[date] = totalSpend;
-      Object.assign(results, dateObj);
+    for (const prop in dataToFormat) {
+      if (prop) {
+        let totalSpend = 0;
+        dataToFormat[prop].forEach(val => {
+          totalSpend += Math.round(val.purchase_price);
+        });
+        date = moment(prop).format('MM/DD/YYYY');
+        if (date !== 'Invalid date') {
+          dateObj[date] = totalSpend;
+        }
+        Object.assign(results, dateObj);
+      }
     }
     return results;
   };

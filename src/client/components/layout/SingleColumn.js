@@ -22,6 +22,7 @@ const StyledSection = styledComponent('section', {
     fontWeight: 'normal',
   },
   '& p': {
+    color: colors.body,
     fontSize: '20px',
   },
   fontFamily: fontConfig.familyStylized,

@@ -4,6 +4,7 @@ import { Dialog, toaster } from 'evergreen-ui';
 import axios from 'axios';
 import Button from '../components/atoms/Button';
 import SingleColumn from '../components/layout/SingleColumn';
+import ZeroState from '../components/atoms/ZeroState';
 import { styledComponent } from '../utils/styledComponent';
 import Gallery from '../components/organisms/Gallery';
 
@@ -70,24 +71,33 @@ function Photos({ history }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          <Gallery
-            canDelete
-            handleSelection={value => {
-              setPhotoToDelete(value.id);
-              setIsDeleting(true);
-            }}
-            photos={photos}
-          />
+          {photos.length === 0 && (
+            <ZeroState entity="photo" to="/photos/upload">
+              <p>Add a photo to begin building a record of your collection.</p>
+            </ZeroState>
+          )}
+          {photos.length > 0 && (
+            <Gallery
+              canDelete
+              handleSelection={value => {
+                setPhotoToDelete(value.id);
+                setIsDeleting(true);
+              }}
+              photos={photos}
+            />
+          )}
         </StyledDiv>
       )}
-      <Button
-        icon="add"
-        onClick={() => {
-          history.push('/photos/upload');
-        }}
-      >
-        Add Photo
-      </Button>
+      {photos.length > 0 && (
+        <Button
+          icon="add"
+          onClick={() => {
+            history.push('/photos/upload');
+          }}
+        >
+          Add Photo
+        </Button>
+      )}
     </SingleColumn>
   );
 }
