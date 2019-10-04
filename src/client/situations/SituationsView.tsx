@@ -2,9 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SingleColumn from '../components/layout/SingleColumn';
 import TabMenu from '../components/atoms/TabMenu';
+import Button from '../components/atoms/Button';
 import { styledComponent } from '../utils/styledComponent';
 
 const StyledSection = styledComponent('section', {
+  '& header': {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '20px',
+  },
   '& li': {
     '& h3': {
       fontSize: '20px',
@@ -57,7 +63,18 @@ const SituationsView: React.FC<SituationsViewProps> = ({
         </li>
       </TabMenu>
       <StyledSection>
-        <h2>Situation</h2>
+        <header>
+          <h2>Situations</h2>
+          <Button
+            additionalClasses="printButton"
+            icon="print"
+            onClick={() => {
+              window.print();
+            }}
+          >
+            Print
+          </Button>
+        </header>
         <ul>
           <li>
             <h3>Smoking Gun</h3>
