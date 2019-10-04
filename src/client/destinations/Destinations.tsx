@@ -5,7 +5,7 @@ import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
-import TabMenu from '../components/atoms/TabMenu';
+import WorkOrdersLocalNav from '../components/organisms/WorkOrdersLocalNav';
 import { colors } from '../config/styles';
 import AddDestination from './components/AddDestination';
 import DeleteDestination from './components/DeleteDestination';
@@ -94,17 +94,7 @@ const Destinations: React.FC<TrafficGenratorsProps> = ({ history }) => {
           >
             Add Destination
           </AddButton>
-          <TabMenu>
-            <li>
-              <Link to="/work-orders">Work Orders</Link>
-            </li>
-            <li>
-              <Link to="/traffic-generators">Traffic Generators</Link>
-            </li>
-            <li className="active">
-              <Link to="/destinations">Destinations</Link>
-            </li>
-          </TabMenu>
+          <WorkOrdersLocalNav activeItem="destinations" />
           <AddDestination
             isOpen={isAddTrafficGeneratorOpen}
             handleModalClose={() => {

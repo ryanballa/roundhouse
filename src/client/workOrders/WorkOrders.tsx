@@ -6,7 +6,7 @@ import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
 import { colors } from '../config/styles';
-import TabMenu from '../components/atoms/TabMenu';
+import WorkOrdersLocalNav from '../components/organisms/WorkOrdersLocalNav';
 import AddWorkOrder from './components/AddWorkOrder';
 import { usePromise } from '../utils/promise.hook';
 import workOrdersService from '../services/workOrders.service';
@@ -88,17 +88,7 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
           >
             Add Work Order
           </AddButton>
-          <TabMenu>
-            <li className="active">
-              <Link to="/work-orders">Work Orders</Link>
-            </li>
-            <li>
-              <Link to="/traffic-generators">Traffic Generators</Link>
-            </li>
-            <li>
-              <Link to="/destinations">Destinations</Link>
-            </li>
-          </TabMenu>
+          <WorkOrdersLocalNav activeItem="workOrders" />
           <AddWorkOrder
             isOpen={isAddWorkOrderOpen}
             handleModalClose={() => {

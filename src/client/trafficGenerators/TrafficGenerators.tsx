@@ -1,11 +1,10 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
-import TabMenu from '../components/atoms/TabMenu';
+import WorkOrdersLocalNav from '../components/organisms/WorkOrdersLocalNav';
 import { colors } from '../config/styles';
 import AddTrafficGenerator from './components/AddTrafficGenerator';
 import DeleteTrafficGenerator from './components/DeleteTrafficGenerator';
@@ -100,19 +99,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
           >
             Add Traffic Generator
           </AddButton>
-          <TabMenu>
-            <li>
-              <Link data-testid="linkWorkOrders" to="/work-orders">
-                Work Orders
-              </Link>
-            </li>
-            <li className="active">
-              <Link to="/traffic-generators">Traffic Generators</Link>
-            </li>
-            <li>
-              <Link to="/destinations">Destinations</Link>
-            </li>
-          </TabMenu>
+          <WorkOrdersLocalNav activeItem="trafficGenerators" />
           <AddTrafficGenerator
             isOpen={isAddTrafficGeneratorOpen}
             handleModalClose={() => {
