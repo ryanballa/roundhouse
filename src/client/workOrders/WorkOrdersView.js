@@ -123,6 +123,10 @@ const WorkOrdersView = ({ history, match }) => {
           />
           <HeaderToolBar>
             <h1>{workOrder.workOrdersResults[0].name}</h1>
+            <p>
+              Run your railroad like a real one with work orders to for
+              operation sessions.
+            </p>
             <div className="butonWrapper">
               <Link
                 onClick={() => {
