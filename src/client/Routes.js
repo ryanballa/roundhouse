@@ -16,6 +16,7 @@ import Railcars from './railcars/Railcars';
 import RailcarsAdd from './railcars/RailcarsAdd';
 import RailcarsCSV from './railcars/RailcarsCSV';
 import RailcarsView from './railcars/RailcarsView';
+import SituationsView from './situations/SituationsView';
 import Photos from './photos/Photos';
 import { userDispatch } from './UserProvider';
 import WorkOrders from './workOrders/WorkOrders';
@@ -62,6 +63,7 @@ const Routes = ({ history }) => {
         <Route exact path="/railcars/csv" component={RailcarsCSV} />
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
+        <Route exact path="/situations" component={SituationsView} />
         <Route exact path="/traffic-generators" component={TrafficGenerators} />
         <Route exact path="/error" component={Error} />
         <Route exact path="/work-orders" component={WorkOrders} />
