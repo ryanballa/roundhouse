@@ -16,6 +16,12 @@ const StyledUL = styledComponent('ul', {
     },
     color: '#61A3C5',
   },
+  '& a.activePhotos': {
+    '& svg': {
+      stroke: '#61A3C5',
+    },
+    color: '#61A3C5',
+  },
   '& a:hover': {
     color: '#b6c4d1',
   },
@@ -25,6 +31,9 @@ const StyledUL = styledComponent('ul', {
     margin: '0 10px',
   },
   '& svg': {
+    '&.photos': {
+      stroke: '#626262',
+    },
     fill: colors.links,
     marginRight: '8px',
   },
@@ -117,10 +126,11 @@ const MainNavigation = () => (
     <li>
       <NavLink
         isActive={checkPhotosActive}
-        activeClassName="active"
+        activeClassName="activePhotos"
         to="/photos"
       >
         <svg
+          className="photos"
           width="24"
           height="21"
           viewBox="0 0 20 17"
@@ -130,14 +140,12 @@ const MainNavigation = () => (
           <path
             fill="none"
             d="M19.1806 14.2222C19.1806 14.6606 19.0064 15.081 18.6965 15.3909C18.3865 15.7009 17.9661 15.875 17.5278 15.875H2.65278C2.21443 15.875 1.79404 15.7009 1.48409 15.3909C1.17413 15.081 1 14.6606 1 14.2222V5.13194C1 4.6936 1.17413 4.27321 1.48409 3.96325C1.79404 3.6533 2.21443 3.47917 2.65278 3.47917H5.95833L7.61111 1H12.5694L14.2222 3.47917H17.5278C17.9661 3.47917 18.3865 3.6533 18.6965 3.96325C19.0064 4.27321 19.1806 4.6936 19.1806 5.13194V14.2222Z"
-            stroke="#626262"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             fill="none"
             d="M10.0903 12.5694C11.9159 12.5694 13.3958 11.0895 13.3958 9.26388C13.3958 7.43828 11.9159 5.95833 10.0903 5.95833C8.26465 5.95833 6.7847 7.43828 6.7847 9.26388C6.7847 11.0895 8.26465 12.5694 10.0903 12.5694Z"
-            stroke="#626262"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
