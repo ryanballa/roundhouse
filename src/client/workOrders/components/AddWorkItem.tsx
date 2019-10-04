@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
+import Input from '../../components/atoms/forms/Input';
 import Select from '../../components/atoms/forms/Select';
 import { colors } from '../../config/styles';
 import { styledComponent } from '../../utils/styledComponent';
@@ -91,6 +92,15 @@ const AddWorkItem: React.FC<AddWorkItemProps> = ({
                     </option>
                   ))}
                 </Select>
+              </li>
+              <li data-testid="depature_time">
+                <Input
+                  label="Depature Time"
+                  id="depature_time"
+                  type="text"
+                  name="depature_time"
+                  placeholder=""
+                />
               </li>
               <li>
                 <Button

@@ -34,6 +34,9 @@ export const fontConfig = {
     fontSize: '1.2em',
     letterSpacing: '0.1em',
   },
+  body: {
+    fontSize: '15px',
+  },
   buttons: {
     regular: {
       fontSize: '18px',

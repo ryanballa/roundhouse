@@ -7,6 +7,7 @@ import { AddButton } from '../components/atoms/AddButton';
 import Breadcrumb from '../components/atoms/Breadcrumb';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
+import { fontConfig } from '../config/styles';
 import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
 import AddWorkItem from './components/AddWorkItem';
@@ -48,6 +49,7 @@ const StyledUl = styledComponent('ul', {
   '& .task': {
     alignItems: 'center',
     display: 'flex',
+    fontSize: fontConfig.body.fontSize,
   },
   '& .destinationWrapper': {
     alignItems: 'center',
@@ -57,10 +59,14 @@ const StyledUl = styledComponent('ul', {
     '@media print': {
       display: 'none',
     },
+    marginTop: '20px',
   },
   '& .addButtonWrapper > div': {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+  },
+  '& p': {
+    margin: '10px 0',
   },
   '@media print': {
     '& p': {
@@ -185,16 +191,6 @@ const WorkOrdersView = ({ history, match }) => {
                     />
                   )}
                 </div>
-                <div className="addButtonWrapper">
-                  <AddButton
-                    onClick={() => {
-                      setAddingWorkItem(workItem);
-                      setIsAddTaskOpen(true);
-                    }}
-                  >
-                    Add Task
-                  </AddButton>
-                </div>
                 <p>Scheduled work at {workItem.destinationname}</p>
                 {!workItem.tasks.length && <small>No Scheduled Work</small>}
                 <ul>
@@ -215,6 +211,19 @@ const WorkOrdersView = ({ history, match }) => {
                     </li>
                   ))}
                 </ul>
+                <div className="addButtonWrapper">
+                  <AddButton
+                    onClick={() => {
+                      setAddingWorkItem(workItem);
+                      setIsAddTaskOpen(true);
+                    }}
+                  >
+                    Add Task
+                  </AddButton>
+                </div>
+                {workItem.depature_time && (
+                  <p>Leave at {workItem.depature_time}</p>
+                )}
               </li>
             ))}
           </StyledUl>

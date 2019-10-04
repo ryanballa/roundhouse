@@ -26,7 +26,6 @@ function LocomotivesCSV({ history }) {
       setIsLoading(true);
       await axios('/api/v1/locomotives').then(res => {
         const adjustedData = res.data.map(item => {
-          console.log(item);
           return {
             dcc_number: item.dcc_number || '',
             engine_number: item.engine_number,
