@@ -52,6 +52,12 @@ const checkRailcarsActive = (match, location) =>
 const checkPhotosActive = (match, location) =>
   location.pathname.includes('photos');
 
+const checkOrdersActive = (match, location) =>
+  location.pathname.includes('work-orders') ||
+  location.pathname.includes('traffic-generators') ||
+  location.pathname.includes('destinations') ||
+  location.pathname.includes('situations');
+
 const MainNavigation = () => (
   <StyledUL>
     <li>
@@ -154,7 +160,11 @@ const MainNavigation = () => (
       </NavLink>
     </li>
     <li>
-      <NavLink activeClassName="active" to="/work-orders">
+      <NavLink
+        activeClassName="active"
+        isActive={checkOrdersActive}
+        to="/work-orders"
+      >
         <svg
           height="28px"
           width="28px"
@@ -163,7 +173,6 @@ const MainNavigation = () => (
           x="0px"
           y="0px"
           viewBox="0 0 100 100"
-          // style={{ enableBackground: 'new 0 0 100 100' }}
         >
           <path d="M73,18.5h-4.1c-0.5-2.8-2.9-5-5.9-5h-5c-0.1-4.3-3.6-7.9-7.8-8c-2.2-0.1-4.2,0.7-5.8,2.3c-1.6,1.5-2.4,3.6-2.4,5.7h-5  c-3,0-5.4,2.2-5.9,5H27c-3.3,0-6,2.7-6,6v64c0,3.3,2.7,6,6,6h46c3.3,0,6-2.7,6-6v-64C79,21.2,76.3,18.5,73,18.5z M35,19.5  c0-1.1,0.9-2,2-2h7c1.1,0,2-0.9,2-2v-2c0-1.1,0.4-2.1,1.2-2.9C48,9.9,49,9.5,50.1,9.5c2.1,0.1,3.9,2,3.9,4.2v1.8c0,1.1,0.9,2,2,2h7  c1.1,0,2,0.9,2,2v2c0,1.1-0.9,2-2,2H37c-1.1,0-2-0.9-2-2V19.5z M75,88.5c0,1.1-0.9,2-2,2H27c-1.1,0-2-0.9-2-2v-64c0-1.1,0.9-2,2-2  h4.1c0.5,2.8,2.9,5,5.9,5h26c3,0,5.4-2.2,5.9-5H73c1.1,0,2,0.9,2,2V88.5z M69,44.5c0,1.1-0.9,2-2,2H33c-1.1,0-2-0.9-2-2  c0-1.1,0.9-2,2-2h34C68.1,42.5,69,43.4,69,44.5z M69,54.5c0,1.1-0.9,2-2,2H33c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2h34  C68.1,52.5,69,53.4,69,54.5z M69,64.5c0,1.1-0.9,2-2,2H33c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2h34C68.1,62.5,69,63.4,69,64.5z M69,74.5  c0,1.1-0.9,2-2,2H33c-1.1,0-2-0.9-2-2c0-1.1,0.9-2,2-2h34C68.1,72.5,69,73.4,69,74.5z" />
         </svg>

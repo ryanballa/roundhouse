@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SingleColumn from '../components/layout/SingleColumn';
-import TabMenu from '../components/atoms/TabMenu';
+import WorkOrdersLocalNav from '../components/organisms/WorkOrdersLocalNav';
 import Button from '../components/atoms/Button';
 import { styledComponent } from '../utils/styledComponent';
 
@@ -48,20 +48,7 @@ const SituationsView: React.FC<SituationsViewProps> = ({
       <p>
         A set of printable cards to add excitement to your operation session.
       </p>
-      <TabMenu>
-        <li className={activeItem === 'workOrders' ? 'active' : ''}>
-          <Link to="/work-orders">Work Orders</Link>
-        </li>
-        <li className={activeItem === 'trafficGenerators' ? 'active' : ''}>
-          <Link to="/traffic-generators">Traffic Generators</Link>
-        </li>
-        <li className={activeItem === 'destinations' ? 'active' : ''}>
-          <Link to="/destinations">Destinations</Link>
-        </li>
-        <li className={activeItem === 'situations' ? 'active' : ''}>
-          <Link to="/situations">Situations</Link>
-        </li>
-      </TabMenu>
+      <WorkOrdersLocalNav activeItem="situations" />
       <StyledSection>
         <header>
           <h2>Situations</h2>
