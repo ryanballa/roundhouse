@@ -5,10 +5,10 @@ import moment from 'moment';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import shortid from 'shortid';
 import { PieChart } from 'react-chartkick';
 import 'chart.js';
 import BaseTable, { Column } from 'react-base-table';
+import Roadfilter from '../components/atoms/RoadFilter';
 import { colors } from '../config/styles';
 import { AddButton } from '../components/atoms/AddButton';
 import ZeroState from '../components/atoms/ZeroState';
@@ -231,36 +231,16 @@ function List({ history, location }) {
                 </li>
               </TabMenu>
               <section className="tableWrapper">
-                <div className="filters">
-                  <h2>Filter</h2>
-                  <ul>
-                    {data.roads.map((road, i) => (
-                      <li key={shortid.generate()}>
-                        <input
-                          data-testid={road}
-                          checked={filters.indexOf(i) > -1}
-                          onChange={e => {
-                            const options = filters;
-                            let index;
-                            if (e.target.checked) {
-                              if (options.indexOf(e.target.value) === -1) {
-                                options.push(+e.target.value);
-                              }
-                            } else {
-                              index = options.indexOf(+e.target.value);
-                              options.splice(index, 1);
-                            }
-                            setFilters(options);
-                            onFilter(options);
-                          }}
-                          type="checkbox"
-                          value={i}
-                        />
-                        {road}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <Roadfilter
+                  data={data}
+                  filters={filters}
+                  onFilter={options => {
+                    onFilter(options);
+                  }}
+                  setFilters={options => {
+                    setFilters(options);
+                  }}
+                />
                 <BaseTable
                   onColumnSort={onColumnSort}
                   data={data.displayedData}

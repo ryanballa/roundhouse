@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import BaseTable, { Column } from 'react-base-table';
+import Roadfilter from '../components/atoms/RoadFilter';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
 import ZeroState from '../components/atoms/ZeroState';
@@ -34,18 +35,39 @@ const StyledDiv = styledComponent('div', {
     display: 'flex',
     marginTop: '20px',
   },
+  '& .tableWrapper': {
+    display: 'flex',
+  },
 });
 
 function Railcars({ history }) {
-  const [data, setData] = useState([{ id: '1', road: 'Test' }]);
+  const [data, setData] = useState({
+    data: [{ id: '001', road: 'Test' }],
+    displayedData: [],
+    roads: [],
+  });
   const [isLoading, setIsLoading] = useState(false);
+  const [filters, setFilters] = useState([]);
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
 
   useEffect(() => {
+    const getListOfRoads = roadData => {
+      const roads = [];
+      roadData.forEach(locomotive => {
+        roads.push(locomotive.road);
+      });
+      const uniqueSet = new Set(roads);
+      return [...uniqueSet];
+    };
+
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios('/api/v1/railcars');
-      setData(result.data);
+      setData({
+        data: result.data,
+        displayedData: result.data,
+        roads: getListOfRoads(result.data),
+      });
       setIsLoading(false);
     };
     fetchData();
@@ -90,6 +112,25 @@ function Railcars({ history }) {
     setData(sortedData);
   };
 
+  const onFilter = filterVals => {
+    const filteredData = [];
+
+    filterVals.forEach(val => {
+      const items = data.data.filter(
+        dataItem => dataItem.road === data.roads[val],
+      );
+      items.forEach(item => {
+        filteredData.push(item);
+      });
+    });
+
+    setData({
+      data: data.data,
+      displayedData: filteredData.length ? filteredData : data.data,
+      roads: data.roads,
+    });
+  };
+
   return (
     <SingleColumn history={history}>
       <h1>Railcars</h1>
@@ -97,65 +138,83 @@ function Railcars({ history }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          {data.length === 0 && (
+          {!data.data[0] && data.data.length === 0 && (
             <ZeroState entity="railcar" to="/railcars/add">
               <p>
                 Add a railcar to begin building a record of your collection.
               </p>
             </ZeroState>
           )}
-          {data.length > 0 && (
+          {data.data[0].id !== '001' && data.data.length > 0 && (
             <>
               <AddButton className="addRailcar" to="/railcars/add">
                 Add Railcar
               </AddButton>
-              <BaseTable
-                onColumnSort={onColumnSort}
-                data={data}
-                sortBy={sortBy}
-                width={1200}
-                height={400}
-              >
-                <Column sortable title="Id" key="id" dataKey="id" width={100} />
-                <Column
-                  cellRenderer={linkFormatter}
-                  title="Road"
-                  key="road"
-                  dataKey="road"
-                  sortable
-                  width={300}
+              <section className="tableWrapper">
+                <Roadfilter
+                  data={data}
+                  filters={filters}
+                  onFilter={options => {
+                    onFilter(options);
+                  }}
+                  setFilters={options => {
+                    setFilters(options);
+                  }}
                 />
-                <Column
-                  title="Car Number"
-                  key="car_number"
-                  dataKey="car_number"
-                  sortable
-                  width={250}
-                />
-                <Column
-                  cellRenderer={booleanFormatter}
-                  title="Operational"
-                  key="is_operational"
-                  dataKey="is_operational"
-                  sortable
-                  width={250}
-                />
-                <Column
-                  title="Location"
-                  key="location"
-                  dataKey="location"
-                  sortable
-                  width={200}
-                />
-                <Column
-                  cellRenderer={dateFormatter}
-                  title="Purchase Date"
-                  key="purchased_on"
-                  dataKey="purchased_on"
-                  sortable
-                  width={220}
-                />
-              </BaseTable>
+                <BaseTable
+                  onColumnSort={onColumnSort}
+                  data={data.displayedData}
+                  sortBy={sortBy}
+                  width={1000}
+                  height={400}
+                >
+                  <Column
+                    sortable
+                    title="Id"
+                    key="id"
+                    dataKey="id"
+                    width={100}
+                  />
+                  <Column
+                    cellRenderer={linkFormatter}
+                    title="Road"
+                    key="road"
+                    dataKey="road"
+                    sortable
+                    width={300}
+                  />
+                  <Column
+                    title="Car Number"
+                    key="car_number"
+                    dataKey="car_number"
+                    sortable
+                    width={250}
+                  />
+                  <Column
+                    cellRenderer={booleanFormatter}
+                    title="Operational"
+                    key="is_operational"
+                    dataKey="is_operational"
+                    sortable
+                    width={250}
+                  />
+                  <Column
+                    title="Location"
+                    key="location"
+                    dataKey="location"
+                    sortable
+                    width={200}
+                  />
+                  <Column
+                    cellRenderer={dateFormatter}
+                    title="Purchase Date"
+                    key="purchased_on"
+                    dataKey="purchased_on"
+                    sortable
+                    width={220}
+                  />
+                </BaseTable>
+              </section>
               <h2>More Tasks</h2>
               <Link to="/railcars/csv">Download CSV</Link>
             </>
