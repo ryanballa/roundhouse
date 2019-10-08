@@ -42,6 +42,11 @@ type WorkOrdersProps = {
   };
 };
 
+type WorkOrder = {
+  key: string;
+  order: string;
+};
+
 const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
   const [isAddWorkOrderOpen, setIsAddWorkOrderOpen] = useState(false);
   const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
@@ -56,7 +61,7 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
     <Link to={`work-orders/${rowData.id}`}>{rowData.name}</Link>
   );
 
-  const sortArrayOfObjects = (arr, key, order) => {
+  const sortArrayOfObjects = (arr: string[], key: string, order: string) => {
     return arr.sort((a, b) => {
       if (order === 'asc') {
         return a[key] > b[key] ? 1 : -1;
@@ -65,10 +70,10 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
     });
   };
 
-  const onColumnSort = sortByVal => {
+  const onColumnSort = (sortByVal: WorkOrder) => {
     const sortedData = sortArrayOfObjects(data, sortByVal.key, sortByVal.order);
     setSortBy(sortByVal);
-    setData(sortedData);
+    setData({ value: sortedData });
   };
 
   return (

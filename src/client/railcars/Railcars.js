@@ -156,10 +156,10 @@ function Railcars({ history }) {
                   width={220}
                 />
               </BaseTable>
+              <h2>More Tasks</h2>
+              <Link to="/railcars/csv">Download CSV</Link>
             </>
           )}
-          <h2>More Tasks</h2>
-          <Link to="/railcars/csv">Download CSV</Link>
         </StyledDiv>
       )}
     </SingleColumn>

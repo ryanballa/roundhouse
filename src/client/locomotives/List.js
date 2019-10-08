@@ -63,7 +63,7 @@ const StyledDiv = styledComponent('div', {
 
 function List({ history, location }) {
   const [data, setData] = useState({
-    data: [{ id: '1', road: 'Test' }],
+    data: [{ id: '001', road: 'Test' }],
     displayedData: [],
     roads: [],
   });
@@ -101,7 +101,9 @@ function List({ history, location }) {
 
   const getTotalValue = totalValues => {
     const values = totalValues.map(value => value.value);
-
+    if (!values.length) {
+      return [];
+    }
     const reducer = (accumulator, currentValue) =>
       Math.round(accumulator) + Math.round(currentValue);
 
@@ -120,11 +122,11 @@ function List({ history, location }) {
             totalValues: getTotalValue(response.data),
             typeGraphData: generateGraphData(response.data),
           });
+          setIsLoading(false);
         })
         .catch(error => {
           console.log(error);
         });
-      setIsLoading(false);
     };
     fetchData();
   }, [location]);
@@ -208,7 +210,7 @@ function List({ history, location }) {
         <div>Loading ...</div>
       ) : (
         <StyledDiv>
-          {data.displayedData.length === 0 && (
+          {!data.data[0] && data.displayedData.length === 0 && (
             <ZeroState entity="locomotive" to="/locomotives/add">
               <p>
                 Add a locomotive to begin building a record of your collection.
