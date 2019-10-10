@@ -135,6 +135,18 @@ function List({ history, location }) {
     return cellData ? 'Yes' : 'No';
   };
 
+  const photoFormatter = ({ cellData }) => {
+    return cellData ? <img alt="Locomotive" src={cellData} width="75" /> : '';
+  };
+
+  photoFormatter.propTypes = {
+    cellData: {},
+  };
+
+  photoFormatter.defaultProps = {
+    cellData: '',
+  };
+
   const dateFormatter = ({ cellData }) =>
     cellData ? moment(cellData).format('MM/DD/YYYY') : '';
 
@@ -249,10 +261,11 @@ function List({ history, location }) {
                   height={400}
                 >
                   <Column
+                    cellRenderer={photoFormatter}
                     sortable
-                    title="Id"
-                    key="id"
-                    dataKey="id"
+                    title="Photo"
+                    key="thumbnail"
+                    dataKey="thumbnail"
                     width={100}
                   />
                   <Column
@@ -300,7 +313,7 @@ function List({ history, location }) {
                   <h2>Collection</h2>
                   <ul>
                     <li>
-                      <b>Locomotives:</b>
+                      <b>Locomotives: </b>
                       {data.data.length}
                     </li>
                     <li>Value: ${data.totalValues}</li>
