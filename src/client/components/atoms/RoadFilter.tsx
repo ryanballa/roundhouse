@@ -54,10 +54,12 @@ const RoadFilter: FunctionComponent<RoadFilterProps> = ({
               setFilters(options);
               onFilter(options);
             }}
+            id={road}
+            name={road}
             type="checkbox"
             value={i}
           />
-          {road}
+          <label htmlFor={road}>{road}</label>
         </li>
       ))}
     </ul>

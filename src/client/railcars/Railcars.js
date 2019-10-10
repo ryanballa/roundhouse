@@ -73,6 +73,18 @@ function Railcars({ history }) {
     fetchData();
   }, []);
 
+  const photoFormatter = ({ cellData }) => {
+    return cellData ? <img alt="Locomotive" src={cellData} width="75" /> : '';
+  };
+
+  photoFormatter.propTypes = {
+    cellData: {},
+  };
+
+  photoFormatter.defaultProps = {
+    cellData: '',
+  };
+
   const booleanFormatter = ({ cellData }) => {
     return cellData ? 'Yes' : 'No';
   };
@@ -107,9 +119,17 @@ function Railcars({ history }) {
   };
 
   const onColumnSort = sortByVal => {
-    const sortedData = sortArrayOfObjects(data, sortByVal.key, sortByVal.order);
+    const sortedData = sortArrayOfObjects(
+      data.data,
+      sortByVal.key,
+      sortByVal.order,
+    );
     setSortBy(sortByVal);
-    setData(sortedData);
+    setData({
+      data: data.data,
+      displayedData: sortedData,
+      roads: data.roads,
+    });
   };
 
   const onFilter = filterVals => {
@@ -169,10 +189,11 @@ function Railcars({ history }) {
                   height={400}
                 >
                   <Column
+                    cellRenderer={photoFormatter}
                     sortable
-                    title="Id"
-                    key="id"
-                    dataKey="id"
+                    title="Photo"
+                    key="thumbnail"
+                    dataKey="thumbnail"
                     width={100}
                   />
                   <Column
