@@ -27,11 +27,17 @@ const HeaderToolBar = styledComponent('div', {
   '& h1': {
     margin: 0,
   },
+  '.intro': {
+    display: 'block',
+  },
   '.printButton': {
     marginLeft: '10px',
   },
   '@media print': {
-    '.printButton': {
+    '& .introDesc': {
+      display: 'none',
+    },
+    '& .butonWrapper': {
       display: 'none',
     },
   },
@@ -122,11 +128,13 @@ const WorkOrdersView = ({ history, match }) => {
             ]}
           />
           <HeaderToolBar>
-            <h1>{workOrder.workOrdersResults[0].name}</h1>
-            <p>
-              Run your railroad like a real one with work orders to for
-              operation sessions.
-            </p>
+            <div className="intro">
+              <h1>{workOrder.workOrdersResults[0].name}</h1>
+              <p className="introDesc">
+                Run your railroad like a real one with work orders to for
+                operation sessions.
+              </p>
+            </div>
             <div className="butonWrapper">
               <Link
                 onClick={() => {
@@ -162,6 +170,7 @@ const WorkOrdersView = ({ history, match }) => {
               </Button>
             </div>
           </HeaderToolBar>
+          {workOrder.workOrdersResults[0].notes && <h2>Notes</h2>}
           <p>{workOrder.workOrdersResults[0].notes}</p>
           {!isRailcarsLoading && !isTasksLoading && (
             <AddTask
