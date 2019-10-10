@@ -6,6 +6,13 @@ import { colors } from '../../config/styles';
 import ModalWindow from './ModalWindow';
 import Button from '../atoms/Button';
 
+const LargeImage = styledComponent('div', {
+  '& .largePhoto': {
+    maxWidth: '900px',
+  },
+  textAlign: 'center',
+});
+
 const StyledGallery = styledComponent('div', {
   '& button': {
     height: 'fit-content',
@@ -61,7 +68,9 @@ const Gallery = ({ canDelete, canSelect, handleSelection, photos, title }) => {
                 setOpenModal(null);
               }}
             >
-              <img src={photo.path} alt="" />
+              <LargeImage>
+                <img className="largePhoto" src={photo.path} alt="" />
+              </LargeImage>
             </ModalWindow>
             {canDelete && (
               <Button
