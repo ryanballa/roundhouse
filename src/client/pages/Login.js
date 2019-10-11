@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Pane, toaster } from 'evergreen-ui';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import SingleColumn from '../components/layout/SingleColumn';
 import Button from '../components/atoms/Button';
@@ -10,6 +11,14 @@ import Input from '../components/atoms/forms/Input';
 import { styledComponent } from '../utils/styledComponent';
 import { userDispatch } from '../UserProvider';
 import { colors } from '../config/styles';
+
+const SectionWrapper = styledComponent('section', {
+  '& .register': {
+    display: 'block',
+    marginTop: '20px',
+    textAlign: 'center',
+  },
+});
 
 const Form = styledComponent('div', {
   '& h1': {
@@ -38,67 +47,72 @@ function Login({ history }) {
 
   return (
     <SingleColumn history={history}>
-      <Form>
-        <h1>Login</h1>
-        <Pane>
-          <Formik
-            initialValues={{
-              password: '',
-              username: '',
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              setSubmitError(false);
-              axios
-                .post('auth/login/', values)
-                .then(
-                  /* istanbul ignore next */ data => {
-                    dispatch({ type: 'set', user: data.data.status });
-                    /* istanbul ignore next */
-                    toaster.success('Login Successful');
+      <SectionWrapper>
+        <Form>
+          <h1>Login</h1>
+          <Pane>
+            <Formik
+              initialValues={{
+                password: '',
+                username: '',
+              }}
+              onSubmit={(values, { setSubmitting }) => {
+                setSubmitError(false);
+                axios
+                  .post('auth/login/', values)
+                  .then(
+                    /* istanbul ignore next */ data => {
+                      dispatch({ type: 'set', user: data.data.status });
+                      /* istanbul ignore next */
+                      toaster.success('Login Successful');
+                      setSubmitting(false);
+                      history.push('/locomotives');
+                    },
+                  )
+                  .catch(() => {
+                    setSubmitError(true);
                     setSubmitting(false);
-                    history.push('/locomotives');
-                  },
-                )
-                .catch(() => {
-                  setSubmitError(true);
-                  setSubmitting(false);
-                });
-            }}
-          >
-            {({ errors, touched, handleSubmit, isSubmitting }) => (
-              <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
-                {submitError && (
-                  <Error>Please check your username or password</Error>
-                )}
-                <ul>
-                  <li data-testid="username">
-                    <Input label="Username" name="username" />
-                    <Error>
-                      {errors.username && touched.username ? (
-                        <div className="error">{errors.username}</div>
-                      ) : null}
-                    </Error>
-                  </li>
-                  <li data-testid="password">
-                    <Input label="Password" name="password" type="password" />
-                    <Error>
-                      {errors.password && touched.password ? (
-                        <div className="error">{errors.password}</div>
-                      ) : null}
-                    </Error>
-                  </li>
-                  <li>
-                    <Button
-                      data-testid="login-submit"
-                      disabled={isSubmitting}
-                    />
-                  </li>
-                </ul>
-              </form>
-            )}
-          </Formik>
-        </Pane>
-      </Form>
+                  });
+              }}
+            >
+              {({ errors, touched, handleSubmit, isSubmitting }) => (
+                <form data-testid="locomotiveAdd-form" onSubmit={handleSubmit}>
+                  {submitError && (
+                    <Error>Please check your username or password</Error>
+                  )}
+                  <ul>
+                    <li data-testid="username">
+                      <Input label="Username" name="username" />
+                      <Error>
+                        {errors.username && touched.username ? (
+                          <div className="error">{errors.username}</div>
+                        ) : null}
+                      </Error>
+                    </li>
+                    <li data-testid="password">
+                      <Input label="Password" name="password" type="password" />
+                      <Error>
+                        {errors.password && touched.password ? (
+                          <div className="error">{errors.password}</div>
+                        ) : null}
+                      </Error>
+                    </li>
+                    <li>
+                      <Button
+                        data-testid="login-submit"
+                        disabled={isSubmitting}
+                      />
+                    </li>
+                  </ul>
+                </form>
+              )}
+            </Formik>
+          </Pane>
+        </Form>
+        <Link className="register" to="/register">
+          Not a member? Register
+        </Link>
+      </SectionWrapper>
     </SingleColumn>
   );
 }

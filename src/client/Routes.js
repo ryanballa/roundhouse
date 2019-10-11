@@ -16,6 +16,7 @@ import Railcars from './railcars/Railcars';
 import RailcarsAdd from './railcars/RailcarsAdd';
 import RailcarsCSV from './railcars/RailcarsCSV';
 import RailcarsView from './railcars/RailcarsView';
+import Register from './pages/Register';
 import SituationsView from './situations/SituationsView';
 import Photos from './photos/Photos';
 import { userDispatch } from './UserProvider';
@@ -25,7 +26,7 @@ import TrafficGenerators from './trafficGenerators/TrafficGenerators';
 import Destinations from './destinations/Destinations';
 import DashboardView from './dashboard/DashboardView';
 
-const Routes = ({ history }) => {
+const Routes = ({ history, location }) => {
   const dispatch = userDispatch();
 
   useEffect(() => {
@@ -63,6 +64,7 @@ const Routes = ({ history }) => {
         <Route exact path="/railcars/csv" component={RailcarsCSV} />
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
+        <Route exact path="/register" component={Register} />
         <Route exact path="/situations" component={SituationsView} />
         <Route exact path="/traffic-generators" component={TrafficGenerators} />
         <Route exact path="/error" component={Error} />
@@ -78,6 +80,9 @@ const Routes = ({ history }) => {
 Routes.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
   }).isRequired,
 };
 
