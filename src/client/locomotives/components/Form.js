@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Error from '../../components/atoms/forms/Error';
 import { styledComponent } from '../../utils/styledComponent';
 import { colors } from '../../config/styles';
@@ -50,15 +51,18 @@ const Form = ({
             {values.thumbnail && (
               <img src={values.thumbnail} width="200" alt="" />
             )}
-            <Button
-              onClick={() => {
-                setAddingPhoto(true);
-              }}
-              type="button"
-              variant="quiet"
-            >
-              Select New Photo
-            </Button>
+            {photos.length > 0 && (
+              <Button
+                onClick={() => {
+                  setAddingPhoto(true);
+                }}
+                type="button"
+                variant="quiet"
+              >
+                Select New Photo
+              </Button>
+            )}
+            {photos.length === 0 && <Link to="/photos/upload">Add Photo</Link>}
             <ModalWindow
               isModalOpen={addingPhoto}
               handleModalClose={() => {

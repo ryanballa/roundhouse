@@ -165,7 +165,7 @@ function Railcars({ history }) {
               </p>
             </ZeroState>
           )}
-          {data.data[0].id !== '001' && data.data.length > 0 && (
+          {data.data.length > 0 && (
             <>
               <AddButton className="addRailcar" to="/railcars/add">
                 Add Railcar
