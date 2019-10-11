@@ -46,18 +46,23 @@ users.post('/', (request, response) => {
 
 users.put('/:userId', (request, response) => {
   const id = request.params.userId;
-  if (request.user.id !== request.body.id) {
+  if (!request.user || request.user.id !== request.body.id) {
     response.status(403).json({});
+  } else {
+    database('users')
+      .where('id', id)
+      .update(request.body)
+      .then(user => {
+        if (!response.headersSent) {
+          response.status(200).json(user);
+        }
+      })
+      .catch(error => {
+        if (!response.headersSent) {
+          response.status(500).json({ error });
+        }
+      });
   }
-  database('users')
-    .where('id', id)
-    .update(request.body)
-    .then(user => {
-      response.status(200).json(user);
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
 });
 
 module.exports = users;

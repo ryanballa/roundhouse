@@ -23,6 +23,7 @@ import { userDispatch } from './UserProvider';
 import WorkOrders from './workOrders/WorkOrders';
 import WorkOrdersView from './workOrders/WorkOrdersView';
 import TrafficGenerators from './trafficGenerators/TrafficGenerators';
+import UsersView from './users/UsersView';
 import Destinations from './destinations/Destinations';
 import DashboardView from './dashboard/DashboardView';
 
@@ -71,6 +72,7 @@ const Routes = ({ history }) => {
         <Route exact path="/work-orders" component={WorkOrders} />
         <Route exact path="/work-orders/:id" component={WorkOrdersView} />
         <Route exact path="/dashboard" component={DashboardView} />
+        <Route exact path="/users" component={UsersView} />
         <Route component={NotFound} />
       </Switch>
     </div>

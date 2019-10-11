@@ -42,6 +42,11 @@ const UserMenu = () => {
       {user && (
         <Menu icon={userIcon} title={user.username}>
           <li>{user && <Link to="/logout">Logout</Link>}</li>
+          {user.admin && (
+            <li>
+              <Link to="/users">Admin: Users</Link>
+            </li>
+          )}
         </Menu>
       )}
     </StyledDiv>
