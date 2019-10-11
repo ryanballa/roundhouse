@@ -1,11 +1,12 @@
 const users = require('express').Router();
 const bodyParser = require('body-parser');
 const database = require('../../serverConnection');
+const authHelpers = require('../../auth/_helpers');
 
 users.use(bodyParser.urlencoded({ extended: false }));
 users.use(bodyParser.json());
 
-users.get('/', (request, response) => {
+users.get('/', authHelpers.loginRequired, (request, response) => {
   database('users')
     .select()
     .then(usersRes => {
