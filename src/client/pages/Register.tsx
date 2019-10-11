@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import SingleColumn from '../components/layout/SingleColumn';
+import ReCAPTCHA from 'react-google-recaptcha';
 import Input from '../components/atoms/forms/Input';
 import Button from '../components/atoms/Button';
 import FormWrapper from '../components/atoms/forms/FormWrapper';
@@ -18,6 +19,8 @@ type RegisterViewProps = {
 };
 
 const Register: React.FC<RegisterViewProps> = ({ history }) => {
+  const [isRobot, setIsRobot] = useState(true);
+
   return (
     <SingleColumn authProtected={false} history={history}>
       <h1>Register</h1>
@@ -79,9 +82,17 @@ const Register: React.FC<RegisterViewProps> = ({ history }) => {
                     />
                   </li>
                   <li>
+                    <ReCAPTCHA
+                      sitekey="6LfwML0UAAAAACmy1MXSUbSlyveoJmcXbJHIJ_L_"
+                      onChange={() => {
+                        setIsRobot(false);
+                      }}
+                    />
+                  </li>
+                  <li>
                     <Button
                       data-testid="userAdd-submit"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting || isRobot}
                       icon="add"
                     >
                       Register

@@ -35,6 +35,10 @@ const StyledButton = styledComponent('button', {
   '&:hover': {
     cursor: 'pointer',
   },
+  '&:disabled': {
+    background: colors.form.buttonDisabledBacgkround,
+    cursor: 'default',
+  },
   alignItems: 'center',
   border: 'none',
   borderRadius: '4px',
@@ -65,6 +69,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 }) => (
   <StyledButton
     className={`${variant} ${size} ${additionalClasses}`}
+    disabled={disabled}
     type="submit"
     {...otherProps}
   >

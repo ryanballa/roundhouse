@@ -26,7 +26,7 @@ import TrafficGenerators from './trafficGenerators/TrafficGenerators';
 import Destinations from './destinations/Destinations';
 import DashboardView from './dashboard/DashboardView';
 
-const Routes = ({ history, location }) => {
+const Routes = ({ history }) => {
   const dispatch = userDispatch();
 
   useEffect(() => {
@@ -80,9 +80,6 @@ const Routes = ({ history, location }) => {
 Routes.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string,
   }).isRequired,
 };
 

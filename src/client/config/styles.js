@@ -11,6 +11,7 @@ export const colors = {
   error: '#c52525',
   form: {
     background: '#EFEFEF',
+    buttonDisabledBacgkround: '#a0a1a2',
     buttonPrimary: '#FFFFFF',
     buttonPrimaryBacgkround: '#61A3C5',
     disabled: '#b9b9b9',
