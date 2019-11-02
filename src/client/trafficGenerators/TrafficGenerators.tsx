@@ -1,5 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
 import SingleColumn from '../components/layout/SingleColumn';
@@ -50,6 +51,10 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
     trafficGeneratorsService.get,
     [],
     [],
+  );
+
+  const linkFormatter = ({ rowData }) => (
+    <Link to={`traffic-generators/${rowData.id}`}>{rowData.name}</Link>
   );
 
   const sortArrayOfObjects = (arr, key, order) => {
@@ -125,6 +130,7 @@ const TrafficGenrators: React.FC<TrafficGenratorsProps> = ({ history }) => {
               width={100}
             />
             <Column
+              cellRenderer={linkFormatter}
               title="Name"
               key="name"
               dataKey="name"

@@ -106,36 +106,47 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
               setIsAddWorkOrderOpen(false);
             }}
           />
-          <BaseTable
-            onColumnSort={onColumnSort}
-            data={data}
-            sortBy={sortBy}
-            width={1200}
-            height={400}
-          >
-            <Column
-              sortable={true}
-              title="Id"
-              key="id"
-              dataKey="id"
-              width={100}
-            />
-            <Column
-              cellRenderer={linkFormatter}
-              title="Name"
-              key="name"
-              dataKey="name"
-              sortable={true}
-              width={300}
-            />
-            <Column
-              title="Description"
-              key="description"
-              dataKey="description"
-              sortable={true}
-              width={500}
-            />
-          </BaseTable>
+          {!data[0] && data.length === 0 && (
+            <p>
+              Begin the fun by setting up Destinations, Traffic Generators, and
+              Railcars. Once you've created one of each you're ready to create
+              your first Work Order.
+            </p>
+          )}
+          {data.length > 0 && (
+            <>
+              <BaseTable
+                onColumnSort={onColumnSort}
+                data={data}
+                sortBy={sortBy}
+                width={1200}
+                height={400}
+              >
+                <Column
+                  sortable={true}
+                  title="Id"
+                  key="id"
+                  dataKey="id"
+                  width={100}
+                />
+                <Column
+                  cellRenderer={linkFormatter}
+                  title="Name"
+                  key="name"
+                  dataKey="name"
+                  sortable={true}
+                  width={300}
+                />
+                <Column
+                  title="Description"
+                  key="description"
+                  dataKey="description"
+                  sortable={true}
+                  width={500}
+                />
+              </BaseTable>
+            </>
+          )}
         </StyledDiv>
       )}
     </SingleColumn>

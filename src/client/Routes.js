@@ -23,6 +23,7 @@ import { userDispatch } from './UserProvider';
 import WorkOrders from './workOrders/WorkOrders';
 import WorkOrdersView from './workOrders/WorkOrdersView';
 import TrafficGenerators from './trafficGenerators/TrafficGenerators';
+import TrafficGenerator from './trafficGenerators/TrafficGenerator';
 import UsersView from './users/UsersView';
 import Destinations from './destinations/Destinations';
 import DashboardView from './dashboard/DashboardView';
@@ -68,6 +69,7 @@ const Routes = ({ history }) => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/situations" component={SituationsView} />
         <Route exact path="/traffic-generators" component={TrafficGenerators} />
+        <Route exact path="/traffic-generators/:id" component={TrafficGenerator} />
         <Route exact path="/error" component={Error} />
         <Route exact path="/work-orders" component={WorkOrders} />
         <Route exact path="/work-orders/:id" component={WorkOrdersView} />
