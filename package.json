@@ -83,6 +83,7 @@
     "react-google-recaptcha": "^2.0.1",
     "react-modal": "^3.9.1",
     "react-router-dom": "^5.0.1",
+    "react-select": "^3.0.8",
     "react-spinners": "^0.6.1",
     "scheduler": "0.14.0",
     "shortid": "^2.2.15",

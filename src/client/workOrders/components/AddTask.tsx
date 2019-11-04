@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Field, Formik } from 'formik';
 import Input from '../../components/atoms/forms/Input';
+import SearchableSelect from '../../components/atoms/forms/SearchableSelect';
 import Select from '../../components/atoms/forms/Select';
 import Toggle from '../../components/atoms/forms/Toggle';
 import { colors } from '../../config/styles';
@@ -84,6 +85,8 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
   handleModalClose,
 }) => {
   const [filteredRailcarsData, setfilteredRailcarsData] = useState([]);
+  const [selectedRailcar, setSelectedRailcar] = useState({ value: null });
+  const options = filteredRailcarsData.map((railcar) => { return { value: railcar.id, label: `${railcar.road} ${railcar.car_number} ${railcar.color}`}})
 
   useEffect(() => {
     tasksService.get().then(vals => {
@@ -115,6 +118,7 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
             axios
               .post('/api/v1/tasks/', {
                 ...values,
+                railcar_id: selectedRailcar.value,
                 work_item_id: workItemId,
               })
               .then(
@@ -152,14 +156,13 @@ const AddTask: FunctionComponent<AddTaskProps> = ({
                   </li>
                   <li data-testid="railcar_id">
                     {!values.is_passenger_stop && (
-                      <Select label="Railcar" id="railcar_id" name="railcar_id">
-                        <option value="">Select Railcar</option>
-                        {filteredRailcarsData.map(railcar => (
-                          <option key={railcar.id} value={railcar.id}>
-                            {railcar.road} {railcar.car_number} {railcar.color}
-                          </option>
-                        ))}
-                      </Select>
+                      <SearchableSelect
+                      name="railcar_id"
+                      label="Railcar"
+                      value={selectedRailcar}
+                      onChange={(v) => { setSelectedRailcar(v) }}
+                      options={options}
+                    />
                     )}
                   </li>
                   <li data-testid="traffic_generator_id">
