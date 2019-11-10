@@ -76,6 +76,9 @@ const StyledUl = styledComponent('ul', {
     margin: '10px 0',
   },
   '@media print': {
+    '& .task': {
+      fontSize: '130%',
+    },
     '& p': {
       fontSize: '190%',
     },
