@@ -35,7 +35,7 @@ workOrders.get(
   authHelpers.loginRequired,
   (request, response) => {
     const workOrder = request.params.workOrderId;
-    const workItemsQuery = `SELECT work_items.id, work_items.order, work_items.depature_time, destinations.name AS destinationname, destinations.id AS destinationid from work_items INNER JOIN destinations ON (work_items.destination_id = destinations.id) WHERE work_order_id = ${workOrder}`;
+    const workItemsQuery = `SELECT work_items.id, work_items.order, work_items.depature_time, work_items.notes, destinations.name AS destinationname, destinations.id AS destinationid from work_items INNER JOIN destinations ON (work_items.destination_id = destinations.id) WHERE work_order_id = ${workOrder}`;
     const tasksQuery = `SELECT work_items.id as workitemid, traffic_generators.name, tasks.railcar_id, tasks.weight, tasks.id, tasks.type AS tasksType, railcars.road, railcars.type AS railcartype, railcars.reporting_marks, railcars.car_number, railcars.length, railcars.color, railcars.type, tasks.traffic_generator_id FROM tasks INNER JOIN work_items ON (tasks.work_item_id = work_items.id) INNER JOIN railcars ON (tasks.railcar_id = railcars.id) INNER JOIN traffic_generators ON (tasks.traffic_generator_id = traffic_generators.id) WHERE work_items.work_order_id = ${workOrder}`;
     const passengerTasksQuery = `SELECT work_items.id as workitemid, traffic_generators.name, tasks.is_passenger_stop, tasks.railcar_id, tasks.weight, tasks.id, tasks.type AS tasksType, tasks.traffic_generator_id FROM tasks INNER JOIN work_items ON (tasks.work_item_id = work_items.id) INNER JOIN traffic_generators ON (tasks.traffic_generator_id = traffic_generators.id) WHERE work_items.work_order_id = ${workOrder} AND tasks.is_passenger_stop = true`;
 

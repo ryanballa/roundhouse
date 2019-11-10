@@ -12,6 +12,7 @@ import AddTask from './components/AddTask';
 import DeleteTask from './components/DeleteTask';
 import AddWorkItem from './components/AddWorkItem';
 import EditWorkOrder from './components/EditWorkOrder';
+import EditWorkItem from './components/EditWorkItem';
 import DeleteWorkItem from './components/DeleteWorkItem';
 import Button from '../components/atoms/Button';
 import DeleteWorkOrder from './components/DeleteWorkOrder';
@@ -93,6 +94,8 @@ const WorkOrdersView = ({ history, match }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
   const [isEditWorkOrderOpen, setIsEditWorkOrderOpen] = useState(false);
+  const [isEditWorkItemOpen, setIsEditWorkItemOpen] = useState(false);
+  const [editingWorkItem, setEditingWorkItem] = useState({});
   const [addingWorkItem, setAddingWorkItem] = useState(false);
   const [railcars, isRailcarsLoading] = usePromise(railcarsService.get, [], []);
   const [tasks, isTasksLoading] = usePromise(tasksService.get, [], []);
@@ -191,10 +194,26 @@ const WorkOrdersView = ({ history, match }) => {
             />
           )}
           <StyledUl>
+            <EditWorkItem
+              handleModalClose={() => {
+                setIsEditWorkItemOpen(false);
+              }}
+              workItem={editingWorkItem}
+              isOpen={isEditWorkItemOpen}
+            />
             {workOrder.workItems.map(workItem => (
               <li key={shortid.generate()}>
                 <div className="destinationWrapper">
                   <h2>{workItem.destinationname}</h2>
+                  <Link
+                    onClick={() => {
+                      setIsEditWorkItemOpen(true);
+                      setEditingWorkItem(workItem);
+                    }}
+                    to={`/work-orders/${workOrder.workOrdersResults[0].id}`}
+                  >
+                  Edit
+                  </Link>
                   {!workItem.tasks.length && (
                     <DeleteWorkItem
                       workItemId={workItem.id}
