@@ -4,11 +4,11 @@ cache:
   # Caches node_modules in all other cases
   npm: true
   directories:
-  - node_modules
-  # we also need to cache folder with Cypress binary
-  - ~/.cache
+    - node_modules
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
 node_js:
-  - "10"
+  - '10'
 env:
   - CXX=g++-4.8]
 addons:
@@ -29,5 +29,5 @@ services:
 deploy:
   provider: heroku
   api_key:
-    secure: "17c9077e-3526-4306-aefa-928c3ad8ed48"
-  app: "roundhouseapp"
+    secure: '6275e442-ff80-45fe-9258-bc8f74fb8523'
+  app: 'roundhouseapp'

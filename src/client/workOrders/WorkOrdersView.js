@@ -95,7 +95,7 @@ const StyledUl = styledComponent('ul', {
       fontSize: '130%',
     },
     '& p': {
-      fontSize: '190%',
+      fontSize: '390%',
     },
     fontSize: '190%',
   },
