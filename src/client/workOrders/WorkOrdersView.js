@@ -118,6 +118,22 @@ const WorkOrdersView = ({ history, match }) => {
   const [railcars, isRailcarsLoading] = usePromise(railcarsService.get, [], []);
   const [tasks, isTasksLoading] = usePromise(tasksService.get, [], []);
 
+  const sortTasks = tasksToSort => {
+    return tasksToSort.sort((a, b) => {
+      var nameA = a.taskstype.toUpperCase();
+      var nameB = b.taskstype.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+  };
+
   const fetchData = async () => {
     setIsLoading(true);
     await axios(`/api/v1/workOrders/${match.params.id}`)
@@ -266,22 +282,25 @@ const WorkOrdersView = ({ history, match }) => {
                   </div>
                 )}
                 <ul>
-                  {workItem.tasks.map(task => (
-                    <li key={shortid.generate()} className="task">
-                      [ ] {task.taskstype}{' '}
-                      {task.taskstype === 'pick' ? 'up' : 'off'}{' '}
-                      {task.is_passenger_stop ? 'passengers' : ''} {task.road}{' '}
-                      {task.reporting_marks} {task.car_number} {task.type}{' '}
-                      {task.color} {task.taskstype === 'pick' ? 'from' : 'to'}{' '}
-                      {task.name}
-                      <DeleteTask
-                        taskId={task.id}
-                        handleDelete={() => {
-                          fetchData();
-                        }}
-                      />
-                    </li>
-                  ))}
+                  {sortTasks(workItem.tasks).map(task => {
+                    console.log(sortTasks(workItem.tasks));
+                    return (
+                      <li key={shortid.generate()} className="task">
+                        [ ] {task.taskstype}{' '}
+                        {task.taskstype === 'pick' ? 'up' : 'off'}{' '}
+                        {task.is_passenger_stop ? 'passengers' : ''} {task.road}{' '}
+                        {task.reporting_marks} {task.car_number} {task.type}{' '}
+                        {task.color} {task.taskstype === 'pick' ? 'from' : 'to'}{' '}
+                        {task.name}
+                        <DeleteTask
+                          taskId={task.id}
+                          handleDelete={() => {
+                            fetchData();
+                          }}
+                        />
+                      </li>
+                    );
+                  })}
                 </ul>
                 <div className="addButtonWrapper">
                   <AddButton
