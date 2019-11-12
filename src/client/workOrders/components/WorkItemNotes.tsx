@@ -22,7 +22,16 @@ const WorkItemNotes: React.FC<WorkItemProps> = ({ workItem }) => {
         const filteredData = workOrders.data.filter(
           item => item.workitemid !== workItem.id,
         );
-        setWorkOrdersData(filteredData);
+        const sortedWorkOrders = filteredData.sort((a, b) => {
+          if (a.depature_time < b.depature_time) {
+            return -1;
+          }
+          if (a.depature_time > b.depature_time) {
+            return 1;
+          }
+          return 0;
+        });
+        setWorkOrdersData(sortedWorkOrders);
       })
       .catch(e => {
         console.log(e);
@@ -48,11 +57,13 @@ const WorkItemNotes: React.FC<WorkItemProps> = ({ workItem }) => {
           {workItem.notes}
         </p>
       )}
-      <h5>Other Train Departures</h5>
+      <p>Other Train Departures</p>
       {workOrdersData.map(workItemData => {
-        console.log(workItem);
-        console.log(workItemData);
-        return <div>{workItemData.depature_time}</div>;
+        return (
+          <div>
+            {workItemData.depature_time} - {workItemData.name}
+          </div>
+        );
       })}
     </StyledDiv>
   );

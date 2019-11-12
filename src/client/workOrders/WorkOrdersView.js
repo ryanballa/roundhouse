@@ -258,8 +258,8 @@ const WorkOrdersView = ({ history, match }) => {
                     />
                   )}
                 </div>
-                <p>Scheduled work at {workItem.destinationname}</p>
                 <WorkItemNotes workItem={workItem} />
+                <p>Scheduled work at {workItem.destinationname}</p>
                 {!workItem.tasks.length && (
                   <div>
                     <small>No Scheduled Work</small>
