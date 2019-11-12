@@ -31,6 +31,23 @@ destinations.get('/', authHelpers.loginRequired, (request, response) => {
 });
 
 destinations.get(
+  '/work-items/:destinationId/',
+  authHelpers.loginRequired,
+  (request, response) => {
+    const id = request.params.destinationId;
+    const query = `SELECT * from work_items INNER JOIN destinations ON (work_items.destination_id = destinations.id) WHERE destinations.id = ${id}`;
+    db.manyOrNone(query)
+      .then(destinationRes => {
+        response.status(200).json(destinationRes);
+      })
+      .catch(error => {
+        console.log(error);
+        response.status(500).json({ error });
+      });
+  },
+);
+
+destinations.get(
   '/:destinationId',
   authHelpers.loginRequired,
   (request, response) => {
