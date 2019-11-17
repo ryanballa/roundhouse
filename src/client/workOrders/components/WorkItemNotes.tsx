@@ -57,11 +57,14 @@ const WorkItemNotes: React.FC<WorkItemProps> = ({ workItem }) => {
           {workItem.notes}
         </p>
       )}
-      <p>Other Train Departures</p>
+      <p>Other Trains</p>
       {workOrdersData.map(workItemData => {
         return (
           <div>
-            {workItemData.depature_time} - {workItemData.name}
+            {workItemData.arrival_time && (
+              <span>{workItemData.arrival_time} - </span>
+            )}
+            {workItemData.depature_time} : {workItemData.name}
           </div>
         );
       })}

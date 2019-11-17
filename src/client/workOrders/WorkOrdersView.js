@@ -89,6 +89,12 @@ const StyledUl = styledComponent('ul', {
     margin: '10px 0',
   },
   '@media print': {
+    '& h2': {
+      marginBottom: 0,
+    },
+    '& .edit': {
+      display: 'none',
+    },
     '& .instructions': {
       fontSize: '130%',
     },
@@ -96,7 +102,7 @@ const StyledUl = styledComponent('ul', {
       fontSize: '130%',
     },
     '& p': {
-      fontSize: '390%',
+      fontSize: '140%',
     },
     fontSize: '190%',
   },
@@ -241,6 +247,7 @@ const WorkOrdersView = ({ history, match }) => {
                 <div className="destinationWrapper">
                   <h2>{workItem.destinationname}</h2>
                   <Link
+                    className="edit"
                     onClick={() => {
                       setIsEditWorkItemOpen(true);
                       setEditingWorkItem(workItem);
@@ -267,7 +274,6 @@ const WorkOrdersView = ({ history, match }) => {
                 )}
                 <ul>
                   {sortTasks(workItem.tasks).map(task => {
-                    console.log(sortTasks(workItem.tasks));
                     return (
                       <li key={shortid.generate()} className="task">
                         [ ] {task.taskstype}{' '}
@@ -296,6 +302,9 @@ const WorkOrdersView = ({ history, match }) => {
                     Add Task
                   </AddButton>
                 </div>
+                {workItem.arrival_time && (
+                  <p>Arrive at {workItem.arrival_time}</p>
+                )}
                 {workItem.depature_time && (
                   <p>Leave at {workItem.depature_time}</p>
                 )}

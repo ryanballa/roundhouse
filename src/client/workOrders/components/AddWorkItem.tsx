@@ -93,6 +93,15 @@ const AddWorkItem: React.FC<AddWorkItemProps> = ({
                   ))}
                 </Select>
               </li>
+              <li data-testid="arrival_time">
+                <Input
+                  label="Arrival Time"
+                  id="arrival_time"
+                  type="text"
+                  name="arrival_time"
+                  placeholder=""
+                />
+              </li>
               <li data-testid="depature_time">
                 <Input
                   label="Depature Time"

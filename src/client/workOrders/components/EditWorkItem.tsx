@@ -39,6 +39,7 @@ const customStyles = {
 };
 
 type WorkItemProps = {
+  arrival_time: string;
   depature_time: string;
   destinationid: number;
   notes: string;
@@ -73,6 +74,7 @@ const EditWorkItem: React.FC<EditWorkItemProps> = ({
     >
       <Formik
         initialValues={{
+          arrival_time: workItem.arrival_time,
           notes: workItem.notes,
           destination_id: workItem.destinationid,
           depature_time: workItem.depature_time,
@@ -104,6 +106,15 @@ const EditWorkItem: React.FC<EditWorkItemProps> = ({
           <StyledFormDiv>
             <form data-testid="workOrderEdit-form" onSubmit={handleSubmit}>
               <ul>
+                <li data-testid="arrival_time">
+                  <Input
+                    label="Arrival Time"
+                    id="arrival_time"
+                    type="text"
+                    name="arrival_time"
+                    placeholder=""
+                  />
+                </li>
                 <li data-testid="depature_time">
                   <Input
                     label="Depature Time"
@@ -132,10 +143,7 @@ const EditWorkItem: React.FC<EditWorkItemProps> = ({
                   />
                 </li>
                 <li>
-                  <Button
-                    data-testid="workItem-submit"
-                    disabled={isSubmitting}
-                  >
+                  <Button data-testid="workItem-submit" disabled={isSubmitting}>
                     Edit
                   </Button>
                 </li>
