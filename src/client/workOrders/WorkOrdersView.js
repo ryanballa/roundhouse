@@ -225,7 +225,10 @@ const WorkOrdersView = ({ history, match }) => {
                 additionalClasses="printButton"
                 icon="print"
                 onClick={() => {
-                  window.print();
+                  window.open(
+                    `/work-orders/print/${workOrder.workOrdersResults[0].id}`,
+                    '_blank',
+                  );
                 }}
               >
                 Print

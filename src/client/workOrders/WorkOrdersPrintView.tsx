@@ -19,9 +19,11 @@ const StyledDiv = styledComponent('div', {
     width: '40%',
   },
   '& h2': {
+    letterSpacing: '1px',
     fontWeight: 'normal',
   },
   '& h3': {
+    letterSpacing: '1px',
     margin: '10px 0 10px 10px',
     padding: 0,
   },
@@ -30,10 +32,12 @@ const StyledDiv = styledComponent('div', {
   },
   header: {
     '& h1': {
+      letterSpacing: '1px',
       margin: '0 0 10px 0',
       padding: 0,
     },
     '& h2': {
+      letterSpacing: '1px',
       margin: 0,
       padding: 0,
     },
@@ -55,8 +59,9 @@ const StyledDiv = styledComponent('div', {
     width: '100%',
   },
   '& .otherTrafficColumn': {
+    fontSize: '11px',
     paddingTop: '10px',
-    width: '30%',
+    width: '40%',
   },
   '& section': {
     borderBottom: '6px solid #000',
@@ -70,7 +75,6 @@ const StyledDiv = styledComponent('div', {
     margin: '0 0 10px 0',
     padding: '0 0 0 10px',
   },
-  borderBottom: '6px solid #000',
   fontFamily: 'MissionGothic',
 });
 
@@ -121,6 +125,7 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
   };
 
   useEffect(() => {
+    window.print();
     fetchData();
   }, []);
 

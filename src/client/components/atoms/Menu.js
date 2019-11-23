@@ -13,6 +13,7 @@ const StyledDiv = styledComponent('div', {
     '&:hover': {
       cursor: 'pointer',
     },
+    background: 'none',
     border: 'none',
     fontSize: '22px',
     outline: 'none',
