@@ -22,6 +22,7 @@ import Photos from './photos/Photos';
 import { userDispatch } from './UserProvider';
 import WorkOrders from './workOrders/WorkOrders';
 import WorkOrdersView from './workOrders/WorkOrdersView';
+import WorkOrdersPrintView from './workOrders/WorkOrdersPrintView';
 import TrafficGenerators from './trafficGenerators/TrafficGenerators';
 import TrafficGenerator from './trafficGenerators/TrafficGenerator';
 import UsersView from './users/UsersView';
@@ -69,10 +70,19 @@ const Routes = ({ history }) => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/situations" component={SituationsView} />
         <Route exact path="/traffic-generators" component={TrafficGenerators} />
-        <Route exact path="/traffic-generators/:id" component={TrafficGenerator} />
+        <Route
+          exact
+          path="/traffic-generators/:id"
+          component={TrafficGenerator}
+        />
         <Route exact path="/error" component={Error} />
         <Route exact path="/work-orders" component={WorkOrders} />
         <Route exact path="/work-orders/:id" component={WorkOrdersView} />
+        <Route
+          exact
+          path="/work-orders/print/:id"
+          component={WorkOrdersPrintView}
+        />
         <Route exact path="/dashboard" component={DashboardView} />
         <Route exact path="/users" component={UsersView} />
         <Route component={NotFound} />

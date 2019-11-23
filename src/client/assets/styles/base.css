@@ -1,0 +1,11 @@
+@font-face {
+  font-family: MissionGothic;
+  font-weight: regular;
+  src: url('../fonts/MissionGothicRegular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: MissionGothic;
+  font-weight: bold;
+  src: url('../fonts/MissionGothicBold.otf') format('opentype');
+}
