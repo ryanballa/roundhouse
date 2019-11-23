@@ -144,6 +144,13 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
                   sortable={true}
                   width={500}
                 />
+                <Column
+                  title="Complexity"
+                  key="complexity"
+                  dataKey="complexity"
+                  sortable={true}
+                  width={500}
+                />
               </BaseTable>
             </>
           )}

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
 import Input from '../../components/atoms/forms/Input';
+import Select from '../../components/atoms/forms/Select';
 import { colors } from '../../config/styles';
 import { styledComponent } from '../../utils/styledComponent';
 import Button from '../../components/atoms/Button';
@@ -114,6 +115,13 @@ const AddWorkOrder: React.FC<AddWorkOrderProps> = ({
                     name="description"
                     placeholder=""
                   />
+                </li>
+                <li>
+                  <Select label="Complexity" id="complexity" name="complexity">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="difficult">Difficult</option>
+                  </Select>
                 </li>
                 <li>
                   <Button
