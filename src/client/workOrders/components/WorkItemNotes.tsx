@@ -19,6 +19,7 @@ const StyledDiv = styledComponent('div', {
 
 type WorkItemProps = {
   workItem: WorkItem;
+  workOrderId: Number;
 };
 
 type WorkItem = {
@@ -27,13 +28,13 @@ type WorkItem = {
   notes: String;
 };
 
-const WorkItemNotes: React.FC<WorkItemProps> = ({ workItem }) => {
+const WorkItemNotes: React.FC<WorkItemProps> = ({ workItem, workOrderId }) => {
   const [workOrdersData, setWorkOrdersData] = useState([]);
   useEffect(() => {
     axios(`/api/v1/destinations/work-items/${workItem.destinationid}/`)
       .then(workOrders => {
         const filteredData = workOrders.data.filter(
-          item => item.workitemid !== workItem.id,
+          item => item.workorderid !== workOrderId,
         );
         const sortedWorkOrders = filteredData.sort((a, b) => {
           if (a.depature_time < b.depature_time) {

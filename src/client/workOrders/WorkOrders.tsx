@@ -80,7 +80,7 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
     <SingleColumn history={history}>
       <h1>Work Orders</h1>
       <p>
-        Run your railroad like a real one with work orders to for operation
+        Run your railroad like a real one with work orders for operation
         sessions.
       </p>
       {isLoading ? (

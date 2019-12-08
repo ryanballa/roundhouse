@@ -286,7 +286,10 @@ const WorkOrdersView = ({ history, match }) => {
                     />
                   )}
                 </div>
-                <WorkItemNotes workItem={workItem} />
+                <WorkItemNotes
+                  workOrderId={workOrder.workOrdersResults[0].id}
+                  workItem={workItem}
+                />
                 <p>
                   <svg
                     data-name="Layer 1"
