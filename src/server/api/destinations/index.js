@@ -35,7 +35,7 @@ destinations.get(
   authHelpers.loginRequired,
   (request, response) => {
     const id = request.params.destinationId;
-    const query = `SELECT work_items.work_order_id, work_items.arrival_time, work_items.depature_time, work_items.id as workitemid, work_orders.id as workorderid, work_orders.name from work_items INNER JOIN destinations ON (work_items.destination_id = destinations.id) INNER JOIN work_orders ON (work_items.work_order_id = work_orders.id) WHERE destinations.id = ${id}`;
+    const query = `SELECT work_items.work_order_id, work_items.arrival_time, work_items.depature_time, work_items.id as workitemid, work_orders.id as workorderid, work_orders.name from work_items INNER JOIN destinations ON (work_items.destination_id = destinations.id) INNER JOIN work_orders ON (work_items.work_order_id = work_orders.id) WHERE destinations.id = ${id} and work_orders.assignee != ''`;
     db.manyOrNone(query)
       .then(destinationRes => {
         response.status(200).json(destinationRes);

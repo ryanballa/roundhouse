@@ -67,8 +67,6 @@ work_items.put('/:workItemId', (request, response) => {
       response.status(200).json(workItemRes);
     })
     .catch(error => {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>');
-      console.log(error);
       response.status(500).json({ error });
     });
 });

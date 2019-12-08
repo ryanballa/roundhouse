@@ -82,8 +82,11 @@ const StyledDiv = styledComponent('div', {
       textTransform: 'uppercase',
     },
     '& .instructions': {
-      borderLeft: '1px solid #000',
-      width: '80%',
+      textAlign: 'left',
+    },
+    '& .run': {
+      borderRight: '1px solid #000',
+      width: '106px',
     },
     '& span': {
       padding: '5px 15px',
@@ -179,7 +182,7 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
         <h2>Work Order</h2>
       </header>
       <div className="notes">
-        <span>
+        <span className="run">
           <b>Run</b>
           {workOrder.workOrdersResults[0].name}
         </span>
