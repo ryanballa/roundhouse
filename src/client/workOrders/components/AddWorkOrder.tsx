@@ -123,6 +123,15 @@ const AddWorkOrder: React.FC<AddWorkOrderProps> = ({
                     <option value="difficult">Difficult</option>
                   </Select>
                 </li>
+                <li data-testid="assignee">
+                  <Input
+                    label="Assignee"
+                    id="assignee"
+                    type="text"
+                    name="assignee"
+                    placeholder=""
+                  />
+                </li>
                 <li>
                   <Button
                     data-testid="workOrderAdd-submit"

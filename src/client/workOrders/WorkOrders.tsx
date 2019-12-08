@@ -151,6 +151,13 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
                   sortable={true}
                   width={500}
                 />
+                <Column
+                  title="Assignee"
+                  key="assignee"
+                  dataKey="assignee"
+                  sortable={true}
+                  width={500}
+                />
               </BaseTable>
             </>
           )}

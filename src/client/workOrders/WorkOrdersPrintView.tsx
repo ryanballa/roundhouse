@@ -26,22 +26,40 @@ const StyledDiv = styledComponent('div', {
     letterSpacing: '1px',
     margin: '10px 0 10px 10px',
     padding: 0,
+    textTransform: 'uppercase',
   },
   '& p': {
     margin: '0 0 10px 10px',
+  },
+  footer: {
+    '& .approval': {
+      borderLeft: '1px solid #000',
+      borderRight: '1px solid #000',
+    },
+    '& .generated': {
+      borderLeft: '1px solid #000',
+    },
+    '& div': {
+      display: 'inline-block',
+      float: 'right',
+      padding: '0 10px',
+      width: '20%',
+    },
+    textAlign: 'center',
   },
   header: {
     '& h1': {
       letterSpacing: '1px',
       margin: '0 0 10px 0',
       padding: 0,
+      textTransform: 'uppercase',
     },
     '& h2': {
       letterSpacing: '1px',
       margin: 0,
       padding: 0,
+      textTransform: 'uppercase',
     },
-    borderBottom: '6px solid #000',
     padding: '30px 0',
     textAlign: 'center',
   },
@@ -58,12 +76,29 @@ const StyledDiv = styledComponent('div', {
     textAlign: 'left',
     width: '100%',
   },
+  '& .notes': {
+    '& b': {
+      marginRight: '15px',
+      textTransform: 'uppercase',
+    },
+    '& .instructions': {
+      borderLeft: '1px solid #000',
+      width: '80%',
+    },
+    '& span': {
+      padding: '5px 15px',
+    },
+    borderTop: '3px solid #000',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   '& .otherTrafficColumn': {
     fontSize: '11px',
     paddingTop: '10px',
     width: '40%',
   },
   '& section': {
+    borderTop: '6px solid #000',
     borderBottom: '6px solid #000',
     display: 'flex',
     minHeight: '300px',
@@ -76,9 +111,12 @@ const StyledDiv = styledComponent('div', {
     padding: '0 0 0 10px',
   },
   fontFamily: 'MissionGothic',
+  letterSpacing: '1px',
 });
 
-type WorkOrdersPrintViewProps = {};
+type WorkOrdersPrintViewProps = {
+  notes: String;
+};
 
 const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
   history,
@@ -90,7 +128,12 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
     destinations: [],
     traffic: [],
     trafficGenerators: [],
-    workOrdersResults: [{}],
+    workOrdersResults: [
+      {
+        name: '',
+        notes: '',
+      },
+    ],
   });
 
   const sortTasks = tasksToSort => {
@@ -135,6 +178,16 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
         <h1>Garfield Central Railroad</h1>
         <h2>Work Order</h2>
       </header>
+      <div className="notes">
+        <span>
+          <b>Run</b>
+          {workOrder.workOrdersResults[0].name}
+        </span>
+        <span className="instructions">
+          <b>Notes</b>
+          {workOrder.workOrdersResults[0].notes}
+        </span>
+      </div>
       {workOrder.workItems.map(workItem => (
         <section>
           <div className="leftColumnWrappers">
@@ -173,13 +226,25 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
             </div>
           </div>
           <div className="otherTrafficColumn">
-            <p>Please be advised of the presence of trains at these times:</p>
+            <p>
+              <b>Please be advised of the presence of trains at these times:</b>
+            </p>
             <ul className="typewriter">
               <PrintItemNotes workItem={workItem} />
             </ul>
           </div>
         </section>
       ))}
+      <footer>
+        <div className="approval">
+          <h3>Approved By</h3>
+          <p>R.K.B</p>
+        </div>
+        <div className="generated">
+          <h3>Generated</h3>
+          <p>19 Nov. 2019</p>
+        </div>
+      </footer>
     </StyledDiv>
   );
 };

@@ -40,6 +40,8 @@ const customStyles = {
 };
 
 type WorkOrderProps = {
+  assignee: string;
+  complexity: string;
   description: string;
   name: string;
   notes: string;
@@ -73,6 +75,7 @@ const EditWorkOrder: React.FC<EditWorkOrderProps> = ({
     >
       <Formik
         initialValues={{
+          assignee: workOrder.assignee,
           complexity: workOrder.complexity,
           description: workOrder.description,
           name: workOrder.name,
@@ -136,6 +139,15 @@ const EditWorkOrder: React.FC<EditWorkOrderProps> = ({
                     <option value="medium">Medium</option>
                     <option value="difficult">Difficult</option>
                   </Select>
+                </li>
+                <li data-testid="assignee">
+                  <Input
+                    label="Assignee"
+                    id="assignee"
+                    type="text"
+                    name="assignee"
+                    placeholder=""
+                  />
                 </li>
                 <li>
                   <Button

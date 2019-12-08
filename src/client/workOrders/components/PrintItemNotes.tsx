@@ -29,6 +29,7 @@ type WorkItem = {
 
 const PrintItemNotes: React.FC<WorkItemProps> = ({ workItem }) => {
   const [workOrdersData, setWorkOrdersData] = useState([]);
+
   useEffect(() => {
     axios(`/api/v1/destinations/work-items/${workItem.destinationid}/`)
       .then(workOrders => {
