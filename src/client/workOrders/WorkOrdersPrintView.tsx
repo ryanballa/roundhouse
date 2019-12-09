@@ -104,7 +104,7 @@ const StyledDiv = styledComponent('div', {
     borderTop: '6px solid #000',
     borderBottom: '6px solid #000',
     display: 'flex',
-    minHeight: '300px',
+    minHeight: '150px',
   },
   '& .typewriter': {
     fontFamily: 'American Typewriter',
