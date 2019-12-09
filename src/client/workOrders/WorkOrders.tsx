@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
@@ -49,8 +49,8 @@ type WorkOrder = {
 
 const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
   const [isAddWorkOrderOpen, setIsAddWorkOrderOpen] = useState(false);
-  const [sortBy, setSortBy] = useState({ key: 'id', order: 'asc' });
-
+  const [sortBy, setSortBy] = useState({ key: 'assignee', order: 'desc' });
+  const [sortedData, setSortedData] = useState([]);
   const [data, error, isLoading, setData] = usePromise(
     workOrdersService.get,
     [],
@@ -70,10 +70,19 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
     });
   };
 
+  useEffect(() => {
+    const sortedData = sortArrayOfObjects(data, 'assignee', 'desc');
+    setSortedData(data);
+  }, [data]);
+
   const onColumnSort = (sortByVal: WorkOrder) => {
-    const sortedData = sortArrayOfObjects(data, sortByVal.key, sortByVal.order);
+    const newSortedData = sortArrayOfObjects(
+      sortedData,
+      sortByVal.key,
+      sortByVal.order,
+    );
     setSortBy(sortByVal);
-    setData({ value: sortedData });
+    setSortedData(data);
   };
 
   return (
@@ -100,24 +109,24 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
               setIsAddWorkOrderOpen(false);
             }}
             handleUpdate={res => {
-              const updated = data;
+              const updated = sortedData;
               updated.push(res);
-              setData({ value: data });
+              setData({ value: sortedData });
               setIsAddWorkOrderOpen(false);
             }}
           />
-          {!data[0] && data.length === 0 && (
+          {!sortedData[0] && sortedData.length === 0 && (
             <p>
               Begin the fun by setting up Destinations, Traffic Generators, and
               Railcars. Once you've created one of each you're ready to create
               your first Work Order.
             </p>
           )}
-          {data.length > 0 && (
+          {sortedData.length > 0 && (
             <>
               <BaseTable
                 onColumnSort={onColumnSort}
-                data={data}
+                data={sortedData}
                 sortBy={sortBy}
                 width={1200}
                 height={400}
