@@ -28,6 +28,9 @@ const StyledDiv = styledComponent('div', {
   '& .BaseTable__table': {
     outline: 'none',
   },
+  '& input': {
+    marginBottom: '20px',
+  },
   '& .itemCallout': {
     width: '50%',
   },
@@ -132,6 +135,21 @@ function Railcars({ history }) {
     });
   };
 
+  const onSearch = e => {
+    const filteredData = data.data.filter(dataItem => {
+      return (
+        dataItem.road.toLowerCase() === e.target.value ||
+        dataItem.car_number === parseInt(e.target.value)
+      );
+    });
+    setFilters([]);
+    setData({
+      data: data.data,
+      displayedData: filteredData.length ? filteredData : data.data,
+      roads: data.roads,
+    });
+  };
+
   const onFilter = filterVals => {
     const filteredData = [];
 
@@ -170,6 +188,8 @@ function Railcars({ history }) {
               <AddButton className="addRailcar" to="/railcars/add">
                 Add Railcar
               </AddButton>
+              <h2>Search</h2>
+              <input onChange={e => onSearch(e)} type="text" />
               <section className="tableWrapper">
                 <Roadfilter
                   data={data}
