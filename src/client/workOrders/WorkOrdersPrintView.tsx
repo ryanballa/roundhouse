@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 import shortid from 'shortid';
 import PrintItemNotes from './components/PrintItemNotes';
 import { styledComponent } from '../utils/styledComponent';
@@ -86,7 +87,9 @@ const StyledDiv = styledComponent('div', {
     },
     '& .run': {
       borderRight: '1px solid #000',
+      hyphens: 'auto',
       width: '106px',
+      wordBreak: 'break-all',
     },
     '& span': {
       padding: '5px 15px',
@@ -245,7 +248,7 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
         </div>
         <div className="generated">
           <h3>Generated</h3>
-          <p>19 Nov. 2019</p>
+          <p>{moment().format('DD MMM. YYYY')}</p>
         </div>
       </footer>
     </StyledDiv>
