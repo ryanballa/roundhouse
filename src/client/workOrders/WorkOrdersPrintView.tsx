@@ -96,7 +96,7 @@ const StyledDiv = styledComponent('div', {
     },
     borderTop: '3px solid #000',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'left',
   },
   '& .otherTrafficColumn': {
     fontSize: '11px',
@@ -204,7 +204,11 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
               </div>
               <div className="borderTop">
                 <h3>Leave At</h3>
-                <p className="typewriter">{workItem.depature_time}</p>
+                <p className="typewriter">
+                  {workItem.depature_time
+                    ? workItem.depature_time
+                    : 'Terminate'}
+                </p>
               </div>
             </div>
             <div className="locationColumn">

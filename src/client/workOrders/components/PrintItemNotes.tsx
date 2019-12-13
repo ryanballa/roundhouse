@@ -54,14 +54,14 @@ const PrintItemNotes: React.FC<WorkItemProps> = ({ workItem }) => {
   return (
     <StyledDiv>
       {workOrdersData.map(workItemData => {
-        return (
+        return workItemData.depature_time && workItemData.arrival_time ? (
           <li>
             {workItemData.arrival_time && (
               <span>{workItemData.arrival_time} - </span>
             )}
             {workItemData.depature_time} : {workItemData.name}
           </li>
-        );
+        ) : null;
       })}
     </StyledDiv>
   );
