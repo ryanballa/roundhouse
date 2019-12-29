@@ -167,6 +167,9 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
         }
         setWorkOrder(workOrderRes.data);
         setIsLoading(false);
+        setTimeout(() => {
+          window.print();
+        }, 1000);
       })
       .catch(e => {
         console.log(e);
@@ -174,7 +177,6 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
   };
 
   useEffect(() => {
-    window.print();
     fetchData();
   }, []);
 

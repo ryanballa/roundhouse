@@ -1,5 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import BaseTable, { Column } from 'react-base-table';
 import { AddButton } from '../components/atoms/AddButton';
@@ -48,6 +49,7 @@ type WorkOrder = {
 };
 
 const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
+  const [workOrderGroups, setWorkOrderGroups] = useState([]);
   const [isAddWorkOrderOpen, setIsAddWorkOrderOpen] = useState(false);
   const [sortBy, setSortBy] = useState({ key: 'assignee', order: 'desc' });
   const [sortedData, setSortedData] = useState([]);
@@ -61,6 +63,16 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
     <Link to={`work-orders/${rowData.id}`}>{rowData.name}</Link>
   );
 
+  const groupFormatter = ({ rowData }) => {
+    const workOrderGroupDisplay = workOrderGroups.find(
+      item => item.id === rowData.work_orders_group_id,
+    );
+    const dataToDisplay = workOrderGroupDisplay
+      ? workOrderGroupDisplay.name
+      : rowData.work_orders_group_id;
+    return <span>{dataToDisplay}</span>;
+  };
+
   const sortArrayOfObjects = (arr: string[], key: string, order: string) => {
     return arr.sort((a, b) => {
       if (order === 'asc') {
@@ -71,6 +83,11 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
   };
 
   useEffect(() => {
+    if (!workOrderGroups.length) {
+      axios.get('/api/v1/work_order_groups/').then(data => {
+        setWorkOrderGroups(data.data);
+      });
+    }
     const sortedData = sortArrayOfObjects(data, 'assignee', 'desc');
     setSortedData(data);
   }, [data]);
@@ -166,6 +183,14 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
                   dataKey="assignee"
                   sortable={true}
                   width={500}
+                />
+                <Column
+                  cellRenderer={groupFormatter}
+                  title="Group"
+                  key="work_orders_group_id"
+                  dataKey="work_orders_group_id"
+                  sortable={true}
+                  width={400}
                 />
               </BaseTable>
             </>

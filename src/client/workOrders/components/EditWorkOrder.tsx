@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
 import { Formik } from 'formik';
@@ -63,6 +63,15 @@ const EditWorkOrder: React.FC<EditWorkOrderProps> = ({
   workOrder,
 }) => {
   const { user } = userState();
+  const [workOrderGroups, setWorkOrderGroups] = useState([]);
+
+  useEffect(() => {
+    if (!workOrderGroups.length) {
+      axios.get('/api/v1/work_order_groups/').then(data => {
+        setWorkOrderGroups(data.data);
+      });
+    }
+  }, []);
 
   return (
     <ModalWindow
@@ -132,6 +141,19 @@ const EditWorkOrder: React.FC<EditWorkOrderProps> = ({
                     name="notes"
                     placeholder=""
                   />
+                </li>
+                <li>
+                  <Select
+                    label="Group"
+                    id="work_orders_group_id"
+                    name="work_orders_group_id"
+                  >
+                    {workOrderGroups.map(item => (
+                      <option key={`group-${item.id}`} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </Select>
                 </li>
                 <li>
                   <Select label="Complexity" id="complexity" name="complexity">
