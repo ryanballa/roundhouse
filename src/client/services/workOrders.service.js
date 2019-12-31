@@ -9,6 +9,14 @@ class WorkOrdersService {
       return e;
     }
   }
+  async getSignUp(userId) {
+    try {
+      this.response = await axios.get(`/api/v1/workOrders/user/${userId}`);
+      return this.response.data;
+    } catch (e) {
+      return e;
+    }
+  }
 }
 
 const workOrdersService = new WorkOrdersService();

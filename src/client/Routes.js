@@ -29,6 +29,7 @@ import UsersView from './users/UsersView';
 import Destinations from './destinations/Destinations';
 import DashboardView from './dashboard/DashboardView';
 import GroupsView from './groups/GroupsView';
+import SignUp from './workOrders/SignUp';
 
 const Routes = ({ history }) => {
   const dispatch = userDispatch();
@@ -79,6 +80,7 @@ const Routes = ({ history }) => {
         />
         <Route exact path="/error" component={Error} />
         <Route exact path="/work-orders" component={WorkOrders} />
+        <Route exact path="/sign-up/:id" component={SignUp} />
         <Route exact path="/work-orders/:id" component={WorkOrdersView} />
         <Route
           exact

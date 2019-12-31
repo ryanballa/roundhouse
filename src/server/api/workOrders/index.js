@@ -30,6 +30,29 @@ workOrders.get('/', authHelpers.loginRequired, (request, response) => {
     );
 });
 
+workOrders.get('/user/:userId', (request, response) => {
+  const user = request.params.userId;
+  const query = `SELECT * FROM work_orders WHERE user_id=${user}`;
+
+  return db
+    .manyOrNone(query)
+    .then(res => {
+      /* istanbul ignore next */
+      if (!response.headersSent) {
+        response.status(200).json(res);
+      }
+    })
+    .catch(
+      /* istanbul ignore next */ error => {
+        console.log(error);
+        /* istanbul ignore next */
+        if (!response.headersSent) {
+          response.status(500).json({ error });
+        }
+      },
+    );
+});
+
 workOrders.get(
   '/:workOrderId',
   authHelpers.loginRequired,
