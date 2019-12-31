@@ -38,18 +38,18 @@ const customStyles = {
   },
 };
 
-type DestinationProps = {
+type GroupsProps = {
   id: number;
   type: string;
 };
 
-type AddDestinationProps = {
+type AddGroupProps = {
   isOpen: boolean;
   handleModalClose: () => void;
-  handleUpdate: (DestinationProps) => void;
+  handleUpdate: (GroupsProps) => void;
 };
 
-const AddGroup: FunctionComponent<AddDestinationProps> = ({
+const AddGroup: FunctionComponent<AddGroupProps> = ({
   handleUpdate,
   isOpen,
   handleModalClose,
