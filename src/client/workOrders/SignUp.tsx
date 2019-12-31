@@ -78,34 +78,40 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
       <ul>
         {data.map(item => (
           <li>
-            {item.name} - {item.assignee}
-            {!item.assignee && (
-              <a
-                href="#"
-                onClick={() => {
-                  setEditingWorkOrder(item.id);
-                }}
-              >
-                Take This Assignment
-              </a>
-            )}
+            <h2>
+              {item.name} - {item.assignee}
+              {!item.assignee && (
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    setEditingWorkOrder(item.id);
+                  }}
+                >
+                  Take This Assignment
+                </a>
+              )}
+            </h2>
+            <p>{item.description}</p>
             {editingWorkOrder === item.id && (
-              <input
-                type="text"
-                onChange={e => {
-                  setAssignee(e.target.value);
-                }}
-                value={assignee}
-              />
+              <div>
+                <input
+                  type="text"
+                  onChange={e => {
+                    setAssignee(e.target.value);
+                  }}
+                  value={assignee}
+                />
+                <button
+                  onClick={() => {
+                    editWorkOrder(item);
+                  }}
+                  type="button"
+                >
+                  Sign Up
+                </button>
+              </div>
             )}
-            <button
-              onClick={() => {
-                editWorkOrder(item);
-              }}
-              type="button"
-            >
-              Sign Up
-            </button>
           </li>
         ))}
       </ul>
