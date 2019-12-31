@@ -78,6 +78,7 @@ work_order_groups.delete(
     const id = request.params.workOrderGroupId;
     database('work_order_groups')
       .where('id', id)
+      .del()
       .then(workOrderGroupRes => {
         return response.status(200).json(workOrderGroupRes);
       })
