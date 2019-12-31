@@ -6,12 +6,16 @@ import { styledComponent } from '../../utils/styledComponent';
 import Header from '../organisms/Header';
 
 const StyledSection = styledComponent('section', {
+  '& h1, & h2, & h3, & h4, & h5, & h6, & p': {
+    lineHeight: '24px',
+    letterSpacing: '0',
+  },
   '& a': {
     color: colors.headers,
   },
   '& h1': {
     fontSize: '3em',
-    marginBottom: 0,
+    marginBottom: '20px',
   },
   '& h1 + p': {
     marginTop: 0,

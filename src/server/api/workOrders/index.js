@@ -180,7 +180,7 @@ workOrders.post('/', (request, response) => {
 
 workOrders.put('/:workOrderId', (request, response) => {
   const id = request.params.workOrderId;
-  if (request.user.id !== request.body.user_id) {
+  if (request.user && request.user.id !== request.body.user_id) {
     response.status(403).json({});
   }
   database('work_orders')

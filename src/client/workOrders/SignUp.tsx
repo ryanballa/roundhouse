@@ -14,27 +14,24 @@ import { usePromise } from '../utils/promise.hook';
 import workOrdersService from '../services/workOrders.service';
 
 const StyledDiv = styledComponent('div', {
-  '& .BaseTable__body': {
-    color: colors.body,
-    fontSize: '16px',
+  '& a': {
+    color: '#61A3C5',
   },
-  '& .BaseTable__header-row': {
-    borderBottom: `1px solid ${colors.border}`,
-    fontSize: '16px',
-    fontWeight: 600,
+  '& li': {
+    '& h2': {
+      marginBottom: '5px',
+    },
+    '& p': {
+      letterSpacing: 0,
+      lineHeight: '24px',
+      margin: '0 0 10px 0',
+    },
+    borderBottom: '1px solid #ccc',
+    listStyle: 'none',
   },
-  '& .BaseTable__row': {
-    border: 'none',
-  },
-  '& .BaseTable__table': {
-    outline: 'none',
-  },
-  '& .itemCallout': {
-    width: '50%',
-  },
-  '& .items': {
-    display: 'flex',
-    marginTop: '20px',
+  '& ul': {
+    margin: 0,
+    padding: 0,
   },
 });
 
@@ -54,8 +51,6 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
   );
 
   const editWorkOrder = values => {
-    console.log(values);
-    console.log(editingWorkOrder);
     axios
       .put(`/api/v1/workOrders/${editingWorkOrder}`, {
         ...values,
@@ -65,6 +60,10 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
         /* istanbul ignore next */ res => {
           /* istanbul ignore next */
           toaster.success("You're Signed Up");
+          const updateItem = data.find(item => item.id === values.id);
+          updateItem.assignee = assignee;
+          setData({ value: data });
+          setEditingWorkOrder(null);
         },
       )
       .catch(err => {
@@ -75,46 +74,48 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
   return (
     <SingleColumn authProtected={false} history={history}>
       <h1>Work Order Signup</h1>
-      <ul>
-        {data.map(item => (
-          <li>
-            <h2>
-              {item.name} - {item.assignee}
-              {!item.assignee && (
-                <a
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    setEditingWorkOrder(item.id);
-                  }}
-                >
-                  Take This Assignment
-                </a>
+      <StyledDiv>
+        <ul>
+          {data.map(item => (
+            <li>
+              <h2>
+                {item.name} - {item.assignee}
+                {!item.assignee && (
+                  <a
+                    href="#"
+                    onClick={e => {
+                      e.preventDefault();
+                      setEditingWorkOrder(item.id);
+                    }}
+                  >
+                    Take This Assignment
+                  </a>
+                )}
+              </h2>
+              <p>{item.description}</p>
+              {editingWorkOrder === item.id && (
+                <div>
+                  <input
+                    type="text"
+                    onChange={e => {
+                      setAssignee(e.target.value);
+                    }}
+                    value={assignee}
+                  />
+                  <button
+                    onClick={() => {
+                      editWorkOrder(item);
+                    }}
+                    type="button"
+                  >
+                    Sign Up
+                  </button>
+                </div>
               )}
-            </h2>
-            <p>{item.description}</p>
-            {editingWorkOrder === item.id && (
-              <div>
-                <input
-                  type="text"
-                  onChange={e => {
-                    setAssignee(e.target.value);
-                  }}
-                  value={assignee}
-                />
-                <button
-                  onClick={() => {
-                    editWorkOrder(item);
-                  }}
-                  type="button"
-                >
-                  Sign Up
-                </button>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </StyledDiv>
     </SingleColumn>
   );
 };
