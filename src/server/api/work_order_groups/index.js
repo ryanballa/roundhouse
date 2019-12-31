@@ -72,7 +72,7 @@ work_order_groups.put('/:workOrderGroupId', (request, response) => {
 });
 
 work_order_groups.delete(
-  '/:workItemId',
+  '/:workOrderGroupId',
   authHelpers.loginRequired,
   (request, response) => {
     const id = request.params.workOrderGroupId;

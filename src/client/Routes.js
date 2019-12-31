@@ -28,6 +28,7 @@ import TrafficGenerator from './trafficGenerators/TrafficGenerator';
 import UsersView from './users/UsersView';
 import Destinations from './destinations/Destinations';
 import DashboardView from './dashboard/DashboardView';
+import GroupsView from './groups/GroupsView';
 
 const Routes = ({ history }) => {
   const dispatch = userDispatch();
@@ -67,6 +68,7 @@ const Routes = ({ history }) => {
         <Route exact path="/railcars/csv" component={RailcarsCSV} />
         <Route exact path="/railcars/add" component={RailcarsAdd} />
         <Route exact path="/railcars/:id" component={RailcarsView} />
+        <Route exact path="/groups" component={GroupsView} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/situations" component={SituationsView} />
         <Route exact path="/traffic-generators" component={TrafficGenerators} />

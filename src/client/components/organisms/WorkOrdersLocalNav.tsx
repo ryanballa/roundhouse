@@ -21,6 +21,9 @@ const WorkOrdersLocalNav: React.FC<LocalNavProps> = ({ activeItem }) => {
       <li className={activeItem === 'situations' ? 'active' : ''}>
         <Link to="/situations">Situations</Link>
       </li>
+      <li className={activeItem === 'groups' ? 'active' : ''}>
+        <Link to="/groups">Groups</Link>
+      </li>
     </TabMenu>
   );
 };
