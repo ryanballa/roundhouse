@@ -83,6 +83,11 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
   return (
     <SingleColumn authProtected={false} history={history}>
       <h1>Work Order Signup</h1>
+      <p>
+        Sign Up for the ops session. Choose "Take This Assignment" and enter
+        your name. If you change your mind, choose "Change Assignment" and click
+        "Sign Up" without a name entered.
+      </p>
       <StyledDiv>
         <ul>
           {data.map(item => (
