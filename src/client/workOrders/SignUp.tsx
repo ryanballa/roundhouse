@@ -61,7 +61,7 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
 
   const editWorkOrder = values => {
     axios
-      .put(`/api/v1/workOrders/${editingWorkOrder}`, {
+      .put(`/api/v1/workOrders/${editingWorkOrder.id}`, {
         ...values,
         assignee,
       })
@@ -88,21 +88,32 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
           {data.map(item => (
             <li>
               <h2>
-                {item.name} - {item.assignee}
+                {item.name} - {item.assignee}{' '}
                 {!item.assignee && editingWorkOrder !== item.id && (
                   <a
                     href="#"
                     onClick={e => {
                       e.preventDefault();
-                      setEditingWorkOrder(item.id);
+                      setEditingWorkOrder(item);
                     }}
                   >
                     Take This Assignment
                   </a>
                 )}
+                {item.assignee && editingWorkOrder !== item.id && (
+                  <a
+                    href="#"
+                    onClick={e => {
+                      e.preventDefault();
+                      setEditingWorkOrder(item);
+                    }}
+                  >
+                    Change Assignment
+                  </a>
+                )}
               </h2>
               <p>{item.description}</p>
-              {editingWorkOrder === item.id && (
+              {editingWorkOrder && editingWorkOrder.id === item.id && (
                 <div className="inputFieldWrapper">
                   <input
                     placeholder="Enter Your Name"
