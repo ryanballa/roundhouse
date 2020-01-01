@@ -1,21 +1,30 @@
 /* eslint-disable react/no-multi-comp */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { toaster } from 'evergreen-ui';
-import { Link } from 'react-router-dom';
-import BaseTable, { Column } from 'react-base-table';
-import { AddButton } from '../components/atoms/AddButton';
+import Button from '../components/atoms/Button';
 import SingleColumn from '../components/layout/SingleColumn';
 import { styledComponent } from '../utils/styledComponent';
-import { colors } from '../config/styles';
-import WorkOrdersLocalNav from '../components/organisms/WorkOrdersLocalNav';
-import AddWorkOrder from './components/AddWorkOrder';
 import { usePromise } from '../utils/promise.hook';
 import workOrdersService from '../services/workOrders.service';
+import { colors } from '../config/styles';
 
 const StyledDiv = styledComponent('div', {
   '& a': {
     color: '#61A3C5',
+  },
+  '& .inputFieldWrapper': {
+    '& input': {
+      background: colors.form.background,
+      border: `1px solid ${colors.form.stroke}`,
+      borderRadius: '4px',
+      display: 'block',
+      marginRight: '15px',
+      padding: '15px',
+    },
+    alignItems: 'center',
+    display: 'flex',
+    marginBottom: '20px',
   },
   '& li': {
     '& h2': {
@@ -80,7 +89,7 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
             <li>
               <h2>
                 {item.name} - {item.assignee}
-                {!item.assignee && (
+                {!item.assignee && editingWorkOrder !== item.id && (
                   <a
                     href="#"
                     onClick={e => {
@@ -94,22 +103,22 @@ const Signup: React.FC<SignupProps> = ({ history, match }) => {
               </h2>
               <p>{item.description}</p>
               {editingWorkOrder === item.id && (
-                <div>
+                <div className="inputFieldWrapper">
                   <input
+                    placeholder="Enter Your Name"
                     type="text"
                     onChange={e => {
                       setAssignee(e.target.value);
                     }}
                     value={assignee}
                   />
-                  <button
+                  <Button
                     onClick={() => {
                       editWorkOrder(item);
                     }}
-                    type="button"
                   >
                     Sign Up
-                  </button>
+                  </Button>
                 </div>
               )}
             </li>
