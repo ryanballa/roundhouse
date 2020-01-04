@@ -27,7 +27,7 @@ const HeaderToolBar = styledComponent('div', {
     alignItems: 'center',
   },
   '& h1': {
-    margin: 0,
+    marginBottom: '20px',
   },
   '.intro': {
     display: 'block',
