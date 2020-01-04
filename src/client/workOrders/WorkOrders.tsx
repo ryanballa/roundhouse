@@ -175,14 +175,14 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
                   key="complexity"
                   dataKey="complexity"
                   sortable={true}
-                  width={500}
+                  width={200}
                 />
                 <Column
                   title="Assignee"
                   key="assignee"
                   dataKey="assignee"
                   sortable={true}
-                  width={500}
+                  width={200}
                 />
                 <Column
                   cellRenderer={groupFormatter}
@@ -190,7 +190,7 @@ const WorkOrders: React.FC<WorkOrdersProps> = ({ history }) => {
                   key="work_orders_group_id"
                   dataKey="work_orders_group_id"
                   sortable={true}
-                  width={400}
+                  width={200}
                 />
               </BaseTable>
             </>
