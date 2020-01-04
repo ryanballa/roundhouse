@@ -59,7 +59,10 @@ function Railcars({ history }) {
       roadData.forEach(locomotive => {
         roads.push(locomotive.road);
       });
-      const uniqueSet = new Set(roads);
+      const sortedRoads = roads.sort((a, b) => {
+        return a > b ? 1 : -1;
+      });
+      const uniqueSet = new Set(sortedRoads);
       return [...uniqueSet];
     };
 
