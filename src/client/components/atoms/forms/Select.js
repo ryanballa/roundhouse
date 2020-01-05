@@ -27,7 +27,7 @@ const StyledDiv = styledComponent('div', {
   },
 });
 
-const Select = ({ children, label, name }) => (
+const Select = ({ children, label, name, onChange }) => (
   <StyledDiv>
     <label id={name} htmlFor={name}>
       {label}

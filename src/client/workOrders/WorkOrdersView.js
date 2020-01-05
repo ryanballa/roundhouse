@@ -20,6 +20,7 @@ import DeleteWorkOrder from './components/DeleteWorkOrder';
 import { usePromise } from '../utils/promise.hook';
 import railcarsService from '../services/railcars.service';
 import tasksService from '../services/tasks.service';
+import Wizard from './components/Wizard';
 
 const HeaderToolBar = styledComponent('div', {
   '& .butonWrapper': {
@@ -127,6 +128,7 @@ const WorkOrdersView = ({ history, match }) => {
     workOrdersResults: [{}],
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isAddRailcarOpen, setIsAddRailcarOpen] = useState(false);
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
   const [isEditWorkOrderOpen, setIsEditWorkOrderOpen] = useState(false);
   const [isEditWorkItemOpen, setIsEditWorkItemOpen] = useState(false);
@@ -346,6 +348,21 @@ const WorkOrdersView = ({ history, match }) => {
               </li>
             ))}
           </StyledUl>
+          <h3>Add Railcar</h3>
+          <AddButton
+            onClick={() => {
+              setIsAddRailcarOpen(true);
+            }}
+          >
+            Add Railcars
+          </AddButton>
+          <Wizard
+            isOpen={isAddRailcarOpen}
+            handleModalClose={() => {
+              setIsAddRailcarOpen(false);
+            }}
+            workOrder={workOrder}
+          />
           <StyledDestWrapper>
             <h3>Add Destination</h3>
           </StyledDestWrapper>
