@@ -162,7 +162,11 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
   const fetchData = async () => {
     setIsLoading(true);
     await axios(`/api/v1/layouts/`).then(layoutRes => {
-      setLayoutName(layoutRes.data[0].name);
+      setLayoutName(
+        layoutRes.data && layoutRes.data.length
+          ? layoutRes.data[0].name
+          : 'My Layout',
+      );
     });
     await axios(`/api/v1/workOrders/${match.params.id}`)
       .then(workOrderRes => {
