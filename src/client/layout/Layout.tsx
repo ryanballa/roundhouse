@@ -47,8 +47,6 @@ const Layout: React.FC<LayoutProps> = ({ history }) => {
     [],
   );
 
-  console.log(data[0]);
-
   return (
     <SingleColumn history={history}>
       {isLoading ? (
@@ -61,7 +59,7 @@ const Layout: React.FC<LayoutProps> = ({ history }) => {
           <p>Enter your layout name</p>
           <Formik
             initialValues={{
-              name: data[0].name,
+              name: data && data.length ? data[0].name : '',
             }}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
