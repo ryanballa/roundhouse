@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import LogRocket from 'logrocket';
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import { Route, Switch, withRouter } from 'react-router-dom';
@@ -43,6 +44,11 @@ const Routes = ({ history }) => {
             history.push('/login');
           }
           dispatch({ type: 'set', user: response.data.user });
+          console.log(process.env);
+          if (process.env === 'production') {
+            LogRocket.init('fy4vib/roundhouse');
+            LogRocket.identify(response.data.user.username);
+          }
         })
         .catch(() => {});
     };
