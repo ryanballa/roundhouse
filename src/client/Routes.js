@@ -44,8 +44,8 @@ const Routes = ({ history }) => {
             history.push('/login');
           }
           dispatch({ type: 'set', user: response.data.user });
-          console.log(process.env);
-          if (process.env === 'production') {
+          console.log(process.env.NODE_ENV);
+          if (process.env.NODE_ENV === 'production') {
             LogRocket.init('fy4vib/roundhouse');
             LogRocket.identify(response.data.user.username);
           }
