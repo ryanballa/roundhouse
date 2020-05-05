@@ -1,1 +1,1 @@
-web: node -r esm ./src/server/index.js
+web: NODE_ENV=production node -r esm ./src/server/index.js
