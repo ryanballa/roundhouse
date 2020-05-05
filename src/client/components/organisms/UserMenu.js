@@ -46,6 +46,9 @@ const UserMenu = () => {
               <Link to="/users">Admin: Users</Link>
             </li>
           )}
+          <li>
+            <Link to="/layout">Layout</Link>
+          </li>
           <li>{user && <Link to="/logout">Logout</Link>}</li>
         </Menu>
       )}

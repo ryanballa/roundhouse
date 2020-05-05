@@ -30,6 +30,7 @@ import Destinations from './destinations/Destinations';
 import DashboardView from './dashboard/DashboardView';
 import GroupsView from './groups/GroupsView';
 import SignUp from './workOrders/SignUp';
+import Layout from './layout/Layout';
 
 const Routes = ({ history }) => {
   const dispatch = userDispatch();
@@ -89,6 +90,7 @@ const Routes = ({ history }) => {
         />
         <Route exact path="/dashboard" component={DashboardView} />
         <Route exact path="/users" component={UsersView} />
+        <Route exact path="/layout" component={Layout} />
         <Route component={NotFound} />
       </Switch>
     </div>

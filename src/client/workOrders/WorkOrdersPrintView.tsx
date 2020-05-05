@@ -129,6 +129,7 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
   match,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [layoutName, setLayoutName] = useState('');
   const [workOrder, setWorkOrder] = useState({
     workItems: [],
     destinations: [],
@@ -160,6 +161,9 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
 
   const fetchData = async () => {
     setIsLoading(true);
+    await axios(`/api/v1/layouts/`).then(layoutRes => {
+      setLayoutName(layoutRes.data[0].name);
+    });
     await axios(`/api/v1/workOrders/${match.params.id}`)
       .then(workOrderRes => {
         if (!workOrderRes.data) {
@@ -183,7 +187,7 @@ const WorkOrdersPrintView: React.FC<WorkOrdersPrintViewProps> = ({
   return (
     <StyledDiv>
       <header>
-        <h1>Garfield Central Railroad</h1>
+        <h1>{layoutName}</h1>
         <h2>Work Order</h2>
       </header>
       <div className="notes">
