@@ -22,7 +22,7 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "cloudinary": "^1.14.0",
     "concurrently": "^4.1.1",
     "config": "^3.1.0",
