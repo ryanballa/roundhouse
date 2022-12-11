@@ -44,7 +44,7 @@
     "esm": "^3.2.25",
     "evergreen-ui": "^4.17.0",
     "export-to-csv": "^0.2.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "^1.16.2",
     "fetch-mock": "^7.3.3",
     "formik": "^1.5.7",
