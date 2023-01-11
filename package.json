@@ -58,7 +58,7 @@
     "jest-mock-axios": "^3.0.0",
     "jooks": "^0.0.16",
     "js-cookie": "^2.2.1",
-    "knex": "^0.19.5",
+    "knex": "^2.4.0",
     "live-server": "^1.2.1",
     "lodash": "^4.17.15",
     "logrocket": "^1.0.7",
